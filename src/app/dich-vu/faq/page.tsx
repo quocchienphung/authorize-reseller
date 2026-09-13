@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { FaqPage } from "@/components/alexander-ferros/PublicPages";
+import { FaqPage } from "@/components/pages/FaqPage";
 
 export const metadata: Metadata = { title: "Câu hỏi thường gặp" };
 
-export default function FrequentlyAskedQuestionsPage() {
+export default function FaqRoute() {
   return <FaqPage />;
 }

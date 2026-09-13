@@ -2,6 +2,9 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   output: process.env.NEXT_BUILD_STANDALONE === "true" ? "standalone" : undefined,
+  images: {
+    qualities: [75, 90],
+  },
   turbopack: {
     root: process.cwd(),
   },

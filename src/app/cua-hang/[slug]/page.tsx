@@ -1,20 +1,25 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { StoreDetailPage, type StoreSlug } from "@/components/alexander-ferros/PublicPages";
+import { StoreDetailPage } from "@/components/pages/StoresPage";
+import { getStore, stores } from "@/config/site";
 
-const storeSlugs: StoreSlug[] = ["le-thanh-tong", "kim-ma"];
 export const dynamicParams = false;
-export function generateStaticParams() { return storeSlugs.map((slug) => ({ slug })); }
+
+export function generateStaticParams() {
+  return stores.map((store) => ({ slug: store.slug }));
+}
 
 type StorePageProps = { params: Promise<{ slug: string }> };
 
 export async function generateMetadata({ params }: StorePageProps): Promise<Metadata> {
   const { slug } = await params;
-  return { title: slug === "kim-ma" ? "Showroom 247 Kim Mã" : "Showroom 6A Lê Thánh Tông" };
+  return { title: getStore(slug)?.name ?? "Showroom" };
 }
 
-export default async function StorePage({ params }: StorePageProps) {
+export default async function StoreRoute({ params }: StorePageProps) {
   const { slug } = await params;
-  if (!storeSlugs.includes(slug as StoreSlug)) notFound();
-  return <StoreDetailPage slug={slug as StoreSlug} />;
+  const store = getStore(slug);
+  if (!store) notFound();
+
+  return <StoreDetailPage store={store} />;
 }

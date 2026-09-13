@@ -1,65 +1,53 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import { ScrollMotion } from "@/components/alexander-ferros/ScrollMotion";
+import { SplashScreen } from "@/components/brand/SplashScreen";
+import { RevealObserver } from "@/components/motion/RevealObserver";
+import { SmoothScroll } from "@/components/motion/SmoothScroll";
+import { siteConfig } from "@/config/site";
 import "./globals.css";
 
-const helveticaNeue = localFont({
+const brandSans = localFont({
   src: [
-    {
-      path: "../../public/alexander-ferros/fonts/sans-ultralight.woff2",
-      weight: "100",
-      style: "normal",
-    },
-    {
-      path: "../../public/alexander-ferros/fonts/sans-light.woff2",
-      weight: "300",
-      style: "normal",
-    },
-    {
-      path: "../../public/alexander-ferros/fonts/sans-regular.woff2",
-      weight: "400",
-      style: "normal",
-    },
-    {
-      path: "../../public/alexander-ferros/fonts/sans-medium.woff2",
-      weight: "500",
-      style: "normal",
-    },
+    { path: "../assets/fonts/neue-haas-25-ultralight.woff2", weight: "100", style: "normal" },
+    { path: "../assets/fonts/neue-haas-45-light.woff2", weight: "300", style: "normal" },
+    { path: "../assets/fonts/neue-haas-55-regular.woff2", weight: "400", style: "normal" },
+    { path: "../assets/fonts/neue-haas-65-medium.woff2", weight: "500", style: "normal" },
   ],
-  variable: "--font-ap-sans",
+  variable: "--font-brand-sans",
   display: "swap",
 });
 
-const timesNow = localFont({
-  src: "../../public/alexander-ferros/fonts/serif-italic.woff",
+const brandSerif = localFont({
+  src: "../assets/fonts/times-now-extralight-italic.woff",
   weight: "400",
   style: "italic",
-  variable: "--font-ap-serif",
+  variable: "--font-brand-serif",
   display: "swap",
   preload: false,
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(siteConfig.url),
   title: {
-    default: "Alexander Ferros | Đồng hồ chính hãng",
-    template: "%s | Alexander Ferros",
+    default: `${siteConfig.name} | ${siteConfig.tagline}`,
+    template: `%s | ${siteConfig.name}`,
   },
-  description: "Khám phá bộ sưu tập đồng hồ Alexander Ferros chính hãng dành cho nam và nữ.",
+  description: siteConfig.description,
+  openGraph: {
+    siteName: siteConfig.name,
+    locale: "vi_VN",
+    type: "website",
+  },
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html
-      lang="vi"
-      className={`${helveticaNeue.variable} ${timesNow.variable} h-full antialiased`}
-    >
-      <body className="min-h-full flex flex-col">
+    <html lang={siteConfig.locale} className={`${brandSans.variable} ${brandSerif.variable} h-full`}>
+      <body className="flex min-h-full flex-col">
+        <SplashScreen />
+        <SmoothScroll />
+        <RevealObserver />
         {children}
-        <ScrollMotion />
       </body>
     </html>
   );

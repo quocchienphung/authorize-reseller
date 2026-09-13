@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { ContactPage } from "@/components/alexander-ferros/PublicPages";
+import { ContactPage } from "@/components/pages/ContactPage";
 
 export const metadata: Metadata = { title: "Liên hệ" };
 
-export default function ContactUsPage() {
+export default function ContactRoute() {
   return <ContactPage />;
 }

@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { ServicesOverview } from "@/components/alexander-ferros/PublicPages";
+import { ServicesPage } from "@/components/pages/ServicesPage";
 
 export const metadata: Metadata = { title: "Dịch vụ" };
 
-export default function ServicesPage() {
-  return <ServicesOverview />;
+export default function ServicesRoute() {
+  return <ServicesPage />;
 }

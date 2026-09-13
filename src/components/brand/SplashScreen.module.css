@@ -1,0 +1,149 @@
+.curtain {
+  align-items: center;
+  background: var(--color-paper);
+  color: var(--color-graphite);
+  display: flex;
+  inset: 0;
+  justify-content: center;
+  position: fixed;
+  transform: translate3d(0, 0, 0);
+  transition: transform 1100ms var(--ease-in-out-quart);
+  will-change: transform;
+  z-index: 1000;
+}
+
+.curtain::after {
+  border: 1px solid rgb(0 0 0 / 8%);
+  content: "";
+  inset: 18px;
+  pointer-events: none;
+  position: absolute;
+}
+
+.curtain[data-phase="leaving"] {
+  transform: translate3d(0, -100%, 0);
+}
+
+.identity {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(20px, 2.6vw, 34px);
+  transition: opacity 500ms ease, transform 800ms var(--ease-out-soft);
+}
+
+.curtain[data-phase="leaving"] .identity {
+  opacity: 0;
+  transform: translate3d(0, -28px, 0);
+}
+
+.mark {
+  animation: mark-arrive 1300ms var(--ease-out-expo) both;
+  height: clamp(56px, 6.4vw, 84px);
+  width: clamp(56px, 6.4vw, 84px);
+}
+
+.wordmark {
+  display: flex;
+  font-size: clamp(22px, 3.4vw, 46px);
+  font-weight: 100;
+  gap: 0.55em;
+  justify-content: center;
+  letter-spacing: 0.28em;
+  line-height: 1;
+  margin: 0;
+  animation: wordmark-track 1800ms var(--ease-out-expo) both;
+}
+
+.word {
+  display: inline-flex;
+  white-space: nowrap;
+}
+
+.letter {
+  animation: letter-arrive 1100ms var(--ease-out-expo) both;
+  animation-delay: calc(260ms + var(--letter-index) * 42ms);
+  display: inline-block;
+  will-change: transform, opacity;
+}
+
+.rule {
+  animation: rule-grow 1400ms var(--ease-out-expo) 900ms both;
+  background: currentColor;
+  display: block;
+  height: 1px;
+  opacity: 0.55;
+  transform-origin: center;
+  width: clamp(120px, 18vw, 260px);
+}
+
+@keyframes mark-arrive {
+  from {
+    opacity: 0;
+    transform: scale(0.82) translate3d(0, 12px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translate3d(0, 0, 0);
+  }
+}
+
+@keyframes letter-arrive {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 0.55em, 0);
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+    filter: blur(0);
+  }
+}
+
+@keyframes wordmark-track {
+  from {
+    letter-spacing: 0.14em;
+  }
+  to {
+    letter-spacing: 0.28em;
+  }
+}
+
+@keyframes rule-grow {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@media (max-width: 767px) {
+  .curtain::after {
+    inset: 10px;
+  }
+
+  .wordmark {
+    flex-direction: column;
+    gap: 0.45em;
+    letter-spacing: 0.22em;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .curtain {
+    transition-duration: 200ms;
+  }
+
+  .mark,
+  .letter,
+  .rule,
+  .wordmark {
+    animation: none;
+  }
+
+  .identity {
+    transition-duration: 1ms;
+  }
+}

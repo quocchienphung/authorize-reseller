@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { ContactPage } from "@/components/alexander-ferros/PublicPages";
+import { ContactPage } from "@/components/pages/ContactPage";
 
 export const metadata: Metadata = { title: "Đặt lịch trải nghiệm" };
 
-export default function AppointmentPage() {
+export default function AppointmentRoute() {
   return <ContactPage appointment />;
 }

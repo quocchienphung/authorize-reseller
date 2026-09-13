@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { CollectionOverview } from "@/components/alexander-ferros/PublicPages";
+import { CollectionsLanding } from "@/components/collections/CollectionsLanding";
 
 export const metadata: Metadata = {
   title: "Bộ sưu tập",
@@ -7,5 +7,5 @@ export const metadata: Metadata = {
 };
 
 export default function CollectionsPage() {
-  return <CollectionOverview />;
+  return <CollectionsLanding />;
 }

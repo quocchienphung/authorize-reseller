@@ -1,5 +1,5 @@
-import { AlexanderFerrosHomepage } from "@/components/alexander-ferros/AlexanderFerrosHomepage";
+import { HomePage } from "@/components/home/HomePage";
 
 export default function Home() {
-  return <AlexanderFerrosHomepage />;
+  return <HomePage />;
 }

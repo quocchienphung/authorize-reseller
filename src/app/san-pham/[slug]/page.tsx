@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { ProductDetail } from "@/components/alexander-ferros/ProductDetail";
-import { getProduct, products } from "@/lib/alexander-ferros";
+import { ProductDetailPage } from "@/components/product/ProductDetailPage";
+import { getProduct, products } from "@/lib/products";
 
 export const dynamicParams = false;
 
@@ -16,10 +16,7 @@ type ProductPageProps = {
 export async function generateMetadata({ params }: ProductPageProps): Promise<Metadata> {
   const { slug } = await params;
   const product = getProduct(slug);
-
-  if (!product) {
-    return { title: "Không tìm thấy sản phẩm" };
-  }
+  if (!product) return { title: "Không tìm thấy sản phẩm" };
 
   return {
     title: product.name,
@@ -35,10 +32,7 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
 export default async function ProductPage({ params }: ProductPageProps) {
   const { slug } = await params;
   const product = getProduct(slug);
+  if (!product) notFound();
 
-  if (!product) {
-    notFound();
-  }
-
-  return <ProductDetail product={product} />;
+  return <ProductDetailPage product={product} />;
 }
