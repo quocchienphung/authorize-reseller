@@ -1,6 +1,6 @@
 "use client";
 
-import { Search } from "lucide-react";
+import { ChevronDown, Search } from "lucide-react";
 import { useMemo, useState } from "react";
 import { categoryLabel, parsePrice, searchProducts, type CategorySlug, type Product } from "@/lib/products";
 import { cn } from "@/lib/utils";
@@ -90,9 +90,7 @@ export function ProductGrid({ products, showCategoryFilter = true, initialCatego
                 </option>
               ))}
             </select>
-            <span className="pointer-events-none absolute right-4 text-paper/60" aria-hidden="true">
-              ⌄
-            </span>
+            <ChevronDown className="pointer-events-none absolute right-4 size-4 stroke-[1.5] text-paper/60" aria-hidden="true" />
           </label>
         </div>
       </div>

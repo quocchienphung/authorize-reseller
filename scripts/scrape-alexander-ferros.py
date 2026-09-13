@@ -314,7 +314,7 @@ def main() -> int:
             }
         )
     runtime_payload = {"count": len(runtime_products), "products": runtime_products}
-    output = DATA_DIR / "alexander-ferros-products.json"
+    output = DATA_DIR / "products.json"
     output.write_text(json.dumps(runtime_payload, ensure_ascii=False, indent=2), encoding="utf-8")
     (RESEARCH_DIR / "product-catalogue.json").write_text(
         json.dumps(research_payload, ensure_ascii=False, indent=2), encoding="utf-8"

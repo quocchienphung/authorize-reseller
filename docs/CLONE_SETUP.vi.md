@@ -1,3 +1,5 @@
+> **Lưu ý (14/09/2026):** tài liệu này mô tả giai đoạn clone homepage Audemars Piguet ban đầu. Mã nguồn và assets AP đã được gỡ khỏi repo; kiến trúc hiện tại được mô tả trong `docs/ARCHITECTURE.md`.
+
 # Thiết lập bản clone Audemars Piguet
 
 Nguồn tham chiếu: https://www.audemarspiguet.com/us/en/home

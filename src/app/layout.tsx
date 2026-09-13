@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Cormorant_Garamond, Montserrat } from "next/font/google";
 import localFont from "next/font/local";
 import { SplashScreen } from "@/components/brand/SplashScreen";
 import { RevealObserver } from "@/components/motion/RevealObserver";
@@ -6,24 +7,30 @@ import { SmoothScroll } from "@/components/motion/SmoothScroll";
 import { siteConfig } from "@/config/site";
 import "./globals.css";
 
-const brandSans = localFont({
-  src: [
-    { path: "../assets/fonts/neue-haas-25-ultralight.woff2", weight: "100", style: "normal" },
-    { path: "../assets/fonts/neue-haas-45-light.woff2", weight: "300", style: "normal" },
-    { path: "../assets/fonts/neue-haas-55-regular.woff2", weight: "400", style: "normal" },
-    { path: "../assets/fonts/neue-haas-65-medium.woff2", weight: "500", style: "normal" },
-  ],
+/** Montserrat is the Alexander Ferros brand face and covers Vietnamese diacritics. */
+const brandSans = Montserrat({
+  subsets: ["latin", "latin-ext", "vietnamese"],
+  weight: ["200", "300", "400", "500"],
   variable: "--font-brand-sans",
   display: "swap",
 });
 
-const brandSerif = localFont({
-  src: "../assets/fonts/times-now-extralight-italic.woff",
-  weight: "400",
-  style: "italic",
+/** Latin-only ultra-light face reserved for the "ALEXANDER FERROS" wordmark. */
+const brandDisplay = localFont({
+  src: "../assets/fonts/neue-haas-25-ultralight.woff2",
+  weight: "100",
+  style: "normal",
+  variable: "--font-brand-display",
+  display: "swap",
+});
+
+/** Italic serif for the second line of display headings (also used by AP). */
+const brandSerif = Cormorant_Garamond({
+  subsets: ["latin", "latin-ext", "vietnamese"],
+  weight: ["400", "500"],
+  style: ["italic"],
   variable: "--font-brand-serif",
   display: "swap",
-  preload: false,
 });
 
 export const metadata: Metadata = {
@@ -42,7 +49,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang={siteConfig.locale} className={`${brandSans.variable} ${brandSerif.variable} h-full`}>
+    <html lang={siteConfig.locale} className={`${brandSans.variable} ${brandSerif.variable} ${brandDisplay.variable} h-full`}>
       <body className="flex min-h-full flex-col">
         <SplashScreen />
         <SmoothScroll />
