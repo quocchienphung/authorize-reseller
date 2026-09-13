@@ -29,8 +29,8 @@ const linkClass = "text-sm font-light leading-relaxed transition-opacity hover:o
 
 export function SiteFooter() {
   return (
-    <footer className="rail bg-pine pt-20 pb-9 text-paper max-md:pt-16">
-      <div className="border-b border-paper/25 pb-14">
+    <footer className="rail border-t border-line bg-surface pt-20 pb-9 text-fg max-md:pt-16">
+      <div className="border-b border-line pb-14">
         <BrandLogo markClassName="size-14 md:size-[68px]" className="text-xl md:text-2xl" />
         <p className="mt-5 max-w-md text-sm font-light md:ml-[84px]">
           Đồng hồ Alexander Ferros chính hãng — kiểm định và bảo hành tại Việt Nam.
@@ -72,7 +72,7 @@ export function SiteFooter() {
         </div>
       </div>
 
-      <div className="flex flex-col gap-6 border-t border-paper/25 pt-8 text-[11px] md:flex-row md:items-center md:justify-between">
+      <div className="flex flex-col gap-6 border-t border-line pt-8 text-[11px] md:flex-row md:items-center md:justify-between">
         <nav aria-label="Mạng xã hội" className="flex flex-wrap gap-6">
           {siteConfig.social.map((item) => (
             <a key={item.label} href={item.href} target="_blank" rel="noreferrer" className="transition-opacity hover:opacity-60">
@@ -80,7 +80,7 @@ export function SiteFooter() {
             </a>
           ))}
         </nav>
-        <p className="m-0 text-paper/80">
+        <p className="m-0 text-fg/80">
           © {new Date().getFullYear()} {siteConfig.name}
         </p>
       </div>

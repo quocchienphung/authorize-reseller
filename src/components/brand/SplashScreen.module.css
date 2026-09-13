@@ -8,6 +8,7 @@
   position: fixed;
   transform: translate3d(0, 0, 0);
   transition: transform 1100ms var(--ease-in-out-quart);
+  touch-action: none;
   will-change: transform;
   z-index: 1000;
 }
@@ -44,27 +45,33 @@
 }
 
 .wordmark {
+  align-items: center;
   display: flex;
   font-family: var(--font-display);
   font-size: clamp(22px, 3.4vw, 46px);
   font-weight: 100;
-  gap: 0.55em;
+  gap: 0.3em;
   justify-content: center;
-  letter-spacing: 0.28em;
   line-height: 1;
   margin: 0;
-  animation: wordmark-track 1800ms var(--ease-out-expo) both;
 }
 
 .word {
   display: inline-flex;
+  justify-content: center;
   white-space: nowrap;
 }
 
+/* Tracking is applied as symmetric padding on every letter (instead of
+   letter-spacing, which only adds space after a glyph) so the wordmark stays
+   optically centred, including when it wraps onto two lines. */
 .letter {
-  animation: letter-arrive 1100ms var(--ease-out-expo) both;
-  animation-delay: calc(260ms + var(--letter-index) * 42ms);
+  animation:
+    letter-arrive 1100ms var(--ease-out-expo) both,
+    letter-track 1800ms var(--ease-out-expo) both;
+  animation-delay: calc(260ms + var(--letter-index) * 42ms), 0ms;
   display: inline-block;
+  padding-inline: 0.14em;
   will-change: transform, opacity;
 }
 
@@ -102,12 +109,12 @@
   }
 }
 
-@keyframes wordmark-track {
+@keyframes letter-track {
   from {
-    letter-spacing: 0.14em;
+    padding-inline: 0.07em;
   }
   to {
-    letter-spacing: 0.28em;
+    padding-inline: 0.14em;
   }
 }
 
@@ -128,7 +135,10 @@
   .wordmark {
     flex-direction: column;
     gap: 0.45em;
-    letter-spacing: 0.22em;
+  }
+
+  .letter {
+    padding-inline: 0.11em;
   }
 }
 
@@ -139,8 +149,7 @@
 
   .mark,
   .letter,
-  .rule,
-  .wordmark {
+  .rule {
     animation: none;
   }
 

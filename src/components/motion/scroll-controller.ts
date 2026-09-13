@@ -2,8 +2,8 @@ import type Lenis from "lenis";
 
 /**
  * Tiny bridge between the Lenis instance (owned by <SmoothScroll />) and any
- * component that needs to pause scrolling, e.g. the splash screen or the
- * navigation drawer. Falls back to a plain overflow lock when Lenis is absent.
+ * component that needs to pause scrolling or follow scroll position. Falls
+ * back to native scroll events when Lenis is absent (reduced motion).
  */
 let lenisInstance: Lenis | null = null;
 let lockCount = 0;
@@ -32,6 +32,21 @@ export function scrollToTop(immediate = false) {
     return;
   }
   window.scrollTo({ top: 0, behavior: immediate ? "auto" : "smooth" });
+}
+
+/**
+ * Subscribe to the smoothed scroll position. With Lenis the callback runs
+ * inside its animation frame (already eased); otherwise on native scroll.
+ */
+export function onScroll(callback: (y: number) => void) {
+  if (lenisInstance) {
+    const handler = ({ scroll }: { scroll: number }) => callback(scroll);
+    lenisInstance.on("scroll", handler);
+    return () => lenisInstance?.off("scroll", handler);
+  }
+  const handler = () => callback(window.scrollY);
+  window.addEventListener("scroll", handler, { passive: true });
+  return () => window.removeEventListener("scroll", handler);
 }
 
 export const SPLASH_DONE_EVENT = "brand:splash-done";

@@ -45,7 +45,7 @@ export function ListingPage({
 
       <header className="rail pt-10 pb-12 md:pt-14 md:pb-16" data-reveal>
         <SectionHeading as="h1" primary={heading.primary} secondary={heading.secondary} />
-        {description ? <p className="type-body mt-6 max-w-2xl text-paper/75">{description}</p> : null}
+        {description ? <p className="type-body mt-6 max-w-2xl text-fg/75">{description}</p> : null}
       </header>
 
       {children}

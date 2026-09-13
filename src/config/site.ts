@@ -22,6 +22,9 @@ export const siteConfig = {
   ],
 } as const;
 
+/** localStorage key holding the visitor's explicit light / dark choice. */
+export const THEME_STORAGE_KEY = "af-theme";
+
 export const routes = {
   home: "/",
   collections: "/bo-suu-tap",

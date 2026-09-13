@@ -19,7 +19,7 @@ export function ProductCard({ product, sizes, headingLevel: Heading = "h3", clas
 
   return (
     <article className={cn("group/card flex flex-col", className)}>
-      <Link href={href} tabIndex={-1} aria-hidden="true" className="relative block aspect-[4/5] overflow-hidden bg-linen">
+      <Link href={href} tabIndex={-1} aria-hidden="true" className="relative block aspect-[4/5] overflow-hidden border border-line bg-tile">
         <Image
           src={product.image}
           alt={product.name}
@@ -31,7 +31,7 @@ export function ProductCard({ product, sizes, headingLevel: Heading = "h3", clas
         />
       </Link>
       <div className="flex flex-1 flex-col pt-4">
-        <p className="m-0 text-[11px] uppercase tracking-[0.12em] text-smoke">{product.sku}</p>
+        <p className="m-0 text-[11px] uppercase tracking-[0.12em] text-fg/55">{product.sku}</p>
         <Heading className="m-0 mt-1.5 text-[15px] font-light leading-snug">
           <Link href={href} className="transition-opacity hover:opacity-60">
             {product.name}

@@ -4,7 +4,8 @@ import { ChevronLeft, MapPin, Phone, Search, Watch, X } from "lucide-react";
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { BrandLogo } from "@/components/brand/BrandLogo";
-import { lockScroll, unlockScroll } from "@/components/motion/scroll-controller";
+import { lockScroll, onScroll, unlockScroll } from "@/components/motion/scroll-controller";
+import { ThemeToggle } from "./ThemeToggle";
 import { navigation, routes, siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
 
@@ -18,7 +19,7 @@ type SiteHeaderProps = {
 const DRAWER_ID = "site-menu";
 
 const iconLinkClass =
-  "inline-flex size-[38px] items-center justify-center transition-opacity hover:opacity-60 [&_svg]:size-[26px] [&_svg]:stroke-[1.35]";
+  "inline-flex size-[38px] items-center justify-center transition-opacity hover:opacity-60 [&_svg]:size-[24px] [&_svg]:stroke-[1.35]";
 
 /**
  * Fixed header in the Audemars Piguet arrangement: menu trigger on the left,
@@ -28,28 +29,51 @@ const iconLinkClass =
 export function SiteHeader({ solid = false, productCount }: SiteHeaderProps) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [hidden, setHidden] = useState(false);
+  const headerRef = useRef<HTMLElement>(null);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
 
+  /*
+   * Show / hide is written straight to the DOM (no React re-render per frame)
+   * and only flips after the scroll has travelled HIDE_AFTER px in one
+   * direction, so momentum jitter on touch devices never makes it flicker.
+   */
   useEffect(() => {
+    const header = headerRef.current;
+    if (!header) return;
+
+    const HIDE_AFTER = 28;
+    const SHOW_AFTER = 12;
+    const REVEAL_ZONE = 140;
     let previousY = window.scrollY;
-    let frame = 0;
+    let travelled = 0;
+    let hidden = false;
+    let solidBar = previousY > 40;
 
-    const onScroll = () => {
-      window.cancelAnimationFrame(frame);
-      frame = window.requestAnimationFrame(() => {
-        const y = window.scrollY;
-        setScrolled(y > 24);
-        setHidden(y > previousY && y > 160);
-        previousY = y;
-      });
+    const apply = (y: number) => {
+      const delta = y - previousY;
+      previousY = y;
+      travelled = Math.sign(delta) === Math.sign(travelled) ? travelled + delta : delta;
+
+      if (!hidden && travelled > HIDE_AFTER && y > REVEAL_ZONE) {
+        hidden = true;
+        header.style.transform = "translate3d(0, -100%, 0)";
+      } else if (hidden && (travelled < -SHOW_AFTER || y <= REVEAL_ZONE)) {
+        hidden = false;
+        header.style.transform = "translate3d(0, 0, 0)";
+      }
+
+      // Hysteresis so the background never toggles back and forth around one pixel.
+      if (!solidBar && y > 40) {
+        solidBar = true;
+        setScrolled(true);
+      } else if (solidBar && y < 10) {
+        solidBar = false;
+        setScrolled(false);
+      }
     };
 
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.cancelAnimationFrame(frame);
-    };
+    apply(window.scrollY);
+    return onScroll(apply);
   }, []);
 
   const isSolid = solid || scrolled || menuOpen;
@@ -57,39 +81,42 @@ export function SiteHeader({ solid = false, productCount }: SiteHeaderProps) {
   return (
     <>
       <header
+        ref={headerRef}
         className={cn(
-          "rail fixed inset-x-0 top-0 z-100 grid h-(--header-height) grid-cols-[1fr_auto_1fr] items-center text-paper transition-[background-color,color,transform] duration-300 ease-out",
-          isSolid && "bg-paper text-ink",
-          hidden && "-translate-y-full",
+          "rail fixed inset-x-0 top-0 z-100 grid h-(--header-height) grid-cols-[1fr_auto_1fr] items-center border-b will-change-transform",
+          "transition-[transform,background-color,color,border-color,backdrop-filter] duration-500 ease-out-expo",
+          isSolid ? "border-line bg-surface/85 text-fg backdrop-blur-md" : "border-transparent bg-transparent text-paper",
         )}
       >
         <button
           ref={menuButtonRef}
           type="button"
-          className="inline-flex size-11 items-center justify-center justify-self-start"
+          className="group/menu inline-flex size-11 items-center justify-center justify-self-start"
           aria-label="Mở menu"
           aria-expanded={menuOpen}
           aria-controls={DRAWER_ID}
           onClick={() => setMenuOpen(true)}
         >
           <span className="grid w-6 gap-[5px]" aria-hidden="true">
-            <span className="block h-px w-6 bg-current" />
-            <span className="block h-px w-6 bg-current" />
+            <span className="block h-px w-6 bg-current transition-transform duration-300 group-hover/menu:translate-x-0.5" />
+            <span className="block h-px w-6 bg-current transition-transform duration-300 group-hover/menu:-translate-x-0.5" />
           </span>
         </button>
 
-        <BrandLogo markOnly className="justify-self-center" markClassName="size-12 md:size-[58px]" />
+        <BrandLogo markOnly className="justify-self-center md:hidden" markClassName="size-12" />
+        <BrandLogo className="justify-self-center max-md:hidden" markClassName="size-[52px]" />
 
-        <nav className="flex items-center gap-2 justify-self-end md:gap-4" aria-label="Liên kết nhanh">
+        <nav className="flex items-center gap-1 justify-self-end md:gap-3" aria-label="Liên kết nhanh">
           <Link href={routes.catalogue} aria-label="Tất cả đồng hồ" className={iconLinkClass}>
             <Watch aria-hidden="true" />
           </Link>
           <Link href={routes.stores} aria-label="Hệ thống showroom" className={cn(iconLinkClass, "max-md:hidden")}>
             <MapPin aria-hidden="true" />
           </Link>
-          <Link href={`${routes.catalogue}#san-pham`} aria-label="Tìm sản phẩm" className={iconLinkClass}>
+          <Link href={`${routes.catalogue}#san-pham`} aria-label="Tìm sản phẩm" className={cn(iconLinkClass, "max-md:hidden")}>
             <Search aria-hidden="true" />
           </Link>
+          <ThemeToggle />
         </nav>
       </header>
 
@@ -132,7 +159,7 @@ function MenuDrawer({ productCount, onClose }: { productCount: number; onClose: 
 
   return (
     <div
-      className="fixed inset-0 z-110 bg-ink/45 backdrop-blur-sm"
+      className="fixed inset-0 z-110 bg-ink/45 backdrop-blur-sm animate-in fade-in duration-300"
       role="presentation"
       onMouseDown={(event) => event.target === event.currentTarget && close()}
     >
@@ -143,7 +170,7 @@ function MenuDrawer({ productCount, onClose }: { productCount: number; onClose: 
         aria-modal="true"
         aria-label="Menu chính"
         className={cn(
-          "flex h-full w-full flex-col bg-paper text-ink transition-[width] duration-300 ease-out animate-in slide-in-from-left-4 fade-in md:w-[420px]",
+          "flex h-full w-full flex-col bg-surface text-fg transition-[width] duration-500 ease-out-expo animate-in slide-in-from-left-8 fade-in duration-500 md:w-[420px]",
           group && "md:w-[820px]",
         )}
       >
@@ -171,7 +198,7 @@ function MenuDrawer({ productCount, onClose }: { productCount: number; onClose: 
                   type="button"
                   onClick={() => setActiveGroup(item.label)}
                   className={cn(
-                    "flex w-full items-center justify-between py-3 text-left text-[28px] font-thin uppercase tracking-[0.02em] transition-opacity md:text-[32px]",
+                    "flex w-full items-center justify-between py-3 text-left text-[28px] font-extralight uppercase tracking-[0.02em] transition-opacity md:text-[32px]",
                     activeGroup && activeGroup !== item.label && "opacity-40",
                   )}
                 >
@@ -182,8 +209,8 @@ function MenuDrawer({ productCount, onClose }: { productCount: number; onClose: 
           </ul>
 
           {group ? (
-            <div className="w-full border-ink/10 px-5 py-4 animate-in fade-in slide-in-from-left-2 md:border-l md:px-10">
-              <p className="type-eyebrow mb-6 text-ink/50">{group.label}</p>
+            <div className="w-full border-line px-5 py-4 animate-in fade-in slide-in-from-left-2 md:border-l md:px-10">
+              <p className="type-eyebrow mb-6 text-fg/50">{group.label}</p>
               <ul className="list-none space-y-4">
                 {group.links.map((link) => (
                   <li key={link.href}>
@@ -203,7 +230,7 @@ function MenuDrawer({ productCount, onClose }: { productCount: number; onClose: 
           ) : null}
         </div>
 
-        <div className="grid gap-3 border-t border-ink/10 px-5 py-5 text-sm md:px-8">
+        <div className="grid gap-3 border-t border-line px-5 py-5 text-sm md:px-8">
           <Link href={routes.catalogue} onClick={close} className="inline-flex items-center gap-3 hover:opacity-60">
             <Watch className="size-[18px] stroke-[1.4]" aria-hidden="true" />
             Khám phá {productCount} sản phẩm

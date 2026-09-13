@@ -4,8 +4,8 @@ import { useState, type FormEvent } from "react";
 import { cn } from "@/lib/utils";
 
 const fieldClass =
-  "h-12 w-full border-b border-paper/30 bg-transparent px-0 text-base font-light text-paper placeholder:text-paper/35 focus:border-paper focus:outline-none";
-const labelClass = "flex flex-col gap-2 text-[12px] uppercase tracking-[0.14em] text-paper/60";
+  "h-12 w-full border-b border-fg/30 bg-transparent px-0 text-base font-light text-fg placeholder:text-fg/35 focus:border-fg focus:outline-none";
+const labelClass = "flex flex-col gap-2 text-[12px] uppercase tracking-[0.14em] text-fg/60";
 
 export function ContactForm({ appointment = false }: { appointment?: boolean }) {
   const [sent, setSent] = useState(false);
@@ -42,12 +42,12 @@ export function ContactForm({ appointment = false }: { appointment?: boolean }) 
       <div className="flex flex-col items-start gap-4 md:col-span-2">
         <button
           type="submit"
-          className="inline-flex min-h-[51px] items-center justify-center rounded-full border border-bronze bg-bronze px-8 text-sm font-medium text-paper transition-colors hover:border-bronze-deep hover:bg-bronze-deep"
+          className="inline-flex min-h-12 items-center justify-center rounded-full border border-fg bg-fg px-8 text-[12px] font-medium tracking-[0.16em] text-surface uppercase transition-[background-color,color] duration-300 hover:bg-transparent hover:text-fg"
         >
           {appointment ? "Gửi yêu cầu đặt lịch" : "Gửi yêu cầu"}
         </button>
         {sent ? (
-          <p role="status" className="m-0 text-sm text-bronze">
+          <p role="status" className="m-0 text-sm text-fg/80">
             Yêu cầu đã được ghi nhận. Alexander Ferros sẽ liên hệ với bạn sớm nhất.
           </p>
         ) : null}

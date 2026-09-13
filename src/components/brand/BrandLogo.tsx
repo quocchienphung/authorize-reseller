@@ -19,7 +19,7 @@ export function BrandLogo({ markOnly = false, className, markClassName }: BrandL
     >
       <BrandMark className={cn("size-10 shrink-0", markClassName)} />
       {markOnly ? null : (
-        <span className="font-display text-[17px] font-thin uppercase tracking-[0.24em] whitespace-nowrap">
+        <span className="font-display text-[15px] font-thin uppercase tracking-[0.26em] whitespace-nowrap">
           {siteConfig.name}
         </span>
       )}

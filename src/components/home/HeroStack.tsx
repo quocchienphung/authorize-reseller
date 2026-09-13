@@ -34,7 +34,7 @@ export function HeroStack() {
             className="pointer-events-none absolute inset-0 z-[1] bg-[linear-gradient(90deg,rgb(0_0_0/0.54)_0%,rgb(0_0_0/0.2)_38%,rgb(0_0_0/0.05)_72%),linear-gradient(0deg,rgb(0_0_0/0.3),transparent_45%)]"
             aria-hidden="true"
           />
-          <div className="rail-left relative z-[2] flex h-full max-w-[calc(var(--rail)+460px)] flex-col justify-center pt-(--header-height)" data-reveal>
+          <div className="rail-left relative z-[2] flex h-full max-w-[calc(var(--rail)+460px)] flex-col justify-center pt-(--header-height) text-paper" data-reveal>
             <SectionHeading as={index === 0 ? "h1" : "h2"} primary={hero.primary} secondary={hero.secondary} />
             <p className="mt-10 max-w-[414px] text-[17px] leading-[1.35] font-light">{hero.description}</p>
             <LineLink href={hero.cta.href} className="mt-7">

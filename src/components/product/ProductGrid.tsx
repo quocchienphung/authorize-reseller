@@ -29,7 +29,7 @@ const sortOptions: { value: SortOrder; label: string }[] = [
 ];
 
 const toolbarButtonClass =
-  "h-10 rounded-full border px-5 text-sm transition-colors duration-200 border-paper/25 text-paper/75 hover:border-paper hover:text-paper";
+  "h-10 rounded-full border px-5 text-sm transition-colors duration-200 border-fg/25 text-fg/75 hover:border-fg hover:text-fg";
 
 /** Filterable, searchable catalogue grid (4 columns on desktop like alexanderferros.com). */
 export function ProductGrid({ products, showCategoryFilter = true, initialCategory = "all" }: ProductGridProps) {
@@ -49,7 +49,7 @@ export function ProductGrid({ products, showCategoryFilter = true, initialCatego
 
   return (
     <div className="rail">
-      <div className="flex flex-col gap-5 border-b border-paper/15 pb-6 md:flex-row md:items-center md:justify-between">
+      <div className="flex flex-col gap-5 border-b border-line pb-6 md:flex-row md:items-center md:justify-between">
         {showCategoryFilter ? (
           <div className="flex flex-wrap gap-2" role="group" aria-label="Lọc danh mục">
             {categoryOptions.map((option) => (
@@ -58,7 +58,7 @@ export function ProductGrid({ products, showCategoryFilter = true, initialCatego
                 type="button"
                 aria-pressed={category === option.value}
                 onClick={() => setCategory(option.value)}
-                className={cn(toolbarButtonClass, category === option.value && "border-paper bg-paper text-ink hover:text-ink")}
+                className={cn(toolbarButtonClass, category === option.value && "border-fg bg-fg text-surface hover:text-surface")}
               >
                 {option.label}
               </button>
@@ -70,13 +70,13 @@ export function ProductGrid({ products, showCategoryFilter = true, initialCatego
 
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
           <label className="relative flex items-center">
-            <Search className="pointer-events-none absolute left-4 size-4 stroke-[1.5] text-paper/60" aria-hidden="true" />
+            <Search className="pointer-events-none absolute left-4 size-4 stroke-[1.5] text-fg/60" aria-hidden="true" />
             <span className="sr-only">Tìm theo tên hoặc mã</span>
             <input
               value={query}
               onChange={(event) => setQuery(event.target.value)}
               placeholder="Tìm theo tên hoặc mã"
-              className="h-10 w-full rounded-full border border-paper/25 bg-transparent pr-4 pl-11 text-sm text-paper placeholder:text-paper/45 focus:border-paper focus:outline-none sm:w-64"
+              className="h-10 w-full rounded-full border border-fg/25 bg-transparent pr-4 pl-11 text-sm text-fg placeholder:text-fg/45 focus:border-fg focus:outline-none sm:w-64"
             />
           </label>
           <label className="relative flex items-center">
@@ -84,7 +84,7 @@ export function ProductGrid({ products, showCategoryFilter = true, initialCatego
             <select
               value={sort}
               onChange={(event) => setSort(event.target.value as SortOrder)}
-              className="h-10 appearance-none rounded-full border border-paper/25 bg-transparent px-5 pr-10 text-sm text-paper focus:border-paper focus:outline-none [&_option]:text-ink"
+              className="h-10 appearance-none rounded-full border border-fg/25 bg-transparent px-5 pr-10 text-sm text-fg focus:border-fg focus:outline-none [&_option]:text-surface"
             >
               {sortOptions.map((option) => (
                 <option key={option.value} value={option.value}>
@@ -92,12 +92,12 @@ export function ProductGrid({ products, showCategoryFilter = true, initialCatego
                 </option>
               ))}
             </select>
-            <ChevronDown className="pointer-events-none absolute right-4 size-4 stroke-[1.5] text-paper/60" aria-hidden="true" />
+            <ChevronDown className="pointer-events-none absolute right-4 size-4 stroke-[1.5] text-fg/60" aria-hidden="true" />
           </label>
         </div>
       </div>
 
-      <p className="type-eyebrow my-6 text-paper/55" aria-live="polite">
+      <p className="type-eyebrow my-6 text-fg/55" aria-live="polite">
         {visible.length} sản phẩm
       </p>
 
@@ -114,7 +114,7 @@ export function ProductGrid({ products, showCategoryFilter = true, initialCatego
           ))}
         </div>
       ) : (
-        <p className="py-20 text-center text-paper/60">Không tìm thấy sản phẩm phù hợp.</p>
+        <p className="py-20 text-center text-fg/60">Không tìm thấy sản phẩm phù hợp.</p>
       )}
     </div>
   );

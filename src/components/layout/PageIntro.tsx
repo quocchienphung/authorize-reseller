@@ -18,7 +18,7 @@ export function PageIntro({ eyebrow, primary, secondary, description, children, 
     <header className={cn("rail flex flex-col pt-16 pb-14 md:pt-24 md:pb-20", className)} data-reveal>
       {eyebrow ? <Eyebrow className="mb-5">{eyebrow}</Eyebrow> : null}
       <SectionHeading as="h1" primary={primary} secondary={secondary} />
-      {description ? <p className="type-body mt-6 max-w-2xl text-paper/75">{description}</p> : null}
+      {description ? <p className="type-body mt-6 max-w-2xl text-fg/75">{description}</p> : null}
       {children}
     </header>
   );

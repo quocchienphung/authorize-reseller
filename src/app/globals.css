@@ -24,8 +24,12 @@
   --color-graphite: #1a1a1a;
   --color-smoke: #8a8a8a;
   --color-bronze: #b2957a;
-  --color-bronze-deep: #9a7f66;
-  --color-pine: #2b4f4f;
+
+  /* Theme-aware surfaces: flip between dark and light (see :root blocks below). */
+  --color-surface: var(--surface);
+  --color-fg: var(--fg);
+  --color-line: var(--line);
+  --color-tile: var(--tile);
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -57,29 +61,55 @@
 }
 
 :root {
-  --background: #000000;
-  --foreground: #ffffff;
-  --card: #0a0a0a;
-  --card-foreground: #ffffff;
-  --popover: #0a0a0a;
-  --popover-foreground: #ffffff;
-  --primary: #b2957a;
-  --primary-foreground: #ffffff;
-  --secondary: #1a1a1a;
-  --secondary-foreground: #ffffff;
-  --muted: #1a1a1a;
+  /* Light theme */
+  --surface: #ffffff;
+  --fg: #111111;
+  --line: rgb(0 0 0 / 12%);
+  --tile: #ffffff;
+  color-scheme: light;
+
+  --background: var(--surface);
+  --foreground: var(--fg);
+  --card: var(--surface);
+  --card-foreground: var(--fg);
+  --popover: var(--surface);
+  --popover-foreground: var(--fg);
+  --primary: var(--fg);
+  --primary-foreground: var(--surface);
+  --secondary: var(--tile);
+  --secondary-foreground: var(--fg);
+  --muted: var(--tile);
   --muted-foreground: #8a8a8a;
-  --accent: #1a1a1a;
-  --accent-foreground: #ffffff;
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: rgb(255 255 255 / 22%);
-  --input: rgb(255 255 255 / 15%);
-  --ring: #b2957a;
+  --accent: var(--tile);
+  --accent-foreground: var(--fg);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: var(--line);
+  --input: var(--line);
+  --ring: var(--fg);
   --radius: 0.625rem;
 
   /* Horizontal gutter that centres a 1240px column on wide screens. */
   --rail: max(20px, calc((100vw - 1240px) / 2));
   --header-height: 112px;
+}
+
+/* Dark theme: system preference, unless the visitor picked light explicitly. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --surface: #000000;
+    --fg: #ffffff;
+    --line: rgb(255 255 255 / 18%);
+    --tile: #000000;
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme="dark"] {
+  --surface: #000000;
+  --fg: #ffffff;
+  --line: rgb(255 255 255 / 18%);
+  --tile: #000000;
+  color-scheme: dark;
 }
 
 @media (max-width: 1024px) {
@@ -102,16 +132,21 @@
 
   html {
     @apply font-sans;
-    background: var(--color-ink);
-    color-scheme: dark;
+    background: var(--surface);
     -webkit-font-smoothing: antialiased;
+    /* Lock horizontal panning on touch devices: no sideways rubber-banding. */
+    overflow-x: clip;
+    overscroll-behavior-x: none;
   }
 
   body {
-    @apply bg-ink text-paper;
+    @apply bg-surface text-fg;
     font-weight: 300;
     min-width: 320px;
     overflow-x: clip;
+    overscroll-behavior-x: none;
+    touch-action: pan-y pinch-zoom;
+    transition: background-color 400ms ease, color 400ms ease;
   }
 
   a,
@@ -128,8 +163,8 @@
   }
 
   ::selection {
-    background: var(--color-bronze);
-    color: var(--color-paper);
+    background: var(--fg);
+    color: var(--surface);
   }
 }
 
@@ -231,6 +266,28 @@ html[data-motion="ready"] [data-reveal][data-revealed="true"] {
   transform: translateY(0);
 }
 
+/* Word-by-word reveal for display headings. <SplitWords /> tags each word
+   with data-word and a --word-index; the stagger starts when the nearest
+   [data-reveal] ancestor is revealed. */
+html[data-motion="ready"] [data-reveal] [data-word] {
+  display: inline-block;
+  opacity: 0;
+  transform: translate3d(0, 0.5em, 0);
+  filter: blur(6px);
+  transition:
+    opacity 900ms var(--ease-out-soft),
+    transform 1200ms var(--ease-out-expo),
+    filter 900ms var(--ease-out-soft);
+  transition-delay: calc(var(--reveal-delay, 0ms) + var(--word-index, 0) * 70ms);
+  will-change: transform, opacity, filter;
+}
+
+html[data-motion="ready"] [data-reveal][data-revealed="true"] [data-word] {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  filter: blur(0);
+}
+
 /* Hide the native scrollbar of horizontal tracks without losing scroll. */
 @utility scrollbar-none {
   scrollbar-width: none;
@@ -240,6 +297,13 @@ html[data-motion="ready"] [data-reveal][data-revealed="true"] {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  html[data-motion="ready"] [data-reveal] [data-word] {
+    filter: none;
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
   html[data-motion="ready"] [data-reveal] {
     -webkit-mask-image: none;
     mask-image: none;

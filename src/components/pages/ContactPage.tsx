@@ -21,7 +21,7 @@ export function ContactPage({ appointment = false }: ContactPageProps) {
             secondary={appointment ? "trải nghiệm" : "với chúng tôi"}
             className="mt-5"
           />
-          <p className="type-body mt-6 text-paper/75">
+          <p className="type-body mt-6 text-fg/75">
             {appointment
               ? "Chọn thời gian phù hợp để được tư vấn trực tiếp tại showroom."
               : "Gửi câu hỏi về sản phẩm, bảo hành hoặc hệ thống đại lý."}

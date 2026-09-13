@@ -18,7 +18,7 @@ type ProductCarouselProps = {
 };
 
 const arrowClass =
-  "inline-flex size-11 items-center justify-center rounded-full border border-paper/40 transition-[opacity,background-color,color] hover:bg-paper hover:text-ink disabled:pointer-events-none disabled:opacity-25";
+  "inline-flex size-11 items-center justify-center rounded-full border border-fg/40 transition-[opacity,background-color,color] hover:bg-fg hover:text-surface disabled:pointer-events-none disabled:opacity-25";
 
 /**
  * Audemars Piguet style novelty rail: sticky intro column on the left and a

@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond, Montserrat } from "next/font/google";
 import localFont from "next/font/local";
+import Script from "next/script";
 import { SplashScreen } from "@/components/brand/SplashScreen";
 import { RevealObserver } from "@/components/motion/RevealObserver";
 import { SmoothScroll } from "@/components/motion/SmoothScroll";
-import { siteConfig } from "@/config/site";
+import { siteConfig, THEME_STORAGE_KEY } from "@/config/site";
 import "./globals.css";
 
 /** Montserrat is the Alexander Ferros brand face and covers Vietnamese diacritics. */
@@ -47,10 +48,18 @@ export const metadata: Metadata = {
   },
 };
 
+/** Applies a saved theme choice before first paint so there is no flash. */
+const themeBootstrap = `(function(){try{var t=localStorage.getItem("${THEME_STORAGE_KEY}");if(t==="dark"||t==="light"){document.documentElement.dataset.theme=t}}catch(e){}})();`;
+
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang={siteConfig.locale} className={`${brandSans.variable} ${brandSerif.variable} ${brandDisplay.variable} h-full`}>
+    <html
+      lang={siteConfig.locale}
+      className={`${brandSans.variable} ${brandSerif.variable} ${brandDisplay.variable} h-full`}
+      suppressHydrationWarning
+    >
       <body className="flex min-h-full flex-col">
+        <Script id="theme-bootstrap" strategy="beforeInteractive">{themeBootstrap}</Script>
         <SplashScreen />
         <SmoothScroll />
         <RevealObserver />

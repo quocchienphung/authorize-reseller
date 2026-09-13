@@ -37,7 +37,7 @@ export function ProductMosaic({ primary, secondary, products, link }: ProductMos
               data-reveal="media"
               style={{ "--reveal-delay": `${index * 90}ms` } as React.CSSProperties}
               className={cn(
-                "group/tile relative block overflow-hidden bg-linen",
+                "group/tile relative block overflow-hidden border border-line bg-tile",
                 isHero ? "col-span-2 row-span-2 aspect-square md:aspect-auto" : "aspect-square md:aspect-auto",
               )}
             >
@@ -49,7 +49,7 @@ export function ProductMosaic({ primary, secondary, products, link }: ProductMos
                 sizes={isHero ? "(min-width: 768px) 50vw, 100vw" : "(min-width: 768px) 25vw, 50vw"}
                 className="object-contain p-[8%] transition-transform duration-700 ease-out-soft group-hover/tile:scale-[1.05]"
               />
-              <span className="absolute bottom-4 left-4 max-w-[calc(100%-2rem)] bg-ink/80 px-3 py-2 text-xs text-paper">
+              <span className="absolute bottom-4 left-4 max-w-[calc(100%-2rem)] bg-fg/85 px-3 py-2 text-xs text-surface">
                 {product.name}
               </span>
             </Link>

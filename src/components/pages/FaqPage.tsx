@@ -14,14 +14,14 @@ export function FaqPage() {
     <PageShell solidHeader>
       <PageIntro eyebrow="Dịch vụ" primary="CÂU HỎI" secondary="thường gặp" description="Thông tin nhanh về sản phẩm, giá, showroom và bảo hành." />
       <section className="rail pb-28" aria-label="Danh sách câu hỏi">
-        <div className="max-w-3xl divide-y divide-paper/15 border-y border-paper/15">
+        <div className="max-w-3xl divide-y divide-line border-y border-line">
           {faqs.map(([question, answer], index) => (
             <details key={question} className="group/faq" data-reveal style={{ "--reveal-delay": `${index * 60}ms` } as React.CSSProperties}>
               <summary className="flex cursor-pointer list-none items-center justify-between gap-6 py-6 text-lg font-light [&::-webkit-details-marker]:hidden">
                 {question}
                 <span aria-hidden="true" className="relative size-4 shrink-0 before:absolute before:inset-x-0 before:top-1/2 before:h-px before:bg-current after:absolute after:inset-y-0 after:left-1/2 after:w-px after:bg-current after:transition-transform group-open/faq:after:scale-y-0" />
               </summary>
-              <p className="type-body m-0 max-w-2xl pb-6 text-paper/70">{answer}</p>
+              <p className="type-body m-0 max-w-2xl pb-6 text-fg/70">{answer}</p>
             </details>
           ))}
         </div>

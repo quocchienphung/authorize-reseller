@@ -65,7 +65,7 @@ export function BrandStory({ chapter, reverse = false }: BrandStoryProps) {
         <div className={cn("flex flex-col", reverse && "md:order-1")} data-reveal>
           <Eyebrow>{chapter.eyebrow}</Eyebrow>
           <SectionHeading primary={chapter.primary} secondary={chapter.secondary} className="mt-5" />
-          <div className="prose-brand type-body mt-8 max-w-[520px] text-paper/80">
+          <div className="prose-brand type-body mt-8 max-w-[520px] text-fg/80">
             {chapter.paragraphs.map((paragraph) => (
               <p key={paragraph} className="m-0">
                 {paragraph}

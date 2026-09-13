@@ -16,7 +16,7 @@ export function PageShell({ children, solidHeader = false, className }: PageShel
   return (
     <>
       <SiteHeader solid={solidHeader} productCount={products.length} />
-      <main className={cn("flex-1 bg-ink text-paper", solidHeader && "pt-(--header-height)", className)}>{children}</main>
+      <main className={cn("flex-1 bg-surface text-fg", solidHeader && "pt-(--header-height)", className)}>{children}</main>
       <SiteFooter />
     </>
   );

@@ -65,7 +65,7 @@ export function ParallaxMedia({ children, overscan = 0.2, className, mediaClassN
   }, [overscan]);
 
   return (
-    <div ref={frameRef} className={cn("relative overflow-hidden bg-ink", className)}>
+    <div ref={frameRef} className={cn("relative overflow-hidden bg-surface", className)}>
       <div
         ref={mediaRef}
         className={cn("absolute inset-x-0 top-0 will-change-transform", mediaClassName)}

@@ -18,17 +18,17 @@ export function Breadcrumbs({ items, className }: { items: readonly Crumb[]; cla
             <Fragment key={`${crumb.label}-${index}`}>
               <li>
                 {crumb.href && !isLast ? (
-                  <Link href={crumb.href} className="text-paper/60 transition-colors hover:text-paper">
+                  <Link href={crumb.href} className="text-fg/60 transition-colors hover:text-fg">
                     {crumb.label}
                   </Link>
                 ) : (
-                  <span aria-current={isLast ? "page" : undefined} className="line-clamp-1 text-bronze">
+                  <span aria-current={isLast ? "page" : undefined} className="line-clamp-1 text-fg">
                     {crumb.label}
                   </span>
                 )}
               </li>
               {isLast ? null : (
-                <li aria-hidden="true" className="flex items-center text-paper/40">
+                <li aria-hidden="true" className="flex items-center text-fg/40">
                   <ChevronRight className="size-3.5 stroke-[1.5]" />
                 </li>
               )}

@@ -28,21 +28,21 @@ export function WarrantyPage() {
         <ol className="m-0 grid list-none gap-10 p-0">
           {commitments.map((item, index) => (
             <li key={item.index} className="grid grid-cols-[48px_1fr] gap-4" data-reveal style={{ "--reveal-delay": `${index * 90}ms` } as React.CSSProperties}>
-              <span className="font-serif text-3xl italic text-bronze">{item.index}</span>
+              <span className="font-serif text-3xl italic text-fg/50">{item.index}</span>
               <div>
                 <h2 className="m-0 text-xl font-light uppercase tracking-[0.04em]">{item.title}</h2>
-                <p className="type-body mt-3 text-paper/70">{item.copy}</p>
+                <p className="type-body mt-3 text-fg/70">{item.copy}</p>
               </div>
             </li>
           ))}
         </ol>
       </section>
 
-      <section className="rail border-t border-paper/15 py-24" aria-label="Cần hỗ trợ">
+      <section className="rail border-t border-line py-24" aria-label="Cần hỗ trợ">
         <div className="grid gap-10 md:grid-cols-2 md:items-end" data-reveal>
           <SectionHeading primary="CẦN" secondary="hỗ trợ?" />
           <div className="flex flex-col items-start gap-6">
-            <p className="type-body m-0 max-w-md text-paper/75">Đội ngũ chăm sóc khách hàng sẵn sàng tiếp nhận thông tin sản phẩm của bạn.</p>
+            <p className="type-body m-0 max-w-md text-fg/75">Đội ngũ chăm sóc khách hàng sẵn sàng tiếp nhận thông tin sản phẩm của bạn.</p>
             <PillLink href={routes.contact}>Liên hệ ngay</PillLink>
           </div>
         </div>
