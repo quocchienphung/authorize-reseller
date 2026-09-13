@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { products } from "@/lib/products";
 import { cn } from "@/lib/utils";
 import { SiteFooter } from "./SiteFooter";
 import { SiteHeader } from "./SiteHeader";
@@ -10,13 +11,13 @@ type PageShellProps = {
   className?: string;
 };
 
-/** Header + footer wrapper shared by every route. */
+/** Header + main + footer wrapper shared by every route. */
 export function PageShell({ children, solidHeader = false, className }: PageShellProps) {
   return (
-    <main className={cn("flex-1 bg-ink text-paper", solidHeader && "pt-(--header-height)", className)}>
-      <SiteHeader solid={solidHeader} />
-      {children}
+    <>
+      <SiteHeader solid={solidHeader} productCount={products.length} />
+      <main className={cn("flex-1 bg-ink text-paper", solidHeader && "pt-(--header-height)", className)}>{children}</main>
       <SiteFooter />
-    </main>
+    </>
   );
 }

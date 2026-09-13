@@ -6,13 +6,16 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { BrandLogo } from "@/components/brand/BrandLogo";
 import { lockScroll, unlockScroll } from "@/components/motion/scroll-controller";
 import { navigation, routes, siteConfig } from "@/config/site";
-import { products } from "@/lib/products";
 import { cn } from "@/lib/utils";
 
 type SiteHeaderProps = {
   /** Always render the white bar (pages without a full-bleed hero). */
   solid?: boolean;
+  /** Catalogue size shown in the drawer footer (passed in to keep the JSON out of the client bundle). */
+  productCount: number;
 };
+
+const DRAWER_ID = "site-menu";
 
 const iconLinkClass =
   "inline-flex size-[38px] items-center justify-center transition-opacity hover:opacity-60 [&_svg]:size-[26px] [&_svg]:stroke-[1.35]";
@@ -22,10 +25,11 @@ const iconLinkClass =
  * emblem in the centre, quick actions on the right. Transparent over media,
  * white once the page is scrolled, and it tucks away while scrolling down.
  */
-export function SiteHeader({ solid = false }: SiteHeaderProps) {
+export function SiteHeader({ solid = false, productCount }: SiteHeaderProps) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     let previousY = window.scrollY;
@@ -36,8 +40,7 @@ export function SiteHeader({ solid = false }: SiteHeaderProps) {
       frame = window.requestAnimationFrame(() => {
         const y = window.scrollY;
         setScrolled(y > 24);
-        if (!menuOpen) setHidden(y > previousY && y > 160);
-        if (y < previousY || y < 80) setHidden(false);
+        setHidden(y > previousY && y > 160);
         previousY = y;
       });
     };
@@ -47,7 +50,7 @@ export function SiteHeader({ solid = false }: SiteHeaderProps) {
       window.removeEventListener("scroll", onScroll);
       window.cancelAnimationFrame(frame);
     };
-  }, [menuOpen]);
+  }, []);
 
   const isSolid = solid || scrolled || menuOpen;
 
@@ -61,10 +64,12 @@ export function SiteHeader({ solid = false }: SiteHeaderProps) {
         )}
       >
         <button
+          ref={menuButtonRef}
           type="button"
           className="inline-flex size-11 items-center justify-center justify-self-start"
           aria-label="Mở menu"
           aria-expanded={menuOpen}
+          aria-controls={DRAWER_ID}
           onClick={() => setMenuOpen(true)}
         >
           <span className="grid w-6 gap-[5px]" aria-hidden="true">
@@ -82,18 +87,26 @@ export function SiteHeader({ solid = false }: SiteHeaderProps) {
           <Link href={routes.stores} aria-label="Hệ thống showroom" className={cn(iconLinkClass, "max-md:hidden")}>
             <MapPin aria-hidden="true" />
           </Link>
-          <Link href={routes.catalogue} aria-label="Tìm sản phẩm" className={iconLinkClass}>
+          <Link href={`${routes.catalogue}#san-pham`} aria-label="Tìm sản phẩm" className={iconLinkClass}>
             <Search aria-hidden="true" />
           </Link>
         </nav>
       </header>
 
-      {menuOpen ? <MenuDrawer onClose={() => setMenuOpen(false)} /> : null}
+      {menuOpen ? (
+        <MenuDrawer
+          productCount={productCount}
+          onClose={() => {
+            setMenuOpen(false);
+            menuButtonRef.current?.focus();
+          }}
+        />
+      ) : null}
     </>
   );
 }
 
-function MenuDrawer({ onClose }: { onClose: () => void }) {
+function MenuDrawer({ productCount, onClose }: { productCount: number; onClose: () => void }) {
   const [activeGroup, setActiveGroup] = useState<string | null>(null);
   const dialogRef = useRef<HTMLDivElement>(null);
 
@@ -125,6 +138,7 @@ function MenuDrawer({ onClose }: { onClose: () => void }) {
     >
       <div
         ref={dialogRef}
+        id={DRAWER_ID}
         role="dialog"
         aria-modal="true"
         aria-label="Menu chính"
@@ -192,7 +206,7 @@ function MenuDrawer({ onClose }: { onClose: () => void }) {
         <div className="grid gap-3 border-t border-ink/10 px-5 py-5 text-sm md:px-8">
           <Link href={routes.catalogue} onClick={close} className="inline-flex items-center gap-3 hover:opacity-60">
             <Watch className="size-[18px] stroke-[1.4]" aria-hidden="true" />
-            Khám phá {products.length} sản phẩm
+            Khám phá {productCount} sản phẩm
           </Link>
           <Link href={routes.stores} onClick={close} className="inline-flex items-center gap-3 hover:opacity-60">
             <MapPin className="size-[18px] stroke-[1.4]" aria-hidden="true" />

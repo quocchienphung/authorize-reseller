@@ -64,7 +64,7 @@ export function StoreDetailPage({ store }: { store: Store }) {
           </div>
         </div>
         <div className="relative aspect-[4/5] overflow-hidden" data-reveal="media">
-          <Image src="/alexander-ferros/editorial/brand-values.webp" alt={store.name} fill sizes="(min-width: 768px) 50vw, 100vw" className="object-cover" />
+          <Image src="/alexander-ferros/editorial/brand-values.webp" alt="Không gian trưng bày Alexander Ferros" fill sizes="(min-width: 768px) 50vw, 100vw" className="object-cover" />
         </div>
       </section>
 

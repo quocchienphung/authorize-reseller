@@ -37,7 +37,7 @@ export function ProductMosaic({ primary, secondary, products, link }: ProductMos
               data-reveal="media"
               style={{ "--reveal-delay": `${index * 90}ms` } as React.CSSProperties}
               className={cn(
-                "group/tile relative block overflow-hidden bg-[#f1efec]",
+                "group/tile relative block overflow-hidden bg-linen",
                 isHero ? "col-span-2 row-span-2 aspect-square md:aspect-auto" : "aspect-square md:aspect-auto",
               )}
             >

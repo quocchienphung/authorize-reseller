@@ -3,7 +3,7 @@
 import Lenis from "lenis";
 import "lenis/dist/lenis.css";
 import { usePathname } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { registerLenis, scrollToTop } from "./scroll-controller";
 
 /**
@@ -39,8 +39,14 @@ export function SmoothScroll() {
     };
   }, []);
 
-  // Client-side navigations should start each page at the top.
+  // Client-side navigations should start each page at the top; the initial
+  // load keeps the browser's own scroll restoration.
+  const isFirstRender = useRef(true);
   useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
     if (window.location.hash) return;
     scrollToTop(true);
   }, [pathname]);

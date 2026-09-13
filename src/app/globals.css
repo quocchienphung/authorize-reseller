@@ -20,6 +20,7 @@
   --color-ink: #000000;
   --color-paper: #ffffff;
   --color-fog: #fafafa;
+  --color-linen: #f1efec;
   --color-graphite: #1a1a1a;
   --color-smoke: #8a8a8a;
   --color-bronze: #b2957a;
@@ -203,11 +204,20 @@ html[data-motion="ready"] [data-reveal] {
   transition-delay: var(--reveal-delay, 0ms);
 }
 
+/* Top-to-bottom wipe. Implemented with mask-size rather than clip-path because
+   Chrome feeds the target's own clip-path into IntersectionObserver, so a fully
+   clipped element would never be reported as intersecting. */
 html[data-motion="ready"] [data-reveal="media"] {
-  clip-path: inset(0 0 100% 0);
+  -webkit-mask-image: linear-gradient(#000, #000);
+  mask-image: linear-gradient(#000, #000);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 0%;
+  mask-size: 100% 0%;
   opacity: 1;
   transform: none;
-  transition: clip-path 1100ms var(--ease-in-out-quart);
+  transition: mask-size 1100ms var(--ease-in-out-quart), -webkit-mask-size 1100ms var(--ease-in-out-quart);
+  transition-delay: var(--reveal-delay, 0ms);
 }
 
 html[data-motion="ready"] [data-reveal="fade"] {
@@ -215,7 +225,8 @@ html[data-motion="ready"] [data-reveal="fade"] {
 }
 
 html[data-motion="ready"] [data-reveal][data-revealed="true"] {
-  clip-path: inset(0);
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
   opacity: 1;
   transform: translateY(0);
 }
@@ -230,7 +241,8 @@ html[data-motion="ready"] [data-reveal][data-revealed="true"] {
 
 @media (prefers-reduced-motion: reduce) {
   html[data-motion="ready"] [data-reveal] {
-    clip-path: none;
+    -webkit-mask-image: none;
+    mask-image: none;
     opacity: 1;
     transform: none;
     transition: none;

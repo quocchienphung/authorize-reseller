@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { routes } from "@/config/site";
-import type { Product } from "@/lib/products";
+import type { Product } from "@/lib/product-helpers";
 import { cn } from "@/lib/utils";
 
 type ProductCardProps = {
@@ -19,7 +19,7 @@ export function ProductCard({ product, sizes, headingLevel: Heading = "h3", clas
 
   return (
     <article className={cn("group/card flex flex-col", className)}>
-      <Link href={href} aria-label={product.name} className="relative block aspect-[4/5] overflow-hidden bg-[#f1efec]">
+      <Link href={href} tabIndex={-1} aria-hidden="true" className="relative block aspect-[4/5] overflow-hidden bg-linen">
         <Image
           src={product.image}
           alt={product.name}

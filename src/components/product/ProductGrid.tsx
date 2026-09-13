@@ -2,7 +2,7 @@
 
 import { ChevronDown, Search } from "lucide-react";
 import { useMemo, useState } from "react";
-import { categoryLabel, parsePrice, searchProducts, type CategorySlug, type Product } from "@/lib/products";
+import { categoryLabel, parsePrice, searchProducts, type CategorySlug, type Product } from "@/lib/product-helpers";
 import { cn } from "@/lib/utils";
 import { ProductCard } from "./ProductCard";
 
@@ -50,21 +50,23 @@ export function ProductGrid({ products, showCategoryFilter = true, initialCatego
   return (
     <div className="rail">
       <div className="flex flex-col gap-5 border-b border-paper/15 pb-6 md:flex-row md:items-center md:justify-between">
-        <div className="flex flex-wrap gap-2" role="group" aria-label="Lọc danh mục">
-          {showCategoryFilter
-            ? categoryOptions.map((option) => (
-                <button
-                  key={option.value}
-                  type="button"
-                  aria-pressed={category === option.value}
-                  onClick={() => setCategory(option.value)}
-                  className={cn(toolbarButtonClass, category === option.value && "border-paper bg-paper text-ink hover:text-ink")}
-                >
-                  {option.label}
-                </button>
-              ))
-            : null}
-        </div>
+        {showCategoryFilter ? (
+          <div className="flex flex-wrap gap-2" role="group" aria-label="Lọc danh mục">
+            {categoryOptions.map((option) => (
+              <button
+                key={option.value}
+                type="button"
+                aria-pressed={category === option.value}
+                onClick={() => setCategory(option.value)}
+                className={cn(toolbarButtonClass, category === option.value && "border-paper bg-paper text-ink hover:text-ink")}
+              >
+                {option.label}
+              </button>
+            ))}
+          </div>
+        ) : (
+          <div />
+        )}
 
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
           <label className="relative flex items-center">

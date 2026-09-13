@@ -51,7 +51,7 @@ export function ListingPage({
       {children}
 
       <section id="san-pham" className="pb-24 md:pb-32" aria-label="Danh sách sản phẩm">
-        <ProductGrid products={products} showCategoryFilter={showCategoryFilter} initialCategory={initialCategory} />
+        <ProductGrid key={initialCategory} products={products} showCategoryFilter={showCategoryFilter} initialCategory={initialCategory} />
       </section>
     </PageShell>
   );

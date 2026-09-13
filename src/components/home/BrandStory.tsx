@@ -2,6 +2,7 @@ import Image from "next/image";
 import { Eyebrow } from "@/components/typography/Eyebrow";
 import { SectionHeading } from "@/components/typography/SectionHeading";
 import { LineLink } from "@/components/ui/LineLink";
+import { routes } from "@/config/site";
 import { cn } from "@/lib/utils";
 
 export type StoryChapter = {
@@ -43,7 +44,7 @@ export const brandChapters = {
       "100% sản phẩm được kiểm định tại Việt Nam, đi kèm chứng nhận và thẻ bảo hành chính thức, hỗ trợ kỹ thuật trên toàn quốc.",
     ],
     image: { src: "/alexander-ferros/editorial/quality-control.webp", alt: "Kiểm định đồng hồ tại Trường Omega" },
-    link: { label: "Tìm hiểu về bảo hành", href: "/dich-vu/bao-hanh" },
+    link: { label: "Tìm hiểu về bảo hành", href: routes.warranty },
   },
 } as const satisfies Record<string, StoryChapter>;
 

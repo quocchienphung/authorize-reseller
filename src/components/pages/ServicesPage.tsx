@@ -6,13 +6,13 @@ import { AutoplayVideo } from "@/components/media/AutoplayVideo";
 import { SectionHeading } from "@/components/typography/SectionHeading";
 import { LineLink } from "@/components/ui/LineLink";
 import { routes } from "@/config/site";
-import { products } from "@/lib/products";
+import { mensProducts, products, womensProducts } from "@/lib/products";
 
 const services = [
-  { title: "Tìm đồng hồ", copy: `Duyệt và lọc toàn bộ ${products.length} phiên bản để tìm mẫu phù hợp.`, href: routes.catalogue, image: products[0].image },
-  { title: "Đặt lịch tư vấn", copy: "Chọn thời gian để trải nghiệm sản phẩm trực tiếp cùng chuyên viên.", href: routes.appointment, image: products[9].image },
-  { title: "Bảo hành", copy: "Thông tin kiểm định, bảo hành và hỗ trợ kỹ thuật cho sản phẩm.", href: routes.warranty, image: products[18].image },
-  { title: "Showroom", copy: "Tìm địa chỉ showroom và thông tin liên hệ chính thức.", href: routes.stores, image: products[27].image },
+  { title: "Tìm đồng hồ", copy: `Duyệt và lọc toàn bộ ${products.length} phiên bản để tìm mẫu phù hợp.`, href: routes.catalogue, image: mensProducts[0].image },
+  { title: "Đặt lịch tư vấn", copy: "Chọn thời gian để trải nghiệm sản phẩm trực tiếp cùng chuyên viên.", href: routes.appointment, image: womensProducts[0].image },
+  { title: "Bảo hành", copy: "Thông tin kiểm định, bảo hành và hỗ trợ kỹ thuật cho sản phẩm.", href: routes.warranty, image: mensProducts[Math.floor(mensProducts.length / 2)].image },
+  { title: "Showroom", copy: "Tìm địa chỉ showroom và thông tin liên hệ chính thức.", href: routes.stores, image: womensProducts[Math.floor(womensProducts.length / 2)].image },
 ] as const;
 
 export function ServicesPage() {
@@ -34,7 +34,7 @@ export function ServicesPage() {
         <div className="grid grid-cols-1 gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
           {services.map((service, index) => (
             <article key={service.href} className="group/service flex flex-col" data-reveal style={{ "--reveal-delay": `${index * 80}ms` } as React.CSSProperties}>
-              <Link href={service.href} className="relative block aspect-[4/5] overflow-hidden bg-[#f1efec]" aria-label={service.title}>
+              <Link href={service.href} className="relative block aspect-[4/5] overflow-hidden bg-linen" aria-label={service.title}>
                 <Image src={service.image} alt="" fill sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw" quality={90} className="object-contain p-[12%] transition-transform duration-700 ease-out-soft group-hover/service:scale-[1.06]" />
               </Link>
               <h2 className="mt-6 text-xl font-light uppercase tracking-[0.04em]">{service.title}</h2>

@@ -13,10 +13,6 @@ export function registerLenis(instance: Lenis | null) {
   if (instance && lockCount > 0) instance.stop();
 }
 
-export function getLenis() {
-  return lenisInstance;
-}
-
 export function lockScroll() {
   lockCount += 1;
   document.documentElement.dataset.scrollLocked = "true";

@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { SectionHeading } from "@/components/typography/SectionHeading";
 import { LineLink } from "@/components/ui/LineLink";
 import { routes } from "@/config/site";
-import type { Product } from "@/lib/products";
+import type { Product } from "@/lib/product-helpers";
 import { cn } from "@/lib/utils";
 import { ProductCard } from "./ProductCard";
 
@@ -60,7 +60,7 @@ export function ProductCarousel({
   }
 
   return (
-    <section className={cn("rail-left py-24 md:py-28", className)} aria-label={`${primary} ${secondary ?? ""}`.trim()}>
+    <section className={cn("rail-left py-24 md:py-28", className)}>
       <div className="grid gap-12 lg:grid-cols-[340px_1fr] lg:gap-16">
         <div className="flex flex-col lg:sticky lg:top-40 lg:self-start" data-reveal>
           <SectionHeading primary={primary} secondary={secondary} />

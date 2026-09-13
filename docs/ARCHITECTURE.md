@@ -14,13 +14,14 @@ src/
     motion/                # SmoothScroll (Lenis), RevealObserver, ParallaxMedia, scroll-controller
     media/                 # AutoplayVideo
     typography/            # SectionHeading, Eyebrow
-    ui/                    # PillLink, LineLink, shadcn Button
+    ui/                    # PillLink, LineLink
     home/                  # HomePage, HeroStack, CollectionShowcase, BrandStory
     collections/           # CollectionsLanding (clone /en/products), ParallaxCover, ListingPage
     product/               # ProductCard, ProductCarousel, ProductMosaic, ProductGrid, ProductDetailPage
     pages/                 # Services, Warranty, FAQ, Stores, Contact, Pricing
   config/site.ts           # Tên thương hiệu, liên hệ, mạng xã hội, showroom, routes, navigation
-  lib/products.ts          # Truy vấn catalogue (theo danh mục, dòng, liên quan, tìm kiếm)
+  lib/products.ts          # Dữ liệu + truy vấn catalogue (server)
+  lib/product-helpers.ts   # Type và helper thuần dùng được ở client
   data/products.json       # 208 sản phẩm scrape từ alexanderferros.com (scripts/scrape-alexander-ferros.py)
 public/alexander-ferros/
   covers/                  # Ảnh bìa parallax (our-collection, mens, womens) desktop + mobile
@@ -35,6 +36,7 @@ public/alexander-ferros/
 - **Đường dẫn tập trung**: luôn dùng `routes.*` từ `src/config/site.ts`, không hard-code chuỗi URL.
 - **Style**: Tailwind utility classes. Token màu/typography khai báo trong `src/app/globals.css` (`@theme`), kèm các utility `rail`, `type-display`, `type-display-serif`, `type-eyebrow`, `type-body`. CSS Module chỉ dùng cho animation phức tạp (SplashScreen).
 - **Typography**: Montserrat (font chính thức của Alexander Ferros, hỗ trợ tiếng Việt) cho heading/body; Cormorant Garamond italic cho dòng phụ của heading; Neue Helvetica Ultra Light chỉ cho wordmark "ALEXANDER FERROS".
+- **Dữ liệu client**: `src/lib/product-helpers.ts` chứa type + helper thuần (không import JSON) để client component dùng; `src/lib/products.ts` giữ dữ liệu và truy vấn cho server component.
 - **Chuyển động**:
   - `SplashScreen` khóa scroll, chạy stagger từng chữ rồi kéo màn lên; phát sự kiện `brand:splash-done`.
   - `RevealObserver` chờ splash xong rồi mới reveal `[data-reveal]` (`"media"` = wipe, `"fade"` = chỉ opacity, mặc định = fade + translate). Delay từng phần tử qua `--reveal-delay`.

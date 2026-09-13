@@ -5,7 +5,6 @@
 
 export const siteConfig = {
   name: "Alexander Ferros",
-  legalName: "JMC&CO Vietnam International Trading Investment JSC",
   tagline: "Đồng hồ chính hãng",
   description: "Khám phá bộ sưu tập đồng hồ Alexander Ferros chính hãng dành cho nam và nữ.",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",

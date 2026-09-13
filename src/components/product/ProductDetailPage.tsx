@@ -7,6 +7,7 @@ import { LineLink } from "@/components/ui/LineLink";
 import { PillLink } from "@/components/ui/PillLink";
 import { routes } from "@/config/site";
 import {
+  categoryRoute,
   familyReference,
   getRelatedProducts,
   getSpecification,
@@ -31,7 +32,7 @@ export function ProductDetailPage({ product }: { product: Product }) {
   const facts = keyFacts
     .map((fact) => ({ label: fact.label, value: getSpecification(product, fact.pattern) }))
     .filter((fact): fact is { label: string; value: string } => Boolean(fact.value));
-  const categorySlug = product.category === "Đồng hồ nam" ? routes.mens : routes.womens;
+  const categoryHref = categoryRoute(product);
 
   return (
     <PageShell solidHeader>
@@ -39,7 +40,7 @@ export function ProductDetailPage({ product }: { product: Product }) {
         className="mt-2"
         items={[
           { label: "Bộ sưu tập", href: routes.collections },
-          { label: product.category, href: categorySlug },
+          { label: product.category, href: categoryHref },
           { label: product.sku },
         ]}
       />
@@ -60,7 +61,7 @@ export function ProductDetailPage({ product }: { product: Product }) {
           </div>
         </div>
 
-        <div className="relative aspect-square overflow-hidden bg-[#f1efec] lg:order-2 lg:aspect-[5/4]" data-reveal="media">
+        <div className="relative aspect-square overflow-hidden bg-linen lg:order-2 lg:aspect-[5/4]" data-reveal="media">
           <Image
             src={product.image}
             alt={product.name}
@@ -107,7 +108,7 @@ export function ProductDetailPage({ product }: { product: Product }) {
                     aria-current={isCurrent ? "page" : undefined}
                     aria-label={variant.name}
                     className={cn(
-                      "group/variant block border bg-[#f1efec] transition-colors",
+                      "group/variant block border bg-linen transition-colors",
                       isCurrent ? "border-bronze" : "border-transparent hover:border-paper/50",
                     )}
                   >
@@ -156,7 +157,7 @@ export function ProductDetailPage({ product }: { product: Product }) {
           primary="CÓ THỂ BẠN"
           secondary="sẽ thích"
           products={related}
-          link={{ label: `Xem tất cả ${product.category.toLowerCase()}`, href: categorySlug }}
+          link={{ label: `Xem tất cả ${product.category.toLowerCase()}`, href: categoryHref }}
         />
       ) : null}
     </PageShell>
