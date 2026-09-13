@@ -40,9 +40,12 @@ export function RevealObserver() {
       });
     };
 
+    // Hide reveal targets straight away so they sit invisible under the splash
+    // curtain (or off-screen) and can animate in once `run` marks them.
+    root.dataset.motion = "ready";
+
     const run = () => {
       if (cancelled) return;
-      root.dataset.motion = "ready";
 
       observer = new IntersectionObserver(
         (entries) => {
@@ -70,7 +73,8 @@ export function RevealObserver() {
     if (root.dataset.splash === "active") {
       window.addEventListener(SPLASH_DONE_EVENT, run, { once: true });
     } else {
-      run();
+      // One frame later so in-view elements have painted hidden and transition in.
+      frame = window.requestAnimationFrame(run);
     }
 
     return () => {
@@ -80,6 +84,7 @@ export function RevealObserver() {
       window.cancelAnimationFrame(frame);
       observer?.disconnect();
       delete root.dataset.motion;
+      for (const node of document.querySelectorAll<HTMLElement>(REVEAL_SELECTOR)) delete node.dataset.revealed;
     };
   }, [pathname]);
 

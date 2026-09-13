@@ -103,8 +103,7 @@ export function SiteHeader({ solid = false, productCount }: SiteHeaderProps) {
           </span>
         </button>
 
-        <BrandLogo markOnly className="justify-self-center md:hidden" markClassName="size-12" />
-        <BrandLogo className="justify-self-center max-md:hidden" markClassName="size-[52px]" />
+        <BrandLogo markOnly className="justify-self-center" markClassName="size-12 md:size-[58px]" />
 
         <nav className="flex items-center gap-1 justify-self-end md:gap-3" aria-label="Liên kết nhanh">
           <Link href={routes.catalogue} aria-label="Tất cả đồng hồ" className={iconLinkClass}>
