@@ -1,0 +1,157 @@
+#onetrust-consent-sdk #onetrust-banner-sdk{max-width:1720px;margin:0 auto}
+#onetrust-consent-sdk #onetrust-banner-sdk .ot-sdk-container{width:100%;padding:0;margin:0}
+#onetrust-consent-sdk #onetrust-banner-sdk .ot-sdk-container:after{display:none}
+#onetrust-consent-sdk #onetrust-banner-sdk .ot-sdk-row{display:flex;flex-direction:column;align-items:center;gap:40px;padding:24px}
+#onetrust-consent-sdk #onetrust-banner-sdk .ot-sdk-row:after{display:none}
+#onetrust-consent-sdk #onetrust-banner-sdk #onetrust-group-container{width:100%}
+#onetrust-consent-sdk #onetrust-banner-sdk #onetrust-policy{margin:0}
+#onetrust-consent-sdk #onetrust-banner-sdk #onetrust-policy-text{margin:0;font-size:1.4rem;line-height:1.29;letter-spacing:.15px;font-weight:300}
+#onetrust-consent-sdk #onetrust-banner-sdk #onetrust-policy-text>a{margin:0;font-weight:500;text-decoration:none;color:#000}
+#onetrust-consent-sdk #onetrust-banner-sdk #onetrust-button-group-parent{position:static;transform:none;width:100%;margin:0;padding:0}
+#onetrust-consent-sdk #onetrust-banner-sdk #onetrust-button-group{display:grid;grid-template-columns:1fr;justify-items:center;gap:16px;width:100%;margin:0}
+#onetrust-consent-sdk #onetrust-banner-sdk #onetrust-button-group button{font-size:1.4rem;line-height:1.29;letter-spacing:.21px;white-space:nowrap;padding:16px 0;width:100%;height:100%;max-width:327px;min-width:unset;margin:0;font-weight:500}
+#onetrust-consent-sdk #onetrust-banner-sdk #onetrust-pc-btn-handler,#onetrust-consent-sdk #onetrust-banner-sdk #onetrust-reject-all-handler{background:0;color:#000;border:1px solid #000;border-radius:unset}
+#onetrust-consent-sdk #onetrust-banner-sdk #onetrust-pc-btn-handler:hover,#onetrust-consent-sdk #onetrust-banner-sdk #onetrust-reject-all-handler:hover{opacity:.56}
+#onetrust-consent-sdk #onetrust-banner-sdk #onetrust-accept-btn-handler{background-color:#000;border:0;margin:0;color:#fff}
+#onetrust-consent-sdk #onetrust-banner-sdk #onetrust-accept-btn-handler:hover{opacity:.56}
+#onetrust-consent-sdk #onetrust-banner-sdk #onetrust-close-btn-container{display:none}
+@media only screen and (min-width:768px){#onetrust-consent-sdk #onetrust-banner-sdk .ot-sdk-row{padding:32px}
+#onetrust-consent-sdk #onetrust-banner-sdk #onetrust-button-group-parent{padding:0 14px}
+#onetrust-consent-sdk #onetrust-banner-sdk #onetrust-button-group{grid-template-columns:repeat(3,minmax(0,240px));justify-content:center;gap:10px}
+}
+@media only screen and (min-width:1025px){#onetrust-consent-sdk #onetrust-banner-sdk .ot-sdk-row{flex-direction:row;justify-content:space-between;gap:unset;padding:32px 48px}
+#onetrust-consent-sdk #onetrust-banner-sdk #onetrust-group-container{width:40%}
+#onetrust-consent-sdk #onetrust-banner-sdk #onetrust-button-group-parent{padding:0;width:60%}
+#onetrust-consent-sdk #onetrust-banner-sdk #onetrust-button-group{gap:24px;justify-content:end}
+}
+#ot-sdk-cookie-policy{background-color:#fff}
+#ot-sdk-cookie-policy *{box-sizing:border-box}
+#ot-sdk-cookie-policy #ot-sdk-cookie-policy-v2.ot-sdk-cookie-policy{padding:0;width:100%}
+#ot-sdk-cookie-policy #ot-sdk-cookie-policy-v2.ot-sdk-cookie-policy #cookie-policy-title{display:none}
+#ot-sdk-cookie-policy #ot-sdk-cookie-policy-v2.ot-sdk-cookie-policy #cookie-policy-description{display:none}
+#ot-sdk-cookie-policy #ot-sdk-cookie-policy-v2.ot-sdk-cookie-policy section{margin:0;margin-top:32px;padding-bottom:32px;border-bottom:1px solid #c4c4c4}
+#ot-sdk-cookie-policy #ot-sdk-cookie-policy-v2.ot-sdk-cookie-policy section .ot-sdk-cookie-policy-group{font-size:1.6rem;font-weight:400;margin:0;margin-bottom:32px;letter-spacing:.24px;line-height:1.37;color:#757575}
+#ot-sdk-cookie-policy #ot-sdk-cookie-policy-v2.ot-sdk-cookie-policy section .ot-sdk-cookie-policy-group-desc{display:none}
+#ot-sdk-cookie-policy #ot-sdk-cookie-policy-v2.ot-sdk-cookie-policy table{border:0}
+#ot-sdk-cookie-policy #ot-sdk-cookie-policy-v2.ot-sdk-cookie-policy table thead,#ot-sdk-cookie-policy #ot-sdk-cookie-policy-v2.ot-sdk-cookie-policy table td,#ot-sdk-cookie-policy #ot-sdk-cookie-policy-v2.ot-sdk-cookie-policy table tbody,#ot-sdk-cookie-policy #ot-sdk-cookie-policy-v2.ot-sdk-cookie-policy table tr{display:block}
+#ot-sdk-cookie-policy #ot-sdk-cookie-policy-v2.ot-sdk-cookie-policy table thead tr{position:absolute;top:-9999px;left:-9999px;z-index:-9999px}
+#ot-sdk-cookie-policy #ot-sdk-cookie-policy-v2.ot-sdk-cookie-policy table tbody{display:grid;grid-template-columns:1fr;row-gap:32px}
+#ot-sdk-cookie-policy #ot-sdk-cookie-policy-v2.ot-sdk-cookie-policy table td{border:0;padding:0;margin-bottom:24px}
+#ot-sdk-cookie-policy #ot-sdk-cookie-policy-v2.ot-sdk-cookie-policy table td.ot-cookies-type{width:auto}
+#ot-sdk-cookie-policy #ot-sdk-cookie-policy-v2.ot-sdk-cookie-policy table td.ot-host-description-td{margin-bottom:0}
+#ot-sdk-cookie-policy #ot-sdk-cookie-policy-v2.ot-sdk-cookie-policy table td p{display:inline}
+#ot-sdk-cookie-policy #ot-sdk-cookie-policy-v2.ot-sdk-cookie-policy table td::before{content:attr(data-label) ":";font-weight:bold;padding-right:10px}
+#ot-sdk-cookie-policy #ot-sdk-cookie-policy-v2.ot-sdk-cookie-policy table td,#ot-sdk-cookie-policy #ot-sdk-cookie-policy-v2.ot-sdk-cookie-policy table td span{font-size:1.6rem;font-style:normal;font-weight:400;line-height:1.43;letter-spacing:.24px}
+#ot-sdk-cookie-policy #ot-sdk-cookie-policy-v2.ot-sdk-cookie-policy a{text-decoration:none}
+@media only screen and (min-width:768px){#ot-sdk-cookie-policy #ot-sdk-cookie-policy-v2.ot-sdk-cookie-policy table tbody{row-gap:48px}
+#ot-sdk-cookie-policy #ot-sdk-cookie-policy-v2.ot-sdk-cookie-policy table tbody td{margin-bottom:32px}
+}
+@media only screen and (min-width:1025px){#ot-sdk-cookie-policy #ot-sdk-cookie-policy-v2.ot-sdk-cookie-policy section .ot-sdk-cookie-policy-group{font-size:2.4rem;letter-spacing:.36px;line-height:1.42}
+#ot-sdk-cookie-policy #ot-sdk-cookie-policy-v2.ot-sdk-cookie-policy table tbody{grid-template-columns:repeat(3,1fr);column-gap:15%}
+#ot-sdk-cookie-policy #ot-sdk-cookie-policy-v2.ot-sdk-cookie-policy table td,#ot-sdk-cookie-policy #ot-sdk-cookie-policy-v2.ot-sdk-cookie-policy table td span{font-size:1.7rem;line-height:1.35;letter-spacing:.255px}
+}
+.cookiepreferences #ot-sdk-btn.ot-sdk-show-settings{padding:23px 0;width:100%;max-width:327px;min-width:unset;border:0;margin:0;color:#fff;background-color:#000;font-size:1.4rem;line-height:1.29;letter-spacing:.15px;font-weight:600;margin-bottom:39px}
+.cookiepreferences #ot-sdk-btn.ot-sdk-show-settings:hover{background-color:#000;color:#fff;opacity:.56}
+#onetrust-consent-sdk #onetrust-pc-sdk{overflow-y:auto;width:100%;max-width:unset;min-width:unset}
+#onetrust-consent-sdk #onetrust-pc-sdk *{box-sizing:border-box}
+#onetrust-consent-sdk #onetrust-pc-sdk .ot-pc-scrollbar::-webkit-scrollbar{display:unset}
+#onetrust-consent-sdk #onetrust-pc-sdk #ot-pc-content button:not(#clear-filters-handler):not(.ot-close-icon):not(#filter-btn-handler):not(.ot-remove-objection-handler):not(.ot-obj-leg-btn-handler):not([aria-expanded]):not(.ot-link-btn),#onetrust-consent-sdk #onetrust-pc-sdk .ot-pc-footer button:not(#clear-filters-handler):not(.ot-close-icon):not(#filter-btn-handler):not(.ot-remove-objection-handler):not(.ot-obj-leg-btn-handler):not([aria-expanded]):not(.ot-link-btn){padding:23px 0;width:100%;max-width:336px;min-width:unset;border:0;margin:0;color:#fff;background-color:#000;font-size:1.4rem;line-height:1.29;letter-spacing:.21px}
+#onetrust-consent-sdk #onetrust-pc-sdk #ot-pc-content button:not(#clear-filters-handler):not(.ot-close-icon):not(#filter-btn-handler):not(.ot-remove-objection-handler):not(.ot-obj-leg-btn-handler):not([aria-expanded]):not(.ot-link-btn):hover,#onetrust-consent-sdk #onetrust-pc-sdk .ot-pc-footer button:not(#clear-filters-handler):not(.ot-close-icon):not(#filter-btn-handler):not(.ot-remove-objection-handler):not(.ot-obj-leg-btn-handler):not([aria-expanded]):not(.ot-link-btn):hover{opacity:.56}
+#onetrust-consent-sdk #onetrust-pc-sdk #ot-pc-content button:not(#clear-filters-handler):not(.ot-close-icon):not(#filter-btn-handler):not(.ot-remove-objection-handler):not(.ot-obj-leg-btn-handler):not([aria-expanded]):not(.ot-link-btn):is(.ot-pc-refuse-all-handler),#onetrust-consent-sdk #onetrust-pc-sdk .ot-pc-footer button:not(#clear-filters-handler):not(.ot-close-icon):not(#filter-btn-handler):not(.ot-remove-objection-handler):not(.ot-obj-leg-btn-handler):not([aria-expanded]):not(.ot-link-btn):is(.ot-pc-refuse-all-handler){background:0;border:1px solid #000;color:#000}
+#onetrust-consent-sdk #onetrust-pc-sdk .ot-pc-header{position:relative;display:flex;flex-direction:column-reverse;gap:56px;z-index:2;padding:27px 0;background:#fff;border-bottom:1px solid #c4c4c4;height:unset}
+#onetrust-consent-sdk #onetrust-pc-sdk .ot-pc-header .ot-pc-logo{width:auto;height:auto}
+#onetrust-consent-sdk #onetrust-pc-sdk .ot-pc-header .ot-pc-logo img{width:31px;content:url(../../../../etc.clientlibs/ap-commons/ui/clientlibs/onetrust/resources/ap-logo-sm.svg)}
+#onetrust-consent-sdk #onetrust-pc-sdk .ot-pc-header #close-pc-btn-handler{display:none}
+#onetrust-consent-sdk #onetrust-pc-sdk #ot-pc-content{padding:0;padding-right:13px;padding-left:24px;margin:0;width:100%;overflow-y:overlay;left:0;height:auto !important;top:81px;bottom:187px}
+#onetrust-consent-sdk #onetrust-pc-sdk #ot-pc-content #ot-pc-title{font-family:"Helvetica Neue Web",HelveticaNeueLTCom-UltLt;font-size:2.2rem;font-weight:100;margin:0;margin-top:32px;margin-bottom:24px;text-transform:uppercase;letter-spacing:-0.22px;line-height:1}
+#onetrust-consent-sdk #onetrust-pc-sdk #ot-pc-content #ot-pc-desc{margin:0;padding-bottom:24px;letter-spacing:.24px;font-size:1.6rem;line-height:1.44;color:#757575;font-weight:300}
+#onetrust-consent-sdk #onetrust-pc-sdk #ot-pc-content #ot-pc-desc>br:last-of-type{display:none}
+#onetrust-consent-sdk #onetrust-pc-sdk #ot-pc-content #ot-pc-desc>div{font-weight:300}
+#onetrust-consent-sdk #onetrust-pc-sdk #ot-pc-content button:not(#clear-filters-handler):not(.ot-close-icon):not(#filter-btn-handler):not(.ot-remove-objection-handler):not(.ot-obj-leg-btn-handler):not([aria-expanded]):not(.ot-link-btn):is(#accept-recommended-btn-handler){margin-bottom:24px}
+#onetrust-consent-sdk #onetrust-pc-sdk .privacy-notice-link{display:inline;font-size:1.7rem;font-weight:500;text-decoration:none;color:#000}
+#onetrust-consent-sdk #onetrust-pc-sdk .privacy-notice-link:focus{outline:0}
+#onetrust-consent-sdk #onetrust-pc-sdk #ot-category-title{padding:0;margin-top:32px;font-family:"Helvetica Neue Web",HelveticaNeueLTCom-UltLt;font-size:2.2rem;font-weight:100;text-transform:uppercase;letter-spacing:-0.22px;line-height:1}
+#onetrust-consent-sdk #onetrust-pc-sdk .ot-sdk-row{display:flex;flex-direction:column;border-top:1px solid #c4c4c4}
+#onetrust-consent-sdk #onetrust-pc-sdk .ot-cat-item{margin:0;padding:24px 0;border-bottom:1px solid #c4c4c4}
+#onetrust-consent-sdk #onetrust-pc-sdk .ot-cat-item:last-of-type{border-bottom:0}
+#onetrust-consent-sdk #onetrust-pc-sdk .ot-cat-item .ot-always-active{color:#757575;font-size:16px;font-weight:300;line-height:1.44;letter-spacing:.24px}
+#onetrust-consent-sdk #onetrust-pc-sdk .ot-cat-item p{color:#757575;font-size:1.6rem;line-height:1.44;letter-spacing:.24px}
+#onetrust-consent-sdk #onetrust-pc-sdk .ot-cat-item p:last-of-type{padding-top:24px}
+#onetrust-consent-sdk #onetrust-pc-sdk .ot-cat-item .ot-hlst-cntr{margin:0;padding:0}
+#onetrust-consent-sdk #onetrust-pc-sdk .ot-cat-header{min-height:unset;font-size:1.6rem;font-weight:500;line-height:1.44;letter-spacing:.15px}
+#onetrust-consent-sdk #onetrust-pc-sdk .ot-switch-nob{border:0;display:flex;align-items:center;box-sizing:border-box;background-color:#c4c4c4;width:45px;height:28px;padding:2px;border-radius:24px;transition:none}
+#onetrust-consent-sdk #onetrust-pc-sdk .ot-switch-nob:before{position:relative;height:24px;width:24px;top:0;background-color:#8b8c8c}
+#onetrust-consent-sdk #onetrust-pc-sdk .ot-tgl input:checked+.ot-switch .ot-switch-nob{border:0;background-color:#000;justify-content:flex-end}
+#onetrust-consent-sdk #onetrust-pc-sdk .ot-tgl input:checked+.ot-switch .ot-switch-nob:before{background-color:#fff;-webkit-transform:none;-ms-transform:none;transform:none}
+#onetrust-consent-sdk #onetrust-pc-sdk .ot-tgl input:focus+.ot-switch .ot-switch-nob{outline:none !important;box-shadow:none}
+#onetrust-consent-sdk #onetrust-pc-sdk .category-host-list-handler{margin-top:24px;font-weight:500;font-size:1.4rem;line-height:1.29;letter-spacing:.21px}
+#onetrust-consent-sdk #onetrust-pc-sdk button{font-weight:500}
+#onetrust-consent-sdk #onetrust-pc-sdk button.ot-link-btn:hover{text-decoration:none}
+#onetrust-consent-sdk #onetrust-pc-sdk #ot-pc-lst{padding:0;margin:0;width:100%;top:81px;bottom:187px;left:0;overflow-y:auto}
+#onetrust-consent-sdk #onetrust-pc-sdk #ot-pc-lst .ot-tgl-cntr{margin:0;right:0;height:28px;width:28px}
+#onetrust-consent-sdk #onetrust-pc-sdk #ot-pc-hdr{width:calc(100% - 37px);margin:0;margin-left:24px;margin-bottom:32px;padding:0;padding-top:32px;padding-bottom:24px;border-bottom:1px solid #c4c4c4}
+#onetrust-consent-sdk #onetrust-pc-sdk .ot-lst-subhdr{display:none}
+#onetrust-consent-sdk #onetrust-pc-sdk .ot-hosts-ui #ot-sel-blk{display:none}
+#onetrust-consent-sdk #onetrust-pc-sdk .back-btn-handler{color:#000;transform:rotate(90deg);scale:2}
+#onetrust-consent-sdk #onetrust-pc-sdk .back-btn-handler>svg{display:none}
+#onetrust-consent-sdk #onetrust-pc-sdk .back-btn-handler::before{font-family:"icomoon";content:""}
+#onetrust-consent-sdk #onetrust-pc-sdk .back-btn-handler:focus{color:#000}
+#onetrust-consent-sdk #onetrust-pc-sdk .back-btn-handler:hover{color:#000;opacity:.57}
+#onetrust-consent-sdk #onetrust-pc-sdk #ot-lst-title{margin:0;display:flex;flex-direction:column;align-items:flex-start;gap:24px}
+#onetrust-consent-sdk #onetrust-pc-sdk #ot-lst-title h3{font-family:"Helvetica Neue Web",HelveticaNeueLTCom-UltLt;font-size:2.2rem;font-weight:400;margin:0;text-transform:uppercase;letter-spacing:-0.22px;line-height:1}
+#onetrust-consent-sdk #onetrust-pc-sdk #ot-lst-cnt{padding-right:13px;padding-left:24px;margin:0;width:100%;height:auto;max-height:unset;left:0;overflow:unset}
+#onetrust-consent-sdk #onetrust-pc-sdk #ot-lst-cnt .ot-sdk-row{border-top:0}
+#onetrust-consent-sdk #onetrust-pc-sdk .ot-host-item{padding:0;padding-bottom:24px;margin-top:24px;border-bottom:1px solid #c4c4c4}
+#onetrust-consent-sdk #onetrust-pc-sdk .ot-host-item:first-child{margin-top:0}
+#onetrust-consent-sdk #onetrust-pc-sdk .ot-host-item:last-child{border-bottom:0}
+#onetrust-consent-sdk #onetrust-pc-sdk .ot-host-item>button{padding:0}
+#onetrust-consent-sdk #onetrust-pc-sdk .ot-host-item>button:focus{border:0;outline:0}
+#onetrust-consent-sdk #onetrust-pc-sdk .ot-host-hdr{width:80%}
+#onetrust-consent-sdk #onetrust-pc-sdk #ot-host-lst .ot-host-name{color:#000;min-height:unset;font-size:1.6rem;font-weight:400;line-height:1.44;letter-spacing:.24px;margin-bottom:4px}
+#onetrust-consent-sdk #onetrust-pc-sdk #ot-host-lst .ot-host-expand{font-weight:600;font-size:1.4rem;line-height:1.29;letter-spacing:.21px}
+#onetrust-consent-sdk #onetrust-pc-sdk .ot-host-tgl{margin:0;height:28px;width:28px}
+#onetrust-consent-sdk #onetrust-pc-sdk .ot-host-tgl label{display:flex;justify-content:center;align-items:center;width:26px;height:26px;border:1px solid #000;border-radius:0}
+#onetrust-consent-sdk #onetrust-pc-sdk .ot-chkbox label::after{display:none}
+#onetrust-consent-sdk #onetrust-pc-sdk .ot-chkbox label::before{outline:0;background:0;width:12px;height:12px;left:unset;border:0;border-radius:0}
+#onetrust-consent-sdk #onetrust-pc-sdk .ot-chkbox input:checked~label::before{background-color:#000}
+#onetrust-consent-sdk #onetrust-pc-sdk .ot-host-opt .ot-host-info{display:flex;flex-direction:column;gap:27px;margin:0;padding:0;margin-bottom:24px;width:100%}
+#onetrust-consent-sdk #onetrust-pc-sdk .ot-host-opt .ot-host-info:first-child{margin-top:24px}
+#onetrust-consent-sdk #onetrust-pc-sdk .ot-host-opt .ot-host-info:last-child{margin-bottom:0}
+#onetrust-consent-sdk #onetrust-pc-sdk .ot-host-opt .ot-host-info>div{text-align:justify}
+#onetrust-consent-sdk #onetrust-pc-sdk .ot-host-opt .ot-host-info>div>div{padding:0;width:100%;color:#818181;font-size:1.4rem;line-height:1.29;letter-spacing:.15px}
+#onetrust-consent-sdk #onetrust-pc-sdk .ot-host-opt .ot-host-info>div>div:first-of-type{font-weight:600}
+#onetrust-consent-sdk #onetrust-pc-sdk .ot-pc-footer-logo{display:none}
+#onetrust-consent-sdk #onetrust-pc-sdk .ot-pc-footer{border:0;left:0;width:100%;max-height:unset;z-index:1;background-color:#fff}
+#onetrust-consent-sdk #onetrust-pc-sdk .ot-btn-container{border-top:1px solid #c4c4c4;display:flex;flex-direction:column;align-items:center;gap:8px;margin:0;padding:24px}
+@media only screen and (min-width:768px){#onetrust-consent-sdk #onetrust-pc-sdk .ot-pc-header{padding:40px 0}
+#onetrust-consent-sdk #onetrust-pc-sdk .ot-pc-header .ot-pc-logo img{width:auto;content:url(../../../../etc.clientlibs/ap-commons/ui/clientlibs/onetrust/resources/ap-logo-md.svg)}
+#onetrust-consent-sdk #onetrust-pc-sdk #ot-pc-content{top:113px;bottom:131px;padding-right:21px;padding-left:32px}
+#onetrust-consent-sdk #onetrust-pc-sdk #ot-pc-content #ot-pc-title{margin-top:48px;margin-bottom:32px}
+#onetrust-consent-sdk #onetrust-pc-sdk #ot-pc-content #ot-pc-desc{padding-bottom:32px}
+#onetrust-consent-sdk #onetrust-pc-sdk #ot-pc-content button:not(#clear-filters-handler):not(.ot-close-icon):not(#filter-btn-handler):not(.ot-remove-objection-handler):not(.ot-obj-leg-btn-handler):not([aria-expanded]):not(.ot-link-btn):is(#accept-recommended-btn-handler){margin-bottom:32px;max-width:303px}
+#onetrust-consent-sdk #onetrust-pc-sdk #ot-category-title{margin-top:48px}
+#onetrust-consent-sdk #onetrust-pc-sdk .ot-cat-item{margin:0;padding:32px 0}
+#onetrust-consent-sdk #onetrust-pc-sdk .ot-cat-item p:last-of-type{padding-top:32px}
+#onetrust-consent-sdk #onetrust-pc-sdk .category-host-list-handler{margin-top:32px}
+#onetrust-consent-sdk #onetrust-pc-sdk .ot-btn-container{flex-direction:row;justify-content:center;gap:32px;padding:32px}
+#onetrust-consent-sdk #onetrust-pc-sdk #ot-pc-hdr{width:calc(100% - 53px);margin-left:32px;margin-bottom:48px;padding-top:48px;padding-bottom:32px}
+#onetrust-consent-sdk #onetrust-pc-sdk #ot-lst-title{gap:32px}
+#onetrust-consent-sdk #onetrust-pc-sdk #ot-lst-cnt{padding-right:21px;padding-left:32px}
+#onetrust-consent-sdk #onetrust-pc-sdk .ot-host-item{padding-bottom:32px;margin-top:32px}
+#onetrust-consent-sdk #onetrust-pc-sdk ot-host-opt .ot-host-info{margin-bottom:32px}
+#onetrust-consent-sdk #onetrust-pc-sdk ot-host-opt .ot-host-info:first-child{margin-top:32px}
+#onetrust-consent-sdk #onetrust-pc-sdk #ot-pc-lst{top:113px;bottom:131px}
+#onetrust-consent-sdk #onetrust-pc-sdk #ot-pc-lst .ot-tgl-cntr{margin-right:16px}
+}
+@media only screen and (min-width:1025px){#onetrust-consent-sdk #onetrust-pc-sdk{max-width:768px}
+#onetrust-consent-sdk #onetrust-pc-sdk .ot-pc-header .ot-pc-logo img{content:url(../../../../etc.clientlibs/ap-commons/ui/clientlibs/onetrust/resources/ap-logo-lg.svg)}
+#onetrust-consent-sdk #onetrust-pc-sdk #ot-pc-content{top:121px}
+#onetrust-consent-sdk #onetrust-pc-sdk #ot-pc-content #ot-pc-title{margin-top:64px;font-size:3rem;letter-spacing:1.2px}
+#onetrust-consent-sdk #onetrust-pc-sdk #ot-pc-content #ot-pc-desc{letter-spacing:.255px;line-height:1.35;font-size:1.7rem}
+#onetrust-consent-sdk #onetrust-pc-sdk #ot-category-title{margin-top:64px;font-size:3rem;letter-spacing:1.2px}
+#onetrust-consent-sdk #onetrust-pc-sdk .ot-cat-item p{font-size:1.7rem;line-height:1.35;letter-spacing:.255px;font-weight:300}
+#onetrust-consent-sdk #onetrust-pc-sdk #ot-lst-title h3{font-size:3rem;letter-spacing:1.2px}
+#onetrust-consent-sdk #onetrust-pc-sdk #ot-host-lst .ot-host-name{color:#000;min-height:unset;font-size:1.7rem;font-weight:400;line-height:1.35;letter-spacing:.255px}
+#onetrust-consent-sdk #onetrust-pc-sdk #ot-pc-hdr{padding-top:64px;margin-bottom:64px}
+#onetrust-consent-sdk #onetrust-pc-sdk #ot-pc-lst{top:121px}
+}

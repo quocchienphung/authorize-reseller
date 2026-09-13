@@ -1,0 +1,1704 @@
+@font-face {
+  font-display: block;
+  font-family: "AP Icomoon";
+  font-style: normal;
+  font-weight: 400;
+  src: url("/sites/www-audemarspiguet-com-14def314/us--en--home-a310b589/fonts/93af1b83-icomoon.woff2") format("woff2");
+}
+
+.site {
+  --rail: max(20px, calc((100vw - 1255px) / 2));
+  background: #000;
+  color: #fff;
+  min-width: 320px;
+  overflow: clip;
+}
+
+.site a,
+.site button,
+.site select,
+.site summary {
+  font-family: inherit;
+}
+
+.site a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.header {
+  align-items: center;
+  color: #fff;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  height: 112px;
+  left: 0;
+  padding: 0 var(--rail);
+  position: fixed;
+  right: 0;
+  top: 0;
+  transition: background-color 300ms ease, color 300ms ease, transform 300ms ease;
+  z-index: 100;
+}
+
+.headerSolid {
+  background: #fff;
+  color: #0a0a0a;
+}
+
+.headerHidden {
+  transform: translateY(-100%);
+}
+
+.headerButton,
+.headerActions a,
+.drawerIconButton,
+.localeClose,
+.carouselControls button,
+.videoControl {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  color: inherit;
+  cursor: pointer;
+  display: inline-flex;
+  justify-content: center;
+  padding: 0;
+}
+
+.headerButton {
+  height: 44px;
+  justify-self: start;
+  width: 44px;
+}
+
+.menuGlyph {
+  display: grid;
+  gap: 5px;
+  width: 24px;
+}
+
+.menuGlyph span {
+  background: currentColor;
+  display: block;
+  height: 1.5px;
+  width: 24px;
+}
+
+.brand {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+.brandFull {
+  display: block;
+  height: 31px;
+  width: 143px;
+}
+
+.brandMark {
+  display: none;
+}
+
+.headerActions {
+  align-items: center;
+  display: flex;
+  gap: 19px;
+  justify-self: end;
+}
+
+.headerActions a {
+  height: 38px;
+  width: 38px;
+}
+
+.headerActions svg {
+  height: 26px;
+  stroke-width: 1.35;
+  width: 26px;
+}
+
+.overlay,
+.localeOverlay {
+  background: rgb(0 0 0 / 46%);
+  backdrop-filter: blur(8px);
+  inset: 0;
+  position: fixed;
+  z-index: 110;
+}
+
+.drawer {
+  background: #fff;
+  color: #090909;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  max-width: 100%;
+  padding: 38px 74px 42px 92px;
+  transition: width 300ms cubic-bezier(0.45, 0, 0.55, 1);
+  width: 475px;
+}
+
+.drawerExpanded {
+  width: 1014px;
+}
+
+.drawerTop {
+  align-items: center;
+  display: flex;
+  gap: 20px;
+  justify-content: flex-start;
+  min-height: 32px;
+}
+
+.drawerIconButton,
+.localeClose {
+  height: 36px;
+  width: 36px;
+}
+
+.drawerIconButton svg,
+.localeClose svg {
+  height: 25px;
+  stroke-width: 1.2;
+  width: 25px;
+}
+
+.drawerBody {
+  flex: 1;
+  overflow: auto;
+  padding: 58px 0 32px;
+}
+
+.drawerPanes {
+  display: grid;
+  gap: 54px;
+  grid-template-columns: 1fr;
+}
+
+.drawerExpanded .drawerPanes {
+  grid-template-columns: 1fr 1fr;
+}
+
+.menuList,
+.submenuList,
+.drawerFoot,
+.footer ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.menuList {
+  display: grid;
+  gap: 14px;
+}
+
+.menuList button {
+  background: transparent;
+  border: 0;
+  color: inherit;
+  cursor: pointer;
+  font-size: 39px;
+  font-weight: 300;
+  letter-spacing: -0.03em;
+  line-height: 1.14;
+  padding: 0;
+  text-align: left;
+}
+
+.activeMenuItem {
+  border-bottom: 1px solid currentColor !important;
+}
+
+.drawerEyebrow {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  margin: 0 0 28px;
+  text-transform: uppercase;
+}
+
+.submenuList {
+  display: grid;
+  gap: 17px;
+}
+
+.submenuList a {
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.45;
+}
+
+.drawerFoot {
+  border-top: 1px solid rgb(0 0 0 / 18%);
+  display: grid;
+  gap: 17px;
+  padding-top: 28px;
+}
+
+.drawerFoot a,
+.drawerFoot button {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  color: inherit;
+  cursor: pointer;
+  display: flex;
+  font-size: 13px;
+  gap: 12px;
+  padding: 0;
+  text-align: left;
+}
+
+.drawerFoot svg {
+  height: 20px;
+  stroke-width: 1.4;
+  width: 20px;
+}
+
+.localeOverlay {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+
+.localeDialog {
+  background: #fff;
+  color: #090909;
+  max-width: 100%;
+  padding: 52px 62px 56px;
+  position: relative;
+  width: 580px;
+}
+
+.localeClose {
+  position: absolute;
+  right: 26px;
+  top: 24px;
+}
+
+.localeDialog h2 {
+  font-size: 46px;
+  font-weight: 100;
+  letter-spacing: -0.02em;
+  line-height: 0.98;
+  margin: 0 0 42px;
+  text-transform: uppercase;
+}
+
+.localeDialog h2 em {
+  font-family: var(--font-ap-serif), serif;
+  font-weight: 400;
+}
+
+.localeDialog label {
+  display: grid;
+  font-size: 12px;
+  gap: 9px;
+  letter-spacing: 0.04em;
+  margin-top: 22px;
+  text-transform: uppercase;
+}
+
+.localeDialog select {
+  background: #fff;
+  border: 0;
+  border-bottom: 1px solid #111;
+  border-radius: 0;
+  color: #111;
+  font-size: 15px;
+  padding: 12px 0;
+  text-transform: none;
+}
+
+.primaryButton {
+  background: #000;
+  border: 1px solid #000;
+  color: #fff;
+  cursor: pointer;
+  font-size: 13px;
+  height: 56px;
+  margin-top: 38px;
+  width: 100%;
+}
+
+.hero {
+  height: 100svh;
+  min-height: 720px;
+  position: relative;
+}
+
+.heroMedia,
+.heroVeil {
+  inset: 0;
+  position: absolute;
+}
+
+.heroMedia {
+  overflow: hidden;
+}
+
+.heroImage,
+.heroMedia video,
+.lookbook img,
+.lookbook video,
+.featureCard img,
+.splitFeatureImage img,
+.cardImage {
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
+.heroImageMobile {
+  display: none;
+}
+
+.videoShell {
+  height: 100%;
+  position: relative;
+  width: 100%;
+}
+
+.heroVeil {
+  background: linear-gradient(90deg, rgb(0 0 0 / 54%) 0%, rgb(0 0 0 / 20%) 38%, rgb(0 0 0 / 5%) 72%), linear-gradient(0deg, rgb(0 0 0 / 30%), transparent 45%);
+  z-index: 1;
+}
+
+.heroContent {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
+  margin-left: var(--rail);
+  padding-top: 112px;
+  position: relative;
+  transform: translateY(25px);
+  width: 414px;
+  z-index: 2;
+}
+
+.sectionHeading {
+  font-size: 56px;
+  font-weight: 100;
+  letter-spacing: -0.01em;
+  line-height: 1;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.sectionHeading span,
+.sectionHeading em {
+  display: block;
+}
+
+.sectionHeading em {
+  font-family: var(--font-ap-serif), "Times New Roman", serif;
+  font-size: 60px;
+  font-style: italic;
+  font-weight: 400;
+  line-height: 0.9334;
+}
+
+.heroHeading {
+  max-width: 414px;
+}
+
+.heroDescription {
+  font-size: 17px;
+  font-weight: 300;
+  line-height: 1.35;
+  margin: 49px 0 0;
+  max-width: 414px;
+}
+
+.lineLink {
+  align-self: flex-start;
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 24px;
+  margin-top: 27px;
+  position: relative;
+  transition: opacity 200ms ease;
+}
+
+.lineLink::after {
+  background: currentColor;
+  bottom: 0;
+  content: "";
+  height: 1px;
+  left: 0;
+  position: absolute;
+  right: 0;
+}
+
+.lineLink:hover {
+  opacity: 0.6;
+}
+
+.videoControl {
+  border: 1px solid rgb(255 255 255 / 70%);
+  border-radius: 50%;
+  bottom: 34px;
+  height: 42px;
+  position: absolute;
+  right: var(--rail);
+  width: 42px;
+  z-index: 3;
+}
+
+.videoControl svg {
+  height: 14px;
+  width: 14px;
+}
+
+.carouselSection {
+  background: #000;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.noveltiesSection {
+  height: 848px;
+  padding: 104px 0;
+}
+
+.servicesSection {
+  height: 797px;
+  padding: 104px 0 84px;
+}
+
+.carouselLayout {
+  display: grid;
+  grid-template-columns: calc(var(--rail) + 406px) minmax(0, 1fr);
+  height: 100%;
+}
+
+.carouselIntro {
+  box-sizing: border-box;
+  padding-left: var(--rail);
+  padding-right: 34px;
+}
+
+.carouselHeading {
+  max-width: 406px;
+}
+
+.carouselIntro .lineLink {
+  margin-top: 20px;
+}
+
+.carouselTrack {
+  display: flex;
+  gap: 10px;
+  min-width: 0;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+}
+
+.carouselTrack::-webkit-scrollbar {
+  display: none;
+}
+
+.carouselCard {
+  flex: 0 0 auto;
+}
+
+.noveltyCard {
+  width: 193.5px;
+}
+
+.serviceCard {
+  width: 282.5px;
+}
+
+.cardImageLink {
+  display: block;
+  overflow: hidden;
+  position: relative;
+}
+
+.noveltyCard .cardImageLink {
+  height: 256px;
+}
+
+.serviceCard .cardImageLink {
+  height: 373px;
+}
+
+.cardImage {
+  transition: transform 700ms cubic-bezier(0.2, 0.65, 0.3, 1);
+}
+
+.carouselCard:hover .cardImage,
+.cardImageLink:focus-visible .cardImage,
+.featureCard:hover img,
+.splitFeatureImage:hover img,
+.lookbookGrid > div:hover img {
+  transform: scale(1.035);
+}
+
+.cardBody {
+  padding: 16px 8px 0 0;
+}
+
+.cardBody h3 {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.cardBody p {
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 1.5;
+  margin: 16px 0 0;
+}
+
+.cardBody .lineLink {
+  margin-top: 10px;
+}
+
+.carouselControls {
+  bottom: 72px;
+  display: flex;
+  gap: 16px;
+  left: var(--rail);
+  position: absolute;
+}
+
+.carouselControls button {
+  border: 1px solid rgb(255 255 255 / 62%);
+  border-radius: 50%;
+  height: 42px;
+  width: 42px;
+}
+
+.carouselControls button:disabled {
+  cursor: default;
+  opacity: 0.28;
+}
+
+.carouselControls svg {
+  height: 17px;
+  stroke-width: 1.4;
+  width: 17px;
+}
+
+.editorialCopy {
+  background: #000;
+  box-sizing: border-box;
+  height: 568px;
+  padding: 132px var(--rail) 90px;
+}
+
+.editorialCopyCompact {
+  height: 536px;
+}
+
+.editorialCopyInner {
+  display: block;
+}
+
+.editorialBody {
+  margin-left: 104px;
+  padding-top: 62px;
+  width: 406.6px;
+}
+
+.editorialBody p,
+.featureCardCopy p,
+.splitFeatureCopy p,
+.newsletter p {
+  font-size: 17px;
+  font-weight: 300;
+  line-height: 1.64;
+  margin: 0;
+}
+
+.lookbook {
+  background: #000;
+  box-sizing: border-box;
+  height: 596px;
+  padding: 33px 0 43px;
+}
+
+.lookbookGrid {
+  box-sizing: border-box;
+  display: grid;
+  gap: 8px;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  height: 520px;
+  margin: 0 auto;
+  max-width: 1240px;
+  padding: 0 100px;
+}
+
+.lookbookGrid > div {
+  min-height: 0;
+  min-width: 0;
+  overflow: hidden;
+  position: relative;
+}
+
+.lookbookGrid img {
+  transition: transform 700ms cubic-bezier(0.2, 0.65, 0.3, 1);
+}
+
+.lookbookSquare {
+  grid-column: 1 / span 2;
+  grid-row: 1 / span 3;
+}
+
+.lookbookPortraitOne {
+  grid-column: 3;
+  grid-row: 1 / span 2;
+}
+
+.lookbookLandscapeOne {
+  grid-column: 3;
+  grid-row: 3;
+}
+
+.lookbookLandscapeTwo {
+  grid-column: 4;
+  grid-row: 1;
+}
+
+.lookbookPortraitTwo {
+  grid-column: 4;
+  grid-row: 2 / span 2;
+}
+
+.lookbookGridB .lookbookSquare {
+  grid-column: 2 / span 2;
+}
+
+.lookbookGridB .lookbookPortraitOne {
+  grid-column: 1;
+}
+
+.lookbookGridB .lookbookLandscapeOne {
+  grid-column: 1;
+}
+
+.lookbookGridB .lookbookLandscapeTwo {
+  grid-column: 4;
+}
+
+.lookbookGridB .lookbookPortraitTwo {
+  grid-column: 4;
+}
+
+.featurePair {
+  background: #000;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 1063px;
+  padding: 100px var(--rail);
+}
+
+.featureCard {
+  min-width: 0;
+}
+
+.featureCardImage {
+  display: block;
+  height: 411px;
+  overflow: hidden;
+  position: relative;
+}
+
+.featureCardImage img,
+.splitFeatureImage img {
+  transition: transform 700ms cubic-bezier(0.2, 0.65, 0.3, 1);
+}
+
+.featureCardCopy {
+  box-sizing: border-box;
+  padding: 68px 0 72px;
+}
+
+.featureCardCopy .sectionHeading {
+  max-width: 407px;
+}
+
+.featureCardCopy p {
+  margin-top: 28px;
+  max-width: 407px;
+}
+
+.splitFeature {
+  background: #000;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 592px;
+  padding: 100px var(--rail);
+}
+
+.splitFeatureCopy {
+  align-self: center;
+  box-sizing: border-box;
+  justify-self: start;
+  margin-left: 103px;
+  max-width: 310px;
+  width: 100%;
+}
+
+.splitFeatureCopy p {
+  margin-top: 28px;
+}
+
+.splitFeatureImage {
+  align-self: center;
+  display: block;
+  height: 345px;
+  overflow: hidden;
+  position: relative;
+  width: 516px;
+}
+
+.boutiqueFeature {
+  grid-template-columns: 2fr 1fr;
+  height: 684px;
+}
+
+.boutiqueFeature .splitFeatureImage {
+  height: 484px;
+  width: calc(100% - 103px);
+}
+
+.boutiqueFeature .splitFeatureCopy {
+  margin-left: 0;
+}
+
+.newsletter {
+  align-items: center;
+  background: #fff;
+  box-sizing: border-box;
+  color: #0a0a0a;
+  display: grid;
+  gap: 80px;
+  grid-template-columns: 382px 380px minmax(220px, 318px);
+  height: 478px;
+  padding: 0 var(--rail);
+}
+
+.newsletterHeading {
+  font-size: 48px;
+}
+
+.newsletterButton {
+  align-items: center;
+  background: #000;
+  color: #fff !important;
+  display: flex;
+  font-size: 13px;
+  height: 64px;
+  justify-content: center;
+  text-transform: uppercase;
+  transition: background-color 200ms ease;
+  transform: translateY(32px);
+}
+
+.newsletter > p {
+  transform: translateY(34px);
+}
+
+.newsletterButton:hover {
+  background: #2b4f4f;
+}
+
+.footer {
+  background: #2b4f4f;
+  box-sizing: border-box;
+  color: #fff;
+  min-height: 795px;
+}
+
+.partnerLogos {
+  align-items: center;
+  display: flex;
+  gap: 70px;
+  height: 178px;
+  justify-content: center;
+}
+
+.partnerLogos a {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+.partnerLogos img {
+  height: auto;
+  max-height: 64px;
+  object-fit: contain;
+  width: auto;
+}
+
+.footerMain {
+  border-top: 1px solid rgb(255 255 255 / 22%);
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: 46% 54%;
+  height: 477px;
+  min-height: 0;
+  padding: 75px var(--rail) 48px;
+}
+
+.footerLocale {
+  align-items: center;
+  align-self: start;
+  background: transparent;
+  border: 0;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  font-size: 13px;
+  font-weight: 400;
+  gap: 10px;
+  padding: 0;
+}
+
+.footerLocale svg {
+  height: 22px;
+  stroke-width: 1.2;
+  width: 22px;
+}
+
+.footerColumns {
+  display: grid;
+  gap: 28px;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.footerColumns details summary,
+.footerColumns nav h3 {
+  cursor: default;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  list-style: none;
+  margin-bottom: 17px;
+  text-transform: uppercase;
+}
+
+.footerColumns nav h3 {
+  cursor: default;
+}
+
+.footerColumnsMobile {
+  display: none;
+}
+
+.footerColumns details summary::-webkit-details-marker {
+  display: none;
+}
+
+.footerColumns ul {
+  display: grid;
+  gap: 8px;
+}
+
+.footerColumns a {
+  font-size: 13px;
+  font-weight: 300;
+  line-height: 1.35;
+}
+
+.footerBottom {
+  align-items: flex-end;
+  border-top: 1px solid rgb(255 255 255 / 22%);
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  height: 140px;
+  padding: 40px var(--rail);
+}
+
+.socialLinks {
+  display: flex;
+  gap: 16px;
+}
+
+.socialLinks a {
+  align-items: center;
+  display: flex;
+  height: 21px;
+  justify-content: center;
+  width: 21px;
+}
+
+.socialIcon {
+  font-family: "AP Icomoon";
+  font-size: 21px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 21px;
+}
+
+.footerBottom p {
+  font-size: 11px;
+  font-weight: 300;
+  margin: 0 0 1px 54px;
+}
+
+@media (max-width: 1024px) {
+  .site {
+    --rail: 32px;
+  }
+
+  .header {
+    height: 112px;
+  }
+
+  .heroContent {
+    padding-top: 112px;
+    width: 401.8px;
+  }
+
+  .sectionHeading {
+    font-size: 48px;
+  }
+
+  .sectionHeading em {
+    font-size: 52px;
+    line-height: 0.9231;
+  }
+
+  .editorialBody p,
+  .featureCardCopy p,
+  .splitFeatureCopy p,
+  .newsletter p {
+    font-size: 16px;
+    line-height: 1.44;
+  }
+
+  .noveltiesSection {
+    height: 1069px;
+    padding: 80px 0;
+  }
+
+  .servicesSection {
+    height: 838px;
+    padding: 80px 0;
+  }
+
+  .carouselLayout {
+    display: block;
+  }
+
+  .carouselIntro {
+    height: 200px;
+    padding-left: 32px;
+  }
+
+  .carouselTrack {
+    height: calc(100% - 200px);
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+
+  .noveltyCard {
+    width: 90.275px;
+  }
+
+  .noveltyCard .cardImageLink {
+    height: 119.575px;
+  }
+
+  .serviceCard {
+    width: 338.087px;
+  }
+
+  .serviceCard .cardImageLink {
+    height: 446.825px;
+  }
+
+  .servicesSection .carouselIntro {
+    height: 128px;
+  }
+
+  .servicesSection .carouselTrack {
+    height: calc(100% - 128px);
+  }
+
+  .carouselControls {
+    bottom: 80px;
+    left: 32px;
+  }
+
+  .editorialCopy {
+    height: 447px;
+    padding: 50px 32px;
+  }
+
+  .editorialCopyCompact {
+    height: 431px;
+  }
+
+  .editorialBody {
+    margin-left: 0;
+    padding-top: 32px;
+    width: 339.4px;
+  }
+
+  .lookbook {
+    height: 649px;
+    padding: 36px 0 39px;
+  }
+
+  .lookbookGrid {
+    height: 574px;
+    padding: 0 32px;
+  }
+
+  .featurePair {
+    display: block;
+    height: 1329px;
+    padding: 90px 32px 0;
+  }
+
+  .featureCard {
+    height: 556px;
+  }
+
+  .featureCardImage {
+    height: 456px;
+    width: calc(100% - 5px);
+  }
+
+  .featureCardCopy {
+    padding: 32px 0 0;
+    width: calc(100% - 5px);
+  }
+
+  .featureCardCopy .sectionHeading,
+  .featureCardCopy p {
+    max-width: none;
+  }
+
+  .featureCardCopy p,
+  .featureCardCopy .lineLink {
+    margin-top: 32px;
+  }
+
+  .featureCard + .featureCard {
+    margin-top: 0;
+    padding-top: 100px;
+  }
+
+  .featureCard + .featureCard .featureCardImage {
+    height: 457px;
+  }
+
+  .splitFeature {
+    display: flex;
+    flex-direction: column;
+    height: 817px;
+    padding: 90px 89px 50px;
+  }
+
+  .splitFeatureCopy {
+    flex: 0 0 auto;
+    margin-left: 0;
+    max-width: none;
+    order: 1;
+    width: 100%;
+  }
+
+  .splitFeatureCopy p {
+    margin-top: 40px;
+  }
+
+  .splitFeatureCopy .lineLink {
+    margin-top: 32px;
+  }
+
+  .splitFeatureImage,
+  .boutiqueFeature .splitFeatureImage {
+    flex: 0 0 384px;
+    height: 384px;
+    margin-top: 32px;
+    order: 2;
+    width: 100%;
+  }
+
+  .newsletter {
+    gap: 36px;
+    grid-template-columns: 1.1fr 1fr 0.9fr;
+    height: 413px;
+  }
+
+  .newsletterHeading {
+    font-size: 42px;
+  }
+
+  .newsletter > p,
+  .newsletterButton {
+    transform: none;
+  }
+
+  .footer {
+    min-height: 815px;
+  }
+
+  .partnerLogos {
+    height: 169px;
+  }
+
+  .footerMain {
+    grid-template-columns: 30% 70%;
+    height: 426px;
+    min-height: 0;
+  }
+
+  .footerBottom {
+    height: 220px;
+    padding: 58px 32px;
+  }
+
+  .footerColumns {
+    gap: 18px;
+  }
+}
+
+@media (max-width: 767px) {
+  .site {
+    --rail: 20px;
+  }
+
+  .header {
+    height: 77px;
+    padding: 0 14px 0 12px;
+  }
+
+  .brandFull {
+    display: none;
+  }
+
+  .brandMark {
+    display: block;
+    height: 28px;
+    width: 28px;
+  }
+
+  .headerActions {
+    gap: 4px;
+  }
+
+  .headerActions a {
+    height: 36px;
+    width: 34px;
+  }
+
+  .headerActions a:nth-child(2) {
+    display: none;
+  }
+
+  .headerActions svg {
+    height: 22px;
+    width: 22px;
+  }
+
+  .drawer {
+    padding: 20px 20px 32px;
+    width: 100%;
+  }
+
+  .drawerExpanded .drawerPanes {
+    display: block;
+  }
+
+  .drawerExpanded .menuListActive {
+    display: none;
+  }
+
+  .drawerTop {
+    justify-content: space-between;
+  }
+
+  .drawerBody {
+    padding-top: 46px;
+  }
+
+  .menuList {
+    gap: 15px;
+  }
+
+  .menuList button {
+    font-size: 37px;
+  }
+
+  .submenuList a {
+    font-size: 22px;
+  }
+
+  .localeDialog {
+    padding: 50px 28px 38px;
+  }
+
+  .localeDialog h2 {
+    font-size: 38px;
+  }
+
+  .hero {
+    height: 100svh;
+    min-height: 640px;
+  }
+
+  .heroImageDesktop {
+    display: none;
+  }
+
+  .heroImageMobile {
+    display: block;
+  }
+
+  .heroVeil {
+    background: linear-gradient(0deg, rgb(0 0 0 / 65%) 0%, rgb(0 0 0 / 12%) 66%), linear-gradient(90deg, rgb(0 0 0 / 20%), transparent 70%);
+  }
+
+  .heroContent {
+    height: 100%;
+    justify-content: flex-end;
+    margin: 0;
+    padding: 0 20px 34px;
+    transform: none;
+    width: auto;
+  }
+
+  .sectionHeading {
+    font-size: 40px;
+  }
+
+  .sectionHeading em {
+    font-size: 44px;
+    line-height: 0.9091;
+  }
+
+  .heroHeading {
+    max-width: none;
+  }
+
+  .heroDescription {
+    line-height: 1.42;
+    margin-top: 20px;
+    max-width: 350px;
+  }
+
+  .heroContent .lineLink {
+    margin-top: 22px;
+  }
+
+  .videoControl {
+    bottom: 30px;
+    right: 20px;
+  }
+
+  .noveltiesSection {
+    height: 997px;
+    padding: 64px 0;
+  }
+
+  .servicesSection {
+    height: 881px;
+    padding: 64px 0;
+  }
+
+  .carouselLayout {
+    display: block;
+  }
+
+  .carouselIntro {
+    height: 148px;
+    padding: 0 20px;
+  }
+
+  .carouselIntro .lineLink {
+    margin-top: 16px;
+  }
+
+  .carouselTrack {
+    height: calc(100% - 148px);
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .servicesSection .carouselIntro {
+    height: 148px;
+  }
+
+  .servicesSection .carouselTrack {
+    height: calc(100% - 148px);
+  }
+
+  .noveltyCard {
+    width: min(291px, 78vw);
+  }
+
+  .noveltyCard .cardImageLink {
+    height: min(385px, 103vw);
+  }
+
+  .serviceCard {
+    width: min(318px, 85vw);
+  }
+
+  .serviceCard .cardImageLink {
+    height: min(421px, 112vw);
+  }
+
+  .cardBody {
+    padding-top: 14px;
+  }
+
+  .carouselControls {
+    display: none;
+  }
+
+  .servicesSection .carouselControls {
+    bottom: 42px;
+  }
+
+  .editorialCopy {
+    height: 409px;
+    padding: 50px 20px;
+  }
+
+  .editorialCopyCompact {
+    height: 404px;
+  }
+
+  .editorialCopyInner {
+    display: block;
+  }
+
+  .editorialBody {
+    margin-left: 0;
+    padding-top: 28px;
+    width: auto;
+  }
+
+  .editorialBody .lineLink {
+    margin-top: 20px;
+  }
+
+  .lookbook {
+    height: 648px;
+    padding: 37px 0;
+  }
+
+  .lookbookGrid,
+  .lookbookGridB {
+    display: grid;
+    gap: 8px;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 283px repeat(3, 89px);
+    height: 574px;
+    padding: 0 44px;
+  }
+
+  .lookbookSquare,
+  .lookbookGridB .lookbookSquare {
+    grid-column: 1 / span 2;
+    grid-row: 1;
+  }
+
+  .lookbookPortraitOne,
+  .lookbookGridB .lookbookPortraitOne {
+    grid-column: 1;
+    grid-row: 2 / span 2;
+  }
+
+  .lookbookLandscapeOne,
+  .lookbookGridB .lookbookLandscapeOne {
+    grid-column: 1;
+    grid-row: 4;
+  }
+
+  .lookbookLandscapeTwo,
+  .lookbookGridB .lookbookLandscapeTwo {
+    grid-column: 2;
+    grid-row: 2;
+  }
+
+  .lookbookPortraitTwo,
+  .lookbookGridB .lookbookPortraitTwo {
+    grid-column: 2;
+    grid-row: 3 / span 2;
+  }
+
+  .featurePair {
+    display: block;
+    height: 1329px;
+    padding: 50px 20px;
+  }
+
+  .featureCard {
+    height: auto;
+  }
+
+  .featureCard + .featureCard {
+    margin-top: 100px;
+    padding-top: 0;
+  }
+
+  .featureCardImage {
+    height: 224px;
+    width: 100%;
+  }
+
+  .featureCardCopy {
+    padding: 36px 0 0;
+    width: 100%;
+  }
+
+  .featureCardCopy .sectionHeading {
+    font-size: 37px;
+  }
+
+  .featureCardCopy p {
+    margin-top: 20px;
+  }
+
+  .featureCardCopy .lineLink {
+    margin-top: 17px;
+  }
+
+  .splitFeature,
+  .boutiqueFeature {
+    display: flex;
+    flex-direction: column;
+    height: 686px;
+    padding: 50px 20px;
+  }
+
+  .splitFeatureCopy {
+    box-sizing: border-box;
+    flex: 1;
+    margin-left: 0;
+    max-width: none;
+    order: 2;
+    padding: 33px 0 0;
+  }
+
+  .splitFeatureImage {
+    flex: 0 0 224px;
+    height: 224px;
+    margin-top: 0;
+    order: 1;
+    width: 100%;
+  }
+
+  .boutiqueFeature {
+    height: 663px;
+  }
+
+  .boutiqueFeature .splitFeatureImage {
+    flex-basis: 224px;
+    height: 224px;
+    order: 1;
+    width: 100%;
+  }
+
+  .boutiqueFeature .splitFeatureCopy {
+    order: 2;
+  }
+
+  .splitFeatureCopy p {
+    margin-top: 20px;
+  }
+
+  .splitFeatureCopy .lineLink {
+    margin-top: 17px;
+  }
+
+  .newsletter {
+    align-content: center;
+    display: grid;
+    gap: 24px;
+    grid-template-columns: 1fr;
+    height: 401px;
+    padding: 50px 20px;
+  }
+
+  .newsletterHeading {
+    font-size: 38px;
+  }
+
+  .newsletterButton {
+    height: 56px;
+  }
+
+  .footer {
+    min-height: 1048px;
+  }
+
+  .partnerLogos {
+    flex-direction: column;
+    gap: 29px;
+    height: 377px;
+    padding: 0 20px;
+  }
+
+  .partnerLogos img {
+    max-height: 44px;
+    max-width: 100px;
+  }
+
+  .footerMain {
+    display: block;
+    min-height: 428px;
+    padding: 32px 20px;
+  }
+
+  .footerLocale {
+    margin-bottom: 45px;
+  }
+
+  .footerColumns {
+    display: block;
+  }
+
+  .footerColumnsDesktop {
+    display: none;
+  }
+
+  .footerColumnsMobile {
+    display: block;
+  }
+
+  .footerColumns details {
+    border-top: 1px solid rgb(255 255 255 / 25%);
+  }
+
+  .footerColumns details:last-child {
+    border-bottom: 1px solid rgb(255 255 255 / 25%);
+  }
+
+  .footerColumns details summary {
+    cursor: pointer;
+    margin: 0;
+    padding: 15px 0;
+  }
+
+  .footerColumns details summary::after {
+    content: "+";
+    float: right;
+    font-size: 18px;
+    font-weight: 300;
+    letter-spacing: 0;
+  }
+
+  .footerColumns details[open] summary::after {
+    content: "−";
+  }
+
+  .footerColumns details ul {
+    grid-template-columns: 1fr 1fr;
+    padding: 0 0 20px;
+  }
+
+  .footerBottom {
+    align-items: start;
+    display: flex;
+    flex-direction: column;
+    gap: 27px;
+    height: 243px;
+    padding: 42px 20px;
+  }
+
+  .footerBottom p {
+    margin: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .header,
+  .cardImage,
+  .featureCardImage img,
+  .splitFeatureImage img,
+  .lookbookGrid img {
+    transition: none;
+  }
+
+  .carouselTrack {
+    scroll-behavior: auto;
+  }
+}
+
+.afBrand { align-items: center; color: inherit; display: flex; gap: 12px; justify-content: center; text-decoration: none; }
+.afBrandMark { background: currentColor; display: block; height: 42px; mask: url("/alexander-ferros/brand/mark.svg") center / contain no-repeat; width: 42px; }
+.afBrandName { font-size: 15px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; white-space: nowrap; }
+.afBrandCompact .afBrandName { display: none; }
+.afProductCarousel { height: 900px; padding: 104px 0; }
+.afProductCard { width: 286px; }
+.afProductImageLink { background: #f1efec; height: 410px; }
+.afProductImage { object-fit: contain; padding: 10%; }
+.afSku { color: #999; font-size: 11px !important; letter-spacing: .08em; margin-top: 8px !important; text-transform: uppercase; }
+.afPrice { font-size: 14px !important; margin-top: 8px !important; }
+.afMosaicSection { background: #000; padding: 110px 0 120px; }
+.afMosaicHeading { margin: 0 auto 68px; max-width: 1255px; }
+.afMosaic { display: grid; gap: 8px; grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(2, 300px); margin: 0 auto; max-width: 1255px; }
+.afMosaicItem { background: #f1efec; display: block; overflow: hidden; position: relative; }
+.afMosaicItem[data-size="hero"] { grid-column: span 2; grid-row: span 2; }
+.afMosaicItem img { object-fit: contain; padding: 8%; transition: transform 700ms cubic-bezier(.2, .65, .3, 1); }
+.afMosaicItem:hover img { transform: scale(1.045); }
+.afMosaicItem span { background: rgb(0 0 0 / 78%); bottom: 16px; font-size: 12px; left: 16px; max-width: calc(100% - 32px); padding: 9px 12px; position: absolute; }
+.afFooter { background: #234342; color: #fff; padding: 86px var(--rail) 36px; }
+.afFooter a { color: inherit; text-decoration: none; }
+.afFooterBrand { border-bottom: 1px solid rgb(255 255 255 / 24%); padding-bottom: 72px; }
+.afFooterBrand .afBrand { justify-content: flex-start; }
+.afFooterBrand .afBrandMark { height: 68px; width: 68px; }
+.afFooterBrand .afBrandName { font-size: 25px; }
+.afFooterBrand p { font-size: 14px; margin: 20px 0 0 82px; }
+.afFooterGrid { display: grid; gap: 48px; grid-template-columns: repeat(4, 1fr); padding: 70px 0 80px; }
+.afFooterGrid nav, .afFooterGrid > div { display: flex; flex-direction: column; gap: 13px; }
+.afFooterGrid h2 { font-size: 12px; font-weight: 500; letter-spacing: .1em; margin: 0 0 14px; text-transform: uppercase; }
+.afFooterGrid a { font-size: 14px; font-weight: 300; line-height: 1.5; max-width: 340px; }
+.afFooterBottom { align-items: center; border-top: 1px solid rgb(255 255 255 / 24%); display: flex; font-size: 11px; justify-content: space-between; padding-top: 34px; }
+.afFooterBottom nav { display: flex; gap: 22px; }
+.afFooterBottom p { margin: 0; }
+
+@media (max-width: 1024px) {
+  .afProductCarousel { height: 850px; padding: 80px 0; }
+  .afProductCard { width: 300px; }
+  .afProductImageLink { height: 410px; }
+  .afMosaicHeading, .afMosaic { margin-inline: 32px; }
+  .afMosaic { grid-template-rows: repeat(2, 240px); }
+  .afFooterGrid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 767px) {
+  .header .afBrandName { display: none; }
+  .header .afBrandMark { height: 34px; width: 34px; }
+  .afProductCarousel { height: 870px; padding: 64px 0; }
+  .afProductCard { width: min(300px, 80vw); }
+  .afProductImageLink { height: min(410px, 108vw); }
+  .afMosaicSection { padding: 80px 0; }
+  .afMosaicHeading { margin: 0 20px 44px; }
+  .afMosaic { gap: 6px; grid-template-columns: 1fr 1fr; grid-template-rows: 360px repeat(2, 210px); margin: 0; }
+  .afMosaicItem[data-size="hero"] { grid-column: span 2; grid-row: auto; }
+  .afMosaicItem span { bottom: 10px; left: 10px; max-width: calc(100% - 20px); }
+  .afFooter { padding: 64px 20px 30px; }
+  .afFooterBrand { padding-bottom: 48px; }
+  .afFooterBrand .afBrandName { display: block; font-size: 18px; }
+  .afFooterBrand .afBrandMark { height: 48px; width: 48px; }
+  .afFooterBrand p { margin-left: 60px; }
+  .afFooterGrid { grid-template-columns: 1fr; padding: 54px 0; }
+  .afFooterBottom { align-items: flex-start; flex-direction: column; gap: 32px; }
+  .afFooterBottom nav { flex-wrap: wrap; }
+}
