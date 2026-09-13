@@ -10,10 +10,10 @@ src/
   assets/fonts/            # Neue Helvetica 25 Ultra Light (chỉ dùng cho wordmark)
   components/
     brand/                 # BrandMark (SVG), BrandLogo, SplashScreen (màn intro)
-    layout/                # PageShell, SiteHeader (+ drawer), SiteFooter, Breadcrumbs, PageIntro
+    layout/                # PageShell, SiteHeader (+ drawer), ThemeToggle, SiteFooter, Breadcrumbs, PageIntro
     motion/                # SmoothScroll (Lenis), RevealObserver, ParallaxMedia, scroll-controller
     media/                 # AutoplayVideo
-    typography/            # SectionHeading, Eyebrow
+    typography/            # SectionHeading, SplitWords (reveal từng từ), Eyebrow
     ui/                    # PillLink, LineLink
     home/                  # HomePage, HeroStack, CollectionShowcase, BrandStory
     collections/           # CollectionsLanding (clone /en/products), ParallaxCover, ListingPage
@@ -34,12 +34,14 @@ public/alexander-ferros/
 
 - **Route mỏng**: `src/app/**/page.tsx` chỉ khai báo `metadata`, `generateStaticParams` và render một component trang.
 - **Đường dẫn tập trung**: luôn dùng `routes.*` từ `src/config/site.ts`, không hard-code chuỗi URL.
+- **Theme sáng/tối**: token ngữ nghĩa `surface` / `fg` / `line` / `tile` trong `globals.css` đổi theo `prefers-color-scheme`, hoặc theo `html[data-theme]` khi người dùng bấm nút mặt trời/mặt trăng (`ThemeToggle`, lưu ở `localStorage["af-theme"]`, bootstrap trước khi paint trong `layout.tsx`). Chỉ dùng `paper`/`ink` (trắng/đen cố định) cho chữ đè lên ảnh/video.
 - **Style**: Tailwind utility classes. Token màu/typography khai báo trong `src/app/globals.css` (`@theme`), kèm các utility `rail`, `type-display`, `type-display-serif`, `type-eyebrow`, `type-body`. CSS Module chỉ dùng cho animation phức tạp (SplashScreen).
 - **Typography**: Montserrat (font chính thức của Alexander Ferros, hỗ trợ tiếng Việt) cho heading/body; Cormorant Garamond italic cho dòng phụ của heading; Neue Helvetica Ultra Light chỉ cho wordmark "ALEXANDER FERROS".
 - **Dữ liệu client**: `src/lib/product-helpers.ts` chứa type + helper thuần (không import JSON) để client component dùng; `src/lib/products.ts` giữ dữ liệu và truy vấn cho server component.
 - **Chuyển động**:
   - `SplashScreen` khóa scroll, chạy stagger từng chữ rồi kéo màn lên; phát sự kiện `brand:splash-done`.
-  - `RevealObserver` chờ splash xong rồi mới reveal `[data-reveal]` (`"media"` = wipe, `"fade"` = chỉ opacity, mặc định = fade + translate). Delay từng phần tử qua `--reveal-delay`.
+  - `RevealObserver` chờ splash xong rồi mới reveal `[data-reveal]` (`"media"` = wipe bằng `mask-size`, `"fade"` = chỉ opacity, mặc định = fade + translate). Delay từng phần tử qua `--reveal-delay`; các từ trong heading (`[data-word]` do `SplitWords` tạo) chạy stagger 70ms/từ.
+  - `SiteHeader` đọc vị trí cuộn qua `onScroll` (Lenis) và ghi `transform` thẳng vào DOM với ngưỡng 28px/12px nên không giật khi vuốt.
   - `SmoothScroll` dùng Lenis; `scroll-controller.ts` là cầu nối để khóa/mở scroll và cuộn lên đầu khi đổi route.
   - `ParallaxMedia` dịch ảnh chậm hơn trang bằng `transform`, chỉ chạy khi phần tử trong viewport.
 
