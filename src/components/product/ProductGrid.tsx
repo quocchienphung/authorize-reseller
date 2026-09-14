@@ -29,7 +29,7 @@ const sortOptions: { value: SortOrder; label: string }[] = [
 ];
 
 const toolbarButtonClass =
-  "h-10 rounded-full border px-5 text-sm transition-colors duration-200 border-fg/25 text-fg/75 hover:border-fg hover:text-fg";
+  "h-10 rounded-none border px-5 text-sm transition-colors duration-200 border-fg/25 text-fg/75 hover:border-fg hover:text-fg";
 
 /** Filterable, searchable catalogue grid (4 columns on desktop like alexanderferros.com). */
 export function ProductGrid({ products, showCategoryFilter = true, initialCategory = "all" }: ProductGridProps) {
@@ -76,7 +76,7 @@ export function ProductGrid({ products, showCategoryFilter = true, initialCatego
               value={query}
               onChange={(event) => setQuery(event.target.value)}
               placeholder="Tìm theo tên hoặc mã"
-              className="h-10 w-full rounded-full border border-fg/25 bg-transparent pr-4 pl-11 text-sm text-fg placeholder:text-fg/45 focus:border-fg focus:outline-none sm:w-64"
+              className="h-10 w-full rounded-none border border-fg/25 bg-transparent pr-4 pl-11 text-sm text-fg placeholder:text-fg/45 focus:border-fg focus:outline-none sm:w-64"
             />
           </label>
           <label className="relative flex items-center">
@@ -84,7 +84,7 @@ export function ProductGrid({ products, showCategoryFilter = true, initialCatego
             <select
               value={sort}
               onChange={(event) => setSort(event.target.value as SortOrder)}
-              className="h-10 appearance-none rounded-full border border-fg/25 bg-transparent px-5 pr-10 text-sm text-fg focus:border-fg focus:outline-none [&_option]:text-surface"
+              className="h-10 appearance-none rounded-none border border-fg/25 bg-transparent px-5 pr-10 text-sm text-fg focus:border-fg focus:outline-none [&_option]:text-surface"
             >
               {sortOptions.map((option) => (
                 <option key={option.value} value={option.value}>

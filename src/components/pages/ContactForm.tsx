@@ -42,7 +42,7 @@ export function ContactForm({ appointment = false }: { appointment?: boolean }) 
       <div className="flex flex-col items-start gap-4 md:col-span-2">
         <button
           type="submit"
-          className="inline-flex min-h-12 items-center justify-center rounded-full border border-fg bg-fg px-8 text-[12px] font-medium tracking-[0.16em] text-surface uppercase transition-[background-color,color] duration-300 hover:bg-transparent hover:text-fg"
+          className="inline-flex min-h-12 items-center justify-center rounded-none border border-fg bg-fg px-8 text-[12px] font-medium tracking-[0.16em] text-surface uppercase transition-[background-color,color] duration-300 hover:bg-transparent hover:text-fg"
         >
           {appointment ? "Gửi yêu cầu đặt lịch" : "Gửi yêu cầu"}
         </button>

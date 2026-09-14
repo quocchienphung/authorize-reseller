@@ -18,10 +18,10 @@ type ProductCarouselProps = {
 };
 
 const arrowClass =
-  "inline-flex size-11 items-center justify-center rounded-full border border-fg/40 transition-[opacity,background-color,color] hover:bg-fg hover:text-surface disabled:pointer-events-none disabled:opacity-25";
+  "inline-flex size-11 items-center justify-center rounded-none border border-fg/40 transition-[opacity,background-color,color] hover:bg-fg hover:text-surface disabled:pointer-events-none disabled:opacity-25";
 
 /**
- * Audemars Piguet style novelty rail: sticky intro column on the left and a
+ * Audemars Piguet style novelty rail: intro column on the left and a
  * free-scrolling track of product tiles on the right.
  */
 export function ProductCarousel({
@@ -62,7 +62,7 @@ export function ProductCarousel({
   return (
     <section className={cn("rail-left py-24 md:py-28", className)}>
       <div className="grid gap-12 lg:grid-cols-[340px_1fr] lg:gap-16">
-        <div className="flex flex-col lg:sticky lg:top-40 lg:self-start" data-reveal>
+        <div className="flex flex-col lg:self-start" data-reveal>
           <SectionHeading primary={primary} secondary={secondary} />
           <LineLink href={link.href} className="mt-7">
             {link.label}

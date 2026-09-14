@@ -6,6 +6,8 @@
 export const siteConfig = {
   name: "Alexander Ferros",
   tagline: "Đồng hồ chính hãng",
+  /** Wordmark shown under the emblem on the opening splash screen. */
+  splashWordmark: "Authorize Reseller",
   description: "Khám phá bộ sưu tập đồng hồ Alexander Ferros chính hãng dành cho nam và nữ.",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
   locale: "vi",

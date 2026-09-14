@@ -17,13 +17,13 @@ const variantClasses = {
   onMedia: "border-paper/80 bg-transparent text-paper hover:bg-paper hover:text-ink",
 } as const;
 
-/** Monochrome pill call-to-action in the Audemars Piguet register. */
+/** Monochrome square-cornered call-to-action in the Audemars Piguet register. */
 export function PillLink({ className, children, variant = "solid", ...props }: PillLinkProps) {
   return (
     <Link
       {...props}
       className={cn(
-        "inline-flex min-h-12 items-center justify-center rounded-full border px-8 text-[12px] font-medium tracking-[0.16em] uppercase transition-[background-color,color,border-color] duration-300 ease-out",
+        "inline-flex min-h-12 items-center justify-center rounded-none border px-8 text-[12px] font-medium tracking-[0.16em] uppercase transition-[background-color,color,border-color] duration-300 ease-out",
         variantClasses[variant],
         className,
       )}

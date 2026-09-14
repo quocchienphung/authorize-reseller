@@ -51,7 +51,7 @@ export function SplashScreen() {
 
   if (phase === "hidden") return null;
 
-  const words = siteConfig.name.toUpperCase().split(" ");
+  const words = siteConfig.splashWordmark.toUpperCase().split(" ");
   let letterIndex = 0;
 
   return (

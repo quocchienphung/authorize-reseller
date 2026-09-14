@@ -77,7 +77,7 @@ export function AutoplayVideo({ src, poster, label, className, showControl = tru
           type="button"
           onClick={toggle}
           aria-label={playing ? `Tạm dừng ${label}` : `Phát ${label}`}
-          className="absolute right-(--rail) bottom-8 z-10 inline-flex size-[42px] items-center justify-center rounded-full border border-paper/70 text-paper transition-colors hover:bg-paper hover:text-ink"
+          className="absolute right-(--rail) bottom-8 z-10 inline-flex size-[42px] items-center justify-center rounded-none border border-paper/70 text-paper transition-colors hover:bg-paper hover:text-ink"
         >
           {playing ? <Pause className="size-3.5" aria-hidden="true" /> : <Play className="size-3.5" aria-hidden="true" />}
         </button>
