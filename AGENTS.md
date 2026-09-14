@@ -1,24 +1,20 @@
-<!-- BEGIN:nextjs-agent-rules -->
-
 # This is NOT the Next.js you know
 
 This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
 
 This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
 
-<!-- END:nextjs-agent-rules -->
-
-# Website Reverse-Engineer Template
+# Alexander Ferros — Authorised Reseller Website
 
 ## What This Is
-A reusable template for reverse-engineering any website into a clean, modern Next.js codebase using AI coding agents. The Next.js + shadcn/ui + Tailwind v4 base is pre-scaffolded — just run `/clone-website <url1> [<url2> ...]`.
+Storefront for the Alexander Ferros watch brand (Vietnamese copy). Layout and motion language follow audemarspiguet.com; products, cover imagery and the parallax banners come from alexanderferros.com. Full structure and conventions: `docs/ARCHITECTURE.md`.
 
 ## Tech Stack
 - **Framework:** Next.js 16 (App Router, React 19, TypeScript strict)
-- **UI:** shadcn/ui (Radix primitives, Tailwind CSS v4, `cn()` utility)
-- **Icons:** Lucide React (default — will be replaced/supplemented by extracted SVGs)
-- **Styling:** Tailwind CSS v4 with oklch design tokens
-- **Deployment:** Vercel
+- **Styling:** Tailwind CSS v4 with semantic theme tokens (`surface`, `fg`, `line`, `tile`) that flip between dark and light
+- **Motion:** Lenis smooth scroll, IntersectionObserver reveals, word-stagger headings, CSS parallax
+- **Fonts:** Montserrat + Cormorant Garamond (Google, Vietnamese subset); Neue Helvetica Ultra Light for the wordmark only
+- **Icons:** Lucide React + inline brand emblem (`src/components/brand/BrandMark.tsx`)
 
 ## Commands
 - `npm run dev` — Start dev server
@@ -26,44 +22,47 @@ A reusable template for reverse-engineering any website into a clean, modern Nex
 - `npm run lint` — ESLint check
 - `npm run typecheck` — TypeScript check
 - `npm run check` — Run lint + typecheck + build
+- `python scripts/scrape-alexander-ferros.py` — Refresh `src/data/products.json` and product images
 
 ## Code Style
 - TypeScript strict mode, no `any`
 - Named exports, PascalCase components, camelCase utils
-- Tailwind utility classes, no inline styles
-- 2-space indentation
-- Responsive: mobile-first
+- Tailwind utility classes; CSS Modules only for animation-heavy pieces (splash screen)
+- Route files (`src/app/**/page.tsx`) stay thin: metadata + one page component
+- Use `routes.*` and `siteConfig` from `src/config/site.ts` instead of hard-coded URLs or contact details
+- Client components import types/helpers from `src/lib/product-helpers.ts`, never the JSON-backed `src/lib/products.ts`
+- 2-space indentation, mobile-first responsive
 
 ## Design Principles
-- **Pixel-perfect emulation** — match the target's spacing, colors, typography exactly
-- **No personal aesthetic changes during emulation phase** — match 1:1 first, customize later
-- **Real content** — use actual text and assets from the target site, not placeholders
-- **Beauty-first** — every pixel matters
+- Keep the AP register: ultra-light uppercase display line + italic serif second line, generous rail spacing, restrained monochrome buttons (no gold/bronze fills)
+- Text over photos/video is always white (`text-paper`); everything else uses theme tokens so dark and light modes both work
+- Real content only: actual product names, SKUs, prices and official imagery
+- Respect `prefers-reduced-motion`
 
 ## Project Structure
 ```
 src/
-  app/              # Next.js routes
-  components/       # React components
-    ui/             # shadcn/ui primitives
-    icons.tsx       # Extracted SVG icons as React components
-  lib/
-    utils.ts        # cn() utility (shadcn)
-  types/            # TypeScript interfaces
-  hooks/            # Custom React hooks
-public/
-  images/           # Downloaded images from target site
-  videos/           # Downloaded videos from target site
-  seo/              # Favicons, OG images, webmanifest
+  app/              # Routes (Vietnamese slugs), globals.css tokens, icon.svg favicon
+  components/
+    brand/          # BrandMark, BrandLogo, SplashScreen
+    layout/         # PageShell, SiteHeader, ThemeToggle, SiteFooter, Breadcrumbs, PageIntro
+    motion/         # SmoothScroll, RevealObserver, ParallaxMedia, scroll-controller
+    media/          # AutoplayVideo
+    typography/     # SectionHeading, SplitWords, Eyebrow
+    ui/             # PillLink, LineLink
+    home/ collections/ product/ pages/   # Page compositions
+  config/site.ts    # Brand, contact, stores, routes, navigation
+  lib/              # products.ts (data), product-helpers.ts (pure helpers)
+  data/products.json
+public/alexander-ferros/   # covers, editorial, products, videos
 docs/
-  research/         # Inspection output (design tokens, components, layout)
-  design-references/ # Screenshots and visual references
-scripts/            # Asset download scripts
+  ARCHITECTURE.md
+  research/         # Audemars Piguet design tokens / component specs used as layout reference
+  design-references/# Screenshots of the AP reference
+scripts/scrape-alexander-ferros.py
 ```
 
 ## MOST IMPORTANT NOTES
 - When launching Claude Code agent teams, ALWAYS have each teammate work in their own worktree branch and merge everyone's work at the end, resolving any merge conflicts smartly since you are basically serving the orchestrator role and have full context to our goals, work given, work achieved, and desired outcomes.
-- After editing `AGENTS.md`, run `bash scripts/sync-agent-rules.sh` to regenerate platform-specific instruction files.
-- After editing `.claude/skills/clone-website/SKILL.md`, run `node scripts/sync-skills.mjs` to regenerate the skill for all platforms.
-
-@docs/research/INSPECTION_GUIDE.md
+- Do not reintroduce scraped Audemars Piguet assets or components; only its layout language is used.
+- Do not add a news/blog section from alexanderferros.com.

@@ -1,3 +1,11 @@
+# Third-party notices
+
+The initial scaffold of this repository was generated from the
+"AI Website Cloner Template" (https://github.com/JCodesMore/ai-website-cloner-template),
+released under the MIT License. The template files themselves have since been removed;
+the notice below is retained as required by that license.
+
+```
 MIT License
 
 Copyright (c) 2025 JCodesMore
@@ -19,3 +27,4 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+```
