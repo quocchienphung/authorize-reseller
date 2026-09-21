@@ -17,6 +17,7 @@ import {
 } from "@/lib/products";
 import { cn } from "@/lib/utils";
 import { ProductCarousel } from "./ProductCarousel";
+import { ProductGallery } from "./ProductGallery";
 
 const keyFacts: { label: string; pattern: RegExp }[] = [
   { label: "Kích thước", pattern: /Kích thước/i },
@@ -50,7 +51,7 @@ export function ProductDetailPage({ product }: { product: Product }) {
       <section className="rail grid gap-12 pt-8 pb-20 lg:grid-cols-[minmax(0,460px)_1fr] lg:items-center lg:gap-20 lg:pb-28">
         <div className="flex flex-col lg:order-1" data-reveal>
           <Eyebrow>{product.category}</Eyebrow>
-          <SectionHeading as="h1" primary="Alexander Ferros" secondary={product.sku} className="mt-5" />
+          <SectionHeading as="h1" primary="Alexander Ferros" secondary={product.sku} secondaryVariant="code" className="mt-5" />
           <p className="mt-8 text-2xl font-light">{product.price}</p>
           <p className="type-body mt-6 max-w-[440px] text-fg/75">{product.description}</p>
           <div className="mt-10 flex flex-wrap items-center gap-6">
@@ -59,16 +60,8 @@ export function ProductDetailPage({ product }: { product: Product }) {
           </div>
         </div>
 
-        <div className="relative aspect-square overflow-hidden border border-line bg-tile lg:order-2 lg:aspect-[5/4]" data-reveal="media">
-          <Image
-            src={product.image}
-            alt={product.name}
-            fill
-            priority
-            quality={90}
-            sizes="(min-width: 1024px) 60vw, 100vw"
-            className="object-contain p-[8%]"
-          />
+        <div className="min-w-0 lg:order-2">
+          <ProductGallery hero={product.image} photos={product.images} name={product.name} />
         </div>
       </section>
 

@@ -17,7 +17,7 @@ src/
     ui/                    # PillLink, LineLink
     home/                  # HomePage, HeroStack, CollectionShowcase, BrandStory
     collections/           # CollectionsLanding (clone /en/products), ParallaxCover, ListingPage
-    product/               # ProductCard, ProductCarousel, ProductMosaic, ProductGrid, ProductDetailPage
+    product/               # ProductCard, ProductCarousel, ProductMosaic, ProductGrid, ProductDetailPage, ProductGallery
     pages/                 # Services, Warranty, FAQ, Stores, Contact, Pricing
   config/site.ts           # Tên thương hiệu, liên hệ, mạng xã hội, showroom, routes, navigation
   lib/products.ts          # Dữ liệu + truy vấn catalogue (server)
@@ -26,7 +26,7 @@ src/
 public/alexander-ferros/
   covers/                  # Ảnh bìa parallax (our-collection, mens, womens) desktop + mobile
   editorial/               # Ảnh brand story
-  products/                # Ảnh sản phẩm PNG nền trong suốt 1000×1000
+  products/                # Ảnh sản phẩm PNG nền trong suốt 1000×1000; <slug>/NN.webp là ảnh thực tế (gallery) của từng phiên bản
   videos/                  # Hai phim hero
 ```
 
@@ -50,5 +50,6 @@ public/alexander-ferros/
 ```bash
 npm run dev      # dev server (webpack)
 npm run check    # lint + typecheck + build
-python scripts/scrape-alexander-ferros.py   # cập nhật src/data/products.json và ảnh sản phẩm
+python scripts/scrape-alexander-ferros.py   # cập nhật src/data/products.json và ảnh sản phẩm (cần Pillow)
+python scripts/scrape-alexander-ferros.py --gallery-only   # chỉ tải lại gallery từng phiên bản
 ```

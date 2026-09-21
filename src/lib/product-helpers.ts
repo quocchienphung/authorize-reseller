@@ -9,7 +9,10 @@ export type ProductCategory = "Đồng hồ nam" | "Đồng hồ nữ";
 export type CategorySlug = "nam" | "nu";
 
 export type Product = {
+  /** Hero product shot used on cards and as the first gallery frame. */
   image: string;
+  /** Official photography for this exact variant (wrist, detail and lifestyle shots). */
+  images: string[];
   name: string;
   sku: string;
   slug: string;
