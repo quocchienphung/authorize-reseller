@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { BrandLogo } from "@/components/brand/BrandLogo";
-import { routes, siteConfig, stores } from "@/config/site";
+import { routes, siteConfig, storeAddress, stores } from "@/config/site";
+import { cn } from "@/lib/utils";
 
 const footerColumns = [
   {
@@ -52,22 +53,24 @@ export function SiteFooter() {
         <div className="flex flex-col gap-3">
           <h2 className="type-eyebrow mb-2">Liên hệ</h2>
           <a href={siteConfig.contact.hotline.href} className={linkClass}>
-            Hotline CSKH: {siteConfig.contact.hotline.label}
+            {siteConfig.contact.hotline.label}
           </a>
-          <a href={siteConfig.contact.whatsapp.href} className={linkClass}>
-            WhatsApp: {siteConfig.contact.whatsapp.label}
-          </a>
-          <a href={siteConfig.contact.email.href} className={linkClass}>
-            {siteConfig.contact.email.label}
+          <a href={siteConfig.contact.zalo.href} target="_blank" rel="noreferrer" className={linkClass}>
+            {siteConfig.contact.zalo.label}
           </a>
         </div>
 
         <div className="flex flex-col gap-3">
           <h2 className="type-eyebrow mb-2">Showroom</h2>
           {stores.map((store) => (
-            <Link key={store.slug} href={routes.store(store.slug)} className={linkClass}>
-              {store.address}, {store.district}, {store.city}
-            </Link>
+            <div key={store.slug} className="flex flex-col gap-1">
+              <Link href={routes.store(store.slug)} className={linkClass}>
+                {storeAddress(store)}
+              </Link>
+              <a href={store.mapUrl} target="_blank" rel="noreferrer" className={cn(linkClass, "text-fg/70")}>
+                Chỉ đường trên Google Maps
+              </a>
+            </div>
           ))}
         </div>
       </div>

@@ -5,7 +5,7 @@ import { SectionHeading } from "@/components/typography/SectionHeading";
 import { SplitWords } from "@/components/typography/SplitWords";
 import { LineLink } from "@/components/ui/LineLink";
 import { PillLink } from "@/components/ui/PillLink";
-import { routes, siteConfig, stores, type Store } from "@/config/site";
+import { routes, siteConfig, storeAddress, stores, type Store } from "@/config/site";
 
 export function StoresPage() {
   return (
@@ -36,6 +36,9 @@ export function StoresPage() {
               <PillLink href={routes.store(store.slug)} variant="outline">
                 Xem showroom
               </PillLink>
+              <LineLink href={store.mapUrl} target="_blank" rel="noreferrer">
+                Chỉ đường trên Google Maps
+              </LineLink>
               <a href={siteConfig.contact.hotline.href} className="text-sm font-medium underline-offset-4 hover:underline">
                 {siteConfig.contact.hotline.label}
               </a>
@@ -59,7 +62,9 @@ export function StoreDetailPage({ store }: { store: Store }) {
           <p className="type-body mt-8 max-w-md text-fg/75">Đặt lịch trước để được chuẩn bị sản phẩm và tư vấn riêng.</p>
           <div className="mt-8 flex flex-wrap items-center gap-6">
             <PillLink href={routes.appointment}>Đặt lịch trải nghiệm</PillLink>
-            <LineLink href={routes.stores}>Tất cả showroom</LineLink>
+            <LineLink href={store.mapUrl} target="_blank" rel="noreferrer">
+              Chỉ đường trên Google Maps
+            </LineLink>
           </div>
         </div>
         <div className="relative aspect-[4/5] overflow-hidden" data-reveal="media">
@@ -67,16 +72,22 @@ export function StoreDetailPage({ store }: { store: Store }) {
         </div>
       </section>
 
-      <section className="rail grid gap-px border-y border-line pb-0 md:grid-cols-3" aria-label="Thông tin showroom">
+      <section className="rail grid gap-px border-y border-line pb-0 md:grid-cols-2 lg:grid-cols-4" aria-label="Thông tin showroom">
         {[
-          { title: "Địa chỉ", body: `${store.address}, ${store.district}, ${store.city}` },
+          { title: "Địa chỉ", body: storeAddress(store), href: store.mapUrl, external: true },
           { title: "Giờ mở cửa", body: store.hours },
-          { title: "Hotline", body: siteConfig.contact.hotline.label, href: siteConfig.contact.hotline.href },
+          { title: "Điện thoại", body: siteConfig.contact.hotline.label, href: siteConfig.contact.hotline.href },
+          { title: "Zalo", body: siteConfig.contact.zalo.href.replace("https://", ""), href: siteConfig.contact.zalo.href, external: true },
         ].map((item) => (
           <div key={item.title} className="py-10 md:pr-10" data-reveal>
             <h2 className="type-eyebrow m-0 text-fg/55">{item.title}</h2>
             {item.href ? (
-              <a href={item.href} className="mt-3 block text-xl font-light hover:opacity-60">
+              <a
+                href={item.href}
+                target={item.external ? "_blank" : undefined}
+                rel={item.external ? "noreferrer" : undefined}
+                className="mt-3 block text-xl font-light hover:opacity-60"
+              >
                 {item.body}
               </a>
             ) : (

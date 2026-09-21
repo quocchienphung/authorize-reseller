@@ -1,10 +1,11 @@
 import { PageIntro } from "@/components/layout/PageIntro";
 import { PageShell } from "@/components/layout/PageShell";
+import { storeAddress, stores } from "@/config/site";
 
 const faqs = [
   ["Làm thế nào để chọn đúng sản phẩm?", "Bạn có thể lọc theo đồng hồ nam, nữ, tìm bằng mã sản phẩm hoặc đặt lịch để được tư vấn trực tiếp tại showroom."],
   ["Sản phẩm có được bảo hành không?", "Có. Mọi sản phẩm được bảo hành chính hãng theo chính sách của Alexander Ferros, kèm chứng nhận kiểm định từ Trường Omega."],
-  ["Tôi có thể xem sản phẩm trực tiếp ở đâu?", "Bạn có thể trải nghiệm tại showroom 6A Lê Thánh Tông (Hoàn Kiếm) hoặc 247 Kim Mã (Ba Đình), Hà Nội."],
+  ["Tôi có thể xem sản phẩm trực tiếp ở đâu?", `Bạn có thể trải nghiệm tại showroom ${storeAddress(stores[0])}.`],
   ["Giá trên website có theo từng phiên bản không?", "Có. Mỗi mã sản phẩm có tên gọi và mức giá riêng, được cập nhật theo catalog chính thức."],
   ["Đồng hồ sử dụng bộ máy gì?", "Bộ sưu tập sử dụng máy cơ Miyota (8215, 9015, 9120) hoặc máy pin Miyota / VJ series của Nhật Bản, tùy từng phiên bản."],
 ] as const;

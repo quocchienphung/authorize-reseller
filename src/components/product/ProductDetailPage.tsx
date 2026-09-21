@@ -48,8 +48,8 @@ export function ProductDetailPage({ product }: { product: Product }) {
       />
 
       {/* Hero: copy on the left, hero shot on the right */}
-      <section className="rail grid gap-12 pt-8 pb-20 lg:grid-cols-[minmax(0,460px)_1fr] lg:items-center lg:gap-20 lg:pb-28">
-        <div className="flex flex-col lg:order-1" data-reveal>
+      <section className="rail grid gap-12 pt-8 pb-20 lg:grid-cols-[minmax(0,460px)_1fr] lg:items-center lg:gap-x-20 lg:gap-y-4 lg:pb-28">
+        <div className="flex flex-col lg:col-start-1 lg:row-start-1" data-reveal>
           <Eyebrow>{product.category}</Eyebrow>
           <SectionHeading as="h1" primary="Alexander Ferros" secondary={product.sku} secondaryVariant="code" className="mt-5" />
           <p className="mt-8 text-2xl font-light">{product.price}</p>
@@ -60,9 +60,7 @@ export function ProductDetailPage({ product }: { product: Product }) {
           </div>
         </div>
 
-        <div className="min-w-0 lg:order-2">
-          <ProductGallery hero={product.image} photos={product.images} name={product.name} />
-        </div>
+        <ProductGallery hero={product.image} photos={product.images} name={product.name} />
       </section>
 
       {/* Key facts */}

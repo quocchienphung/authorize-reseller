@@ -47,6 +47,8 @@ type ProductGalleryProps = {
 /**
  * Hero image plus a thumbnail strip. Frames mount on first selection and
  * crossfade once loaded, so unselected photography is never downloaded.
+ * On desktop the wrapper dissolves (`lg:contents`) so the strip sits in its
+ * own grid row and the product copy stays centred on the hero image alone.
  */
 export function ProductGallery({ hero, photos, name }: ProductGalleryProps) {
   const frames = [
@@ -60,8 +62,11 @@ export function ProductGallery({ hero, photos, name }: ProductGalleryProps) {
   const [{ active, shown, mounted }, dispatch] = useReducer(reduce, initialState);
 
   return (
-    <div className="flex flex-col gap-4">
-      <div className="relative aspect-square overflow-hidden border border-line bg-tile lg:aspect-[5/4]" data-reveal="media">
+    <div className="flex min-w-0 flex-col gap-4 lg:contents">
+      <div
+        className="relative aspect-square overflow-hidden border border-line bg-tile lg:col-start-2 lg:row-start-1 lg:aspect-[5/4]"
+        data-reveal="media"
+      >
         {frames.map((frame, index) =>
           mounted.includes(index) ? (
             <Image
@@ -87,7 +92,7 @@ export function ProductGallery({ hero, photos, name }: ProductGalleryProps) {
         <div
           role="group"
           aria-label="Thư viện ảnh sản phẩm"
-          className="scrollbar-none flex snap-x snap-proximity gap-3 overflow-x-auto"
+          className="scrollbar-none flex min-w-0 snap-x snap-proximity gap-3 overflow-x-auto lg:col-start-2 lg:row-start-2"
           data-reveal="fade"
         >
           {frames.map((frame, index) => (

@@ -3,12 +3,12 @@ import { PageIntro } from "@/components/layout/PageIntro";
 import { PageShell } from "@/components/layout/PageShell";
 import { SectionHeading } from "@/components/typography/SectionHeading";
 import { PillLink } from "@/components/ui/PillLink";
-import { routes } from "@/config/site";
+import { routes, siteConfig } from "@/config/site";
 
 const commitments = [
   { index: "01", title: "Kiểm định", copy: "100% sản phẩm trải qua quy trình kiểm tra và căn chỉnh tại Việt Nam bởi đội ngũ chuyên gia Trường Omega." },
   { index: "02", title: "Bảo hành", copy: "Bảo hành chính hãng toàn cầu, kèm chứng nhận và thẻ bảo hành chính thức — hỗ trợ cả lỗi do người dùng." },
-  { index: "03", title: "Hỗ trợ", copy: "Hỗ trợ kỹ thuật toàn quốc qua hotline 1900 3222 và hệ thống showroom, đại lý ủy quyền." },
+  { index: "03", title: "Hỗ trợ", copy: `Hỗ trợ kỹ thuật toàn quốc qua hotline ${siteConfig.contact.hotline.label} và hệ thống showroom, đại lý ủy quyền.` },
 ] as const;
 
 export function WarrantyPage() {

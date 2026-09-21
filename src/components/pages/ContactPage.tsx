@@ -1,7 +1,8 @@
 import { PageShell } from "@/components/layout/PageShell";
 import { Eyebrow } from "@/components/typography/Eyebrow";
 import { SectionHeading } from "@/components/typography/SectionHeading";
-import { siteConfig } from "@/config/site";
+import { LineLink } from "@/components/ui/LineLink";
+import { siteConfig, storeAddress, stores } from "@/config/site";
 import { ContactForm } from "./ContactForm";
 
 type ContactPageProps = {
@@ -28,14 +29,22 @@ export function ContactPage({ appointment = false }: ContactPageProps) {
           </p>
           <div className="mt-10 flex flex-col gap-3 text-base font-light">
             <a href={siteConfig.contact.hotline.href} className="hover:opacity-60">
-              Hotline {siteConfig.contact.hotline.label}
+              {siteConfig.contact.hotline.label}
             </a>
-            <a href={siteConfig.contact.whatsapp.href} className="hover:opacity-60">
-              WhatsApp {siteConfig.contact.whatsapp.label}
+            <a href={siteConfig.contact.zalo.href} target="_blank" rel="noreferrer" className="hover:opacity-60">
+              {siteConfig.contact.zalo.label}
             </a>
-            <a href={siteConfig.contact.email.href} className="hover:opacity-60">
-              {siteConfig.contact.email.label}
-            </a>
+          </div>
+          <div className="mt-8 flex flex-col gap-2">
+            <p className="type-eyebrow m-0 text-fg/55">Showroom</p>
+            {stores.map((store) => (
+              <div key={store.slug} className="flex flex-col gap-2 text-base font-light">
+                <span>{storeAddress(store)}</span>
+                <LineLink href={store.mapUrl} target="_blank" rel="noreferrer">
+                  Chỉ đường trên Google Maps
+                </LineLink>
+              </div>
+            ))}
           </div>
         </div>
         <div data-reveal="fade">

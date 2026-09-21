@@ -12,15 +12,13 @@ export const siteConfig = {
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
   locale: "vi",
   contact: {
-    hotline: { label: "1900 3222", href: "tel:19003222" },
-    whatsapp: { label: "0813 880 666", href: "tel:0813880666" },
-    email: { label: "sales@alexanderferros.com", href: "mailto:sales@alexanderferros.com" },
+    hotline: { label: "0382 669 211", href: "tel:0382669211" },
+    zalo: { label: "Zalo", href: "https://zalo.me/0382669211" },
   },
   social: [
-    { label: "Instagram", href: "https://www.instagram.com/alexander.ferros" },
-    { label: "TikTok", href: "https://www.tiktok.com/@alexander.ferros" },
-    { label: "YouTube", href: "https://www.youtube.com/@AlexanderFerros" },
-    { label: "Facebook", href: "https://www.facebook.com/alexanderferrosofficial" },
+    { label: "Instagram", href: "https://www.instagram.com/lenhiluxury" },
+    { label: "TikTok", href: "https://www.tiktok.com/@lenhiiiiiiiii" },
+    { label: "Facebook", href: "https://www.facebook.com/share/1C7PwahaGD/" },
   ],
 } as const;
 
@@ -75,8 +73,8 @@ export const navigation: readonly NavGroup[] = [
     label: "Liên hệ",
     links: [
       { label: "Liên hệ chúng tôi", href: routes.contact },
-      { label: `Hotline ${siteConfig.contact.hotline.label}`, href: siteConfig.contact.hotline.href },
-      { label: siteConfig.contact.email.label, href: siteConfig.contact.email.href },
+      { label: siteConfig.contact.hotline.label, href: siteConfig.contact.hotline.href },
+      { label: siteConfig.contact.zalo.label, href: siteConfig.contact.zalo.href, external: true },
       { label: "Instagram", href: siteConfig.social[0].href, external: true },
     ],
   },
@@ -89,26 +87,27 @@ export type Store = {
   district: string;
   city: string;
   hours: string;
+  /** Google Maps place page, opened in a new tab for directions. */
+  mapUrl: string;
 };
 
 export const stores: readonly Store[] = [
   {
-    slug: "le-thanh-tong",
-    name: "Showroom 6A Lê Thánh Tông",
-    address: "6A Lê Thánh Tông",
-    district: "Hoàn Kiếm",
-    city: "Hà Nội",
+    slug: "van-tien-dung",
+    name: "Showroom 1247 Văn Tiến Dũng",
+    address: "1247 Văn Tiến Dũng",
+    district: "Bình Hưng",
+    city: "Hồ Chí Minh",
     hours: "09:00 – 21:00, Thứ Hai – Chủ Nhật",
-  },
-  {
-    slug: "kim-ma",
-    name: "Showroom 247 Kim Mã",
-    address: "247 Kim Mã",
-    district: "Ba Đình",
-    city: "Hà Nội",
-    hours: "09:00 – 21:00, Thứ Hai – Chủ Nhật",
+    mapUrl:
+      "https://www.google.com/maps/place/L%C3%AA+Nhi+Luxury/@10.7100719,106.6531793,17z/data=!3m1!4b1!4m6!3m5!1s0x31752f00373c54df:0x92acb7b3c42a02f!8m2!3d10.7100719!4d106.6557542!16s%2Fg%2F11nq_1vtdc?entry=ttu",
   },
 ];
+
+/** Full postal address for the store, as printed on the site. */
+export function storeAddress(store: Store) {
+  return `${store.address}, ${store.district}, ${store.city}`;
+}
 
 export function getStore(slug: string) {
   return stores.find((store) => store.slug === slug);

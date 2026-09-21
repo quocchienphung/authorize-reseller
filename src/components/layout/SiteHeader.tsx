@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronLeft, MapPin, Phone, Search, Watch, X } from "lucide-react";
+import { ChevronLeft, MapPin, MessageCircle, Phone, Search, Watch, X } from "lucide-react";
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { BrandLogo } from "@/components/brand/BrandLogo";
@@ -241,6 +241,10 @@ function MenuDrawer({ productCount, onClose }: { productCount: number; onClose: 
           <a href={siteConfig.contact.hotline.href} className="inline-flex items-center gap-3 hover:opacity-60">
             <Phone className="size-[18px] stroke-[1.4]" aria-hidden="true" />
             {siteConfig.contact.hotline.label}
+          </a>
+          <a href={siteConfig.contact.zalo.href} target="_blank" rel="noreferrer" className="inline-flex items-center gap-3 hover:opacity-60">
+            <MessageCircle className="size-[18px] stroke-[1.4]" aria-hidden="true" />
+            {siteConfig.contact.zalo.label}
           </a>
         </div>
       </div>
