@@ -1,3 +1,4 @@
+import { preload } from "react-dom";
 import { AutoplayVideo } from "@/components/media/AutoplayVideo";
 import { VideoWall, type WallFilm } from "@/components/media/VideoWall";
 import { SectionHeading } from "@/components/typography/SectionHeading";
@@ -35,6 +36,7 @@ const craftFilms: readonly WallFilm[] = [1, 2, 3, 4].map((n) => ({
  * (four uncropped portrait films with the copy set to the right on desktop).
  */
 export function HeroStack() {
+  preload(hero.poster, { as: "image", fetchPriority: "high" });
   return (
     <div>
       <section className="relative h-svh min-h-[640px] md:min-h-[720px]" aria-label={hero.primary}>

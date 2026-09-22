@@ -1,7 +1,7 @@
-import Image from "next/image";
 import type { ReactNode } from "react";
 import { Breadcrumbs, type Crumb } from "@/components/layout/Breadcrumbs";
 import { PageShell } from "@/components/layout/PageShell";
+import { CoverPicture } from "@/components/media/CoverPicture";
 import { ProductGrid } from "@/components/product/ProductGrid";
 import { SectionHeading } from "@/components/typography/SectionHeading";
 import type { CategorySlug, Product } from "@/lib/products";
@@ -36,8 +36,7 @@ export function ListingPage({
     <PageShell solidHeader>
       {cover ? (
         <div className="relative aspect-[9/16] w-full overflow-hidden md:aspect-[5/2]" data-reveal="media">
-          <Image src={cover.desktopSrc} alt={cover.alt} fill priority sizes="100vw" quality={90} className="object-cover max-md:hidden" />
-          <Image src={cover.mobileSrc} alt={cover.alt} fill priority sizes="100vw" quality={90} className="object-cover md:hidden" />
+          <CoverPicture desktopSrc={cover.desktopSrc} mobileSrc={cover.mobileSrc} alt={cover.alt} priority />
         </div>
       ) : null}
 

@@ -1,5 +1,5 @@
-import Image from "next/image";
 import type { ReactNode } from "react";
+import { CoverPicture } from "@/components/media/CoverPicture";
 import { ParallaxMedia } from "@/components/motion/ParallaxMedia";
 import { cn } from "@/lib/utils";
 
@@ -47,8 +47,7 @@ export function ParallaxCover({
   return (
     <section className={cn("relative w-full", ratioClasses[ratio], className)}>
       <ParallaxMedia className="absolute inset-0" overscan={ratio === "landscape" ? 0.2 : 0.16}>
-        <Image src={desktopSrc} alt={alt} fill priority={priority} sizes="100vw" quality={90} className="object-cover max-md:hidden" />
-        <Image src={mobileSrc} alt={alt} fill priority={priority} sizes="100vw" quality={90} className="object-cover md:hidden" />
+        <CoverPicture desktopSrc={desktopSrc} mobileSrc={mobileSrc} alt={alt} priority={priority} />
       </ParallaxMedia>
       {veil ? <div className="pointer-events-none absolute inset-0 z-[1] bg-ink/40" aria-hidden="true" /> : null}
       <div
