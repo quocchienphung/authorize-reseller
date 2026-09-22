@@ -17,22 +17,28 @@ type VideoWallProps = {
 
 const MOBILE_QUERY = "(max-width: 767px)";
 const REDUCED_QUERY = "(prefers-reduced-motion: reduce)";
-/** Belt drift while the page is still, in frame widths per second. */
-const IDLE_SPEED = 1 / 9;
-/** Belt pixels travelled per pixel of vertical scroll. */
-const SCROLL_GAIN = 0.9;
-/** Fastest the belt may go, in frame widths per second. */
-const MAX_SPEED = 3;
-/** How quickly the belt takes on / sheds the finger's speed (per frame). */
-const INERTIA = 0.12;
+/** Vertical scroll (in viewport heights) that carries the belt one full frame. */
+const SCROLL_PER_FRAME = 0.75;
+/** How far the rendered belt closes on its target each frame: scrolling / settling / under the finger. */
+const FOLLOW = 0.16;
+const SETTLE = 0.11;
+const DRAG_FOLLOW = 0.45;
+/** No scroll change for this long counts as a stop → the belt parks on the nearest frame. */
+const IDLE_MS = 140;
+/** Finger travel before a horizontal drag is recognised, and the swipe that turns the belt one frame. */
+const DRAG_START_PX = 6;
+const SWIPE_FRACTION = 0.18;
+const SWIPE_VELOCITY = 350; // px / s
 
 /**
  * Four portrait films shown uncropped. Desktop: one 2.25:1 wall of four
- * 9:16 columns. Mobile: the same frames on an endless belt that glides
- * right → left (1 → 2 → 3 → 4 → 1 …) at a pace set by how fast the visitor
- * scrolls — faster scrolling turns the belt faster, either way, with a slow
- * drift when the page is still. The section stays in normal document flow:
- * nothing is pinned and vertical scrolling is never intercepted. One
+ * 9:16 columns. Mobile: the same frames on an endless belt (1 → 2 → 3 → 4 →
+ * 1 …) that the page scroll turns — scrolling down carries it left at the
+ * visitor's own pace, scrolling up carries it back. When the finger stops,
+ * the belt parks on the nearest whole frame. A horizontal swipe on the films
+ * turns the belt one frame either way, looping without end. The section stays
+ * in normal document flow: nothing is pinned and vertical scrolling is never
+ * intercepted (touch-action: pan-y leaves it to the browser). One
  * requestAnimationFrame loop writes the transform straight to the DOM.
  */
 export function VideoWall({ films, className }: VideoWallProps) {
@@ -81,22 +87,25 @@ export function VideoWall({ films, className }: VideoWallProps) {
     let frameW = 1;
     let railW = 1;
     let loopW = 1;
+    let pxPerFrame = 1;
     const measure = () => {
       frameW = items[0]?.offsetWidth || 1;
       railW = rail.clientWidth || 1;
       loopW = frameW * count;
+      pxPerFrame = Math.max(1, window.innerHeight * SCROLL_PER_FRAME);
     };
 
-    let offset = 0;
-    let speed = 0; // px / s, positive = belt moves left
-    let scrollVel = 0; // px / s of the page
+    // Belt position in px along the endless track (unbounded; wrapped only when painted).
+    let target = 0;
+    let rendered = 0;
     let lastY = window.scrollY;
-    let lastNow = 0;
+    let lastScrollAt = 0;
     let near = false;
     let frame = 0;
     const playing = new Array<boolean>(items.length).fill(false);
 
     const paint = () => {
+      const offset = ((rendered % loopW) + loopW) % loopW;
       track.style.transform = `translate3d(${(-offset).toFixed(2)}px, 0, 0)`;
       // Only the frames actually inside the rail play; the rest wait silently.
       for (let i = 0; i < items.length; i++) {
@@ -111,42 +120,113 @@ export function VideoWall({ films, className }: VideoWallProps) {
       }
     };
 
+    // Drag state (pointer events; the browser keeps vertical pans for itself via touch-action: pan-y).
+    let pointerId = -1;
+    let dragging = false;
+    let downX = 0;
+    let downY = 0;
+    let downTarget = 0;
+    let dragX = 0;
+    let dragAt = 0;
+    let dragVelocity = 0;
+
+    const nearestFrame = (value: number) => Math.round(value / frameW) * frameW;
+
     const loop = (now: number) => {
-      const dt = lastNow ? Math.min((now - lastNow) / 1000, 0.05) : 1 / 60;
-      lastNow = now;
-
       const y = window.scrollY;
-      const rawVel = (y - lastY) / dt;
-      lastY = y;
-      scrollVel += (rawVel - scrollVel) * INERTIA;
+      if (y !== lastY) {
+        // Scroll-linked: the belt travels with the page, one frame per SCROLL_PER_FRAME viewports.
+        if (!dragging) target += ((y - lastY) / pxPerFrame) * frameW;
+        lastY = y;
+        lastScrollAt = now;
+      }
+      const idle = now - lastScrollAt > IDLE_MS;
+      // Finger lifted → park on the nearest whole frame so nothing is cut off.
+      if (idle && !dragging) target = nearestFrame(target);
 
-      const target = IDLE_SPEED * frameW + SCROLL_GAIN * scrollVel;
-      const limit = MAX_SPEED * frameW;
-      speed += (Math.max(-limit, Math.min(limit, target)) - speed) * INERTIA;
-
-      offset = (((offset + speed * dt) % loopW) + loopW) % loopW;
+      const ease = dragging ? DRAG_FOLLOW : idle ? SETTLE : FOLLOW;
+      rendered += (target - rendered) * ease;
+      if (Math.abs(target - rendered) < 0.05) rendered = target;
       paint();
+
+      if (idle && !dragging && rendered === target) {
+        // Parked: rebase so the unbounded counters never grow, and sleep until the next gesture.
+        const base = Math.floor(rendered / loopW) * loopW;
+        rendered -= base;
+        target -= base;
+        frame = 0;
+        return;
+      }
       frame = window.requestAnimationFrame(loop);
     };
 
     const start = () => {
-      if (frame) return;
-      lastNow = 0;
-      lastY = window.scrollY;
+      if (frame || !near) return;
       frame = window.requestAnimationFrame(loop);
     };
     const stop = () => {
       window.cancelAnimationFrame(frame);
       frame = 0;
     };
+    const wake = () => {
+      lastScrollAt = performance.now();
+      start();
+    };
 
-    // Belt and films run only while the wall is near the viewport; the offset is kept, so nothing jumps on return.
+    const onPointerDown = (event: PointerEvent) => {
+      if (event.pointerType === "mouse" && event.button !== 0) return;
+      pointerId = event.pointerId;
+      dragging = false;
+      downX = dragX = event.clientX;
+      downY = event.clientY;
+      dragAt = event.timeStamp;
+      dragVelocity = 0;
+      downTarget = nearestFrame(target);
+    };
+    const onPointerMove = (event: PointerEvent) => {
+      if (event.pointerId !== pointerId) return;
+      const dx = event.clientX - downX;
+      if (!dragging) {
+        const dy = event.clientY - downY;
+        // Wait for a clear sideways intent; a vertical gesture belongs to the page.
+        if (Math.abs(dx) < DRAG_START_PX || Math.abs(dx) < Math.abs(dy)) return;
+        dragging = true;
+        rail.setPointerCapture(pointerId);
+      }
+      const dt = Math.max(1, event.timeStamp - dragAt);
+      dragVelocity = ((event.clientX - dragX) / dt) * 1000;
+      dragX = event.clientX;
+      dragAt = event.timeStamp;
+      target = downTarget - dx; // finger left → belt left → next film
+      wake();
+    };
+    const release = (event: PointerEvent) => {
+      if (event.pointerId !== pointerId) return;
+      pointerId = -1;
+      if (!dragging) return;
+      dragging = false;
+      if (rail.hasPointerCapture(event.pointerId)) rail.releasePointerCapture(event.pointerId);
+      // A real swipe (distance or flick) turns exactly one frame in its direction; anything less springs back.
+      const travelled = target - downTarget;
+      const flick = Math.abs(dragVelocity) > SWIPE_VELOCITY ? -Math.sign(dragVelocity) : 0;
+      const step = Math.abs(travelled) > frameW * SWIPE_FRACTION ? Math.sign(travelled) : flick;
+      target = downTarget + step * frameW;
+      lastScrollAt = 0; // count as idle so the belt settles straight away
+      wake();
+    };
+
+    // Belt and films run only while the wall is near the viewport; the position is kept, so nothing jumps on return.
     const observer = new IntersectionObserver(
       ([entry]) => {
         near = entry.isIntersecting;
-        if (near) start();
-        else {
+        if (near) {
+          lastY = window.scrollY;
+          wake();
+        } else {
+          // Out of sight: park instantly so the wall is whole the moment it comes back.
           stop();
+          target = nearestFrame(target);
+          rendered = target;
           paint();
         }
       },
@@ -154,18 +234,30 @@ export function VideoWall({ films, className }: VideoWallProps) {
     );
     const onResize = () => {
       measure();
+      target = nearestFrame(target);
+      rendered = target;
       paint();
     };
 
     measure();
     paint();
     observer.observe(rail);
+    window.addEventListener("scroll", wake, { passive: true });
     window.addEventListener("resize", onResize);
+    rail.addEventListener("pointerdown", onPointerDown);
+    rail.addEventListener("pointermove", onPointerMove);
+    rail.addEventListener("pointerup", release);
+    rail.addEventListener("pointercancel", release);
 
     return () => {
       stop();
       observer.disconnect();
+      window.removeEventListener("scroll", wake);
       window.removeEventListener("resize", onResize);
+      rail.removeEventListener("pointerdown", onPointerDown);
+      rail.removeEventListener("pointermove", onPointerMove);
+      rail.removeEventListener("pointerup", release);
+      rail.removeEventListener("pointercancel", release);
       track.style.transform = "";
       videos.forEach((video) => video.pause());
     };
@@ -177,8 +269,9 @@ export function VideoWall({ films, className }: VideoWallProps) {
       className={cn(
         "bg-ink",
         // Mobile fallback (no JS / reduced motion): one full-width frame per swipe, horizontal pans stay inside this box.
+        // Belt: vertical pans stay with the browser, sideways drags reach the pointer handlers.
         belt
-          ? "overflow-hidden"
+          ? "overflow-hidden select-none [touch-action:pan-y]"
           : "overflow-x-auto overflow-y-hidden snap-x snap-mandatory scrollbar-none [touch-action:pan-x_pan-y]",
         // Desktop: four equal 9:16 columns forming one 2.25:1 wall, no gaps.
         "md:aspect-[2.25/1] md:overflow-hidden",
