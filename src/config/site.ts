@@ -78,6 +78,8 @@ export const navigation: readonly NavGroup[] = [
       { label: siteConfig.contact.hotline.label, href: siteConfig.contact.hotline.href },
       { label: siteConfig.contact.zalo.label, href: siteConfig.contact.zalo.href, external: true },
       { label: "Instagram", href: siteConfig.social[0].href, external: true },
+      { label: "Facebook", href: siteConfig.social[2].href, external: true },
+      { label: "TikTok", href: siteConfig.social[1].href, external: true },
     ],
   },
 ];
