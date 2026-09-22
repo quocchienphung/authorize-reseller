@@ -8,6 +8,8 @@ export const siteConfig = {
   tagline: "Đồng hồ chính hãng",
   /** Wordmark shown under the emblem on the opening splash screen. */
   splashWordmark: "Authorize Reseller",
+  /** The authorised reseller operating this storefront (header brand rotator, accessible names). */
+  reseller: { name: "Le Nhi Luxury", role: "Authorized Reseller" },
   description: "Khám phá bộ sưu tập đồng hồ Alexander Ferros chính hãng dành cho nam và nữ.",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
   locale: "vi",

@@ -10,7 +10,9 @@ const heroes = [
     description:
       "Trước khi đến tay khách hàng, mỗi chiếc Alexander Ferros đều trải qua quy trình kiểm định nghiêm ngặt bởi các chuyên gia tại Viện Đồng Hồ Trường Omega.",
     cta: { label: "Khám phá bộ sưu tập", href: routes.collections },
-    video: "/alexander-ferros/videos/official-film.mp4",
+    // Trimmed to the opening dial close-up (0–3.15s) of the official film; the full cut is in git history.
+    video: "/alexander-ferros/videos/official-film-intro.mp4",
+    poster: "/alexander-ferros/videos/official-film-intro-poster.jpg",
   },
   {
     primary: "NGHỆ THUẬT",
@@ -18,6 +20,7 @@ const heroes = [
     description: "Kế thừa truyền thống Geneva, chúng tôi gìn giữ những kỹ thuật thủ công quý giá nhất.",
     cta: { label: "Xem tất cả sản phẩm", href: routes.catalogue },
     video: "/alexander-ferros/videos/atelier.mp4",
+    poster: undefined,
   },
 ] as const;
 
@@ -28,7 +31,7 @@ export function HeroStack() {
       {heroes.map((hero, index) => (
         <section key={hero.video} className="relative h-svh min-h-[640px] md:min-h-[720px]" aria-label={hero.primary}>
           <div className="absolute inset-0 overflow-hidden">
-            <AutoplayVideo src={hero.video} label={`${hero.primary} ${hero.secondary}`} />
+            <AutoplayVideo src={hero.video} poster={hero.poster} label={`${hero.primary} ${hero.secondary}`} />
           </div>
           <div
             className="pointer-events-none absolute inset-0 z-[1] bg-[linear-gradient(90deg,rgb(0_0_0/0.54)_0%,rgb(0_0_0/0.2)_38%,rgb(0_0_0/0.05)_72%),linear-gradient(0deg,rgb(0_0_0/0.3),transparent_45%)]"

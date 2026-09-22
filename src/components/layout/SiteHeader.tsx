@@ -3,7 +3,7 @@
 import { ChevronLeft, MapPin, MessageCircle, Phone, Search, Watch, X } from "lucide-react";
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { BrandLogo } from "@/components/brand/BrandLogo";
+import { BrandRotator } from "@/components/brand/BrandRotator";
 import { lockScroll, onScroll, unlockScroll } from "@/components/motion/scroll-controller";
 import { ThemeToggle } from "./ThemeToggle";
 import { navigation, routes, siteConfig } from "@/config/site";
@@ -103,7 +103,13 @@ export function SiteHeader({ solid = false, productCount }: SiteHeaderProps) {
           </span>
         </button>
 
-        <BrandLogo markOnly className="justify-self-center" markClassName="size-12 md:size-[58px]" />
+        <Link
+          href={routes.home}
+          aria-label={`${siteConfig.reseller.name} – ${siteConfig.name} – Trang chủ`}
+          className="block justify-self-center text-current no-underline"
+        >
+          <BrandRotator markClassName="size-12 md:size-[58px]" />
+        </Link>
 
         <nav className="flex items-center gap-1 justify-self-end md:gap-3" aria-label="Liên kết nhanh">
           <Link href={routes.catalogue} aria-label="Tất cả đồng hồ" className={iconLinkClass}>
