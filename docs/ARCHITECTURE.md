@@ -9,10 +9,10 @@ src/
   app/                     # Route files: chỉ metadata + compose component, không chứa UI
   assets/fonts/            # Neue Helvetica 25 Ultra Light (chỉ dùng cho wordmark)
   components/
-    brand/                 # BrandMark (SVG), BrandLogo, SplashScreen (màn intro)
+    brand/                 # BrandMark (SVG), BrandLogo, BrandRotator (logo ↔ Le Nhi Luxury trong header), SplashScreen (màn intro)
     layout/                # PageShell, SiteHeader (+ drawer), ThemeToggle, SiteFooter, Breadcrumbs, PageIntro
     motion/                # SmoothScroll (Lenis), RevealObserver, ParallaxMedia, scroll-controller
-    media/                 # AutoplayVideo
+    media/                 # AutoplayVideo, VideoWall (4 phim dọc 9:16: grid desktop / rail vuốt ngang mobile)
     typography/            # SectionHeading, SplitWords (reveal từng từ), Eyebrow
     ui/                    # PillLink, LineLink
     home/                  # HomePage, HeroStack, CollectionShowcase, BrandStory
@@ -27,7 +27,7 @@ public/alexander-ferros/
   covers/                  # Ảnh bìa parallax (our-collection, mens, womens) desktop + mobile
   editorial/               # Ảnh brand story
   products/                # Ảnh sản phẩm PNG nền trong suốt 1000×1000; <slug>/NN.webp là ảnh thực tế (gallery) của từng phiên bản
-  videos/                  # Hai phim hero
+  videos/                  # official-film-intro (3s cận cảnh mặt số), atelier-1..4 (phim dọc xưởng chế tác), atelier (trang dịch vụ)
 ```
 
 ## Quy ước

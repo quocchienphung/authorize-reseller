@@ -26,12 +26,12 @@ const brandItems: readonly BrandItem[] = [
   {
     type: "text",
     value: siteConfig.reseller.name,
-    className: "text-[clamp(11px,3.1vw,12.5px)] font-normal tracking-[0.18em] md:text-[13px]",
+    className: "text-[clamp(9px,8cqw,13px)] font-light tracking-[0.22em] md:text-[13px]",
   },
   {
     type: "text",
     value: siteConfig.reseller.role,
-    className: "text-[clamp(8px,2.35vw,9.5px)] font-normal tracking-[0.2em] md:text-[10px] md:tracking-[0.22em]",
+    className: "text-[clamp(6.5px,5.2cqw,10.5px)] font-extralight tracking-[0.26em] md:text-[11px] md:tracking-[0.28em]",
   },
   { type: "logo" },
 ];
@@ -107,7 +107,8 @@ export function BrandRotator({ markClassName, className }: BrandRotatorProps) {
       aria-hidden="true"
       className={cn(
         // Fixed viewport: wide enough for the longest text, narrow enough to never crowd the mobile controls.
-        "relative block h-12 w-[min(200px,calc(100vw-2*var(--rail)-168px))] overflow-hidden md:h-[58px] md:w-[220px]",
+        // It is a size container so the mobile text sizes (cqw) scale with whatever width is left.
+        "relative block h-12 w-[min(200px,calc(100vw-2*var(--rail)-168px))] overflow-hidden @container md:h-[58px] md:w-[220px]",
         className,
       )}
     >
