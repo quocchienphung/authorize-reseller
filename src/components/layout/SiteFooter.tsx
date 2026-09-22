@@ -43,20 +43,26 @@ export function SiteFooter() {
 
         {/* Dealer certificate: the document at a modest size, the claim set beside it in the display register. */}
         <figure className="m-0 flex items-start gap-6 md:gap-8 lg:justify-self-end" data-reveal>
-          <div className="relative w-[112px] shrink-0 overflow-hidden border border-line bg-paper md:w-[132px]">
+          <a
+            href={certificate.image}
+            target="_blank"
+            rel="noreferrer"
+            className="block w-[112px] shrink-0 overflow-hidden border border-line bg-paper transition-opacity hover:opacity-80 md:w-[140px]"
+            aria-label="Mở chứng nhận đại lý ở kích thước đầy đủ"
+          >
             <Image
               src={certificate.image}
               alt={`Chứng nhận ${siteConfig.reseller.name} là đại lý bán hàng chính thức của ${siteConfig.name}`}
               width={900}
               height={1253}
-              sizes="132px"
+              sizes="140px"
               className="block h-auto w-full"
             />
-          </div>
+          </a>
           <figcaption className="flex flex-col pt-1">
             <p className="type-eyebrow m-0 opacity-70">Chứng nhận đại lý</p>
             <p className="m-0 mt-4 text-[22px] leading-none font-extralight tracking-[0.04em] uppercase md:text-[26px]">Lê Nhi Luxury</p>
-            <p className="font-serif m-0 mt-1.5 text-[24px] leading-none font-medium italic md:text-[28px]">đại lý phân phối chính hãng</p>
+            <p className="font-serif m-0 mt-1.5 text-[24px] leading-[1.05] font-medium italic [text-wrap:balance] md:text-[28px]">đại lý phân phối chính hãng</p>
             <p className="m-0 mt-5 max-w-[300px] text-sm leading-relaxed font-light text-fg/70">
               Được {certificate.issuer} — {certificate.issuerRole} — chứng nhận, hiệu lực đến {certificate.validUntil}.
             </p>

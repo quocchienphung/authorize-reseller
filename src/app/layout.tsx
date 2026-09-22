@@ -5,6 +5,7 @@ import Script from "next/script";
 import { SplashScreen } from "@/components/brand/SplashScreen";
 import { RevealObserver } from "@/components/motion/RevealObserver";
 import { SmoothScroll } from "@/components/motion/SmoothScroll";
+import { StructuredData } from "@/components/seo/StructuredData";
 import { siteConfig, THEME_STORAGE_KEY } from "@/config/site";
 import "./globals.css";
 
@@ -34,18 +35,39 @@ const brandSerif = Cormorant_Garamond({
   display: "swap",
 });
 
+const reseller = siteConfig.reseller.displayName;
+
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: `${siteConfig.name} | ${siteConfig.tagline}`,
-    template: `%s | ${siteConfig.name}`,
+    default: `${reseller} | Đại lý ${siteConfig.name} chính hãng`,
+    template: `%s | ${reseller}`,
   },
   description: siteConfig.description,
+  applicationName: reseller,
+  keywords: [
+    "Lê Nhi Luxury",
+    "lenhiluxury",
+    "lenhiluxury.com",
+    "Alexander Ferros",
+    "đồng hồ Alexander Ferros",
+    "đồng hồ Alexander Ferros chính hãng",
+    "đại lý Alexander Ferros",
+    "đồng hồ nam",
+    "đồng hồ nữ",
+  ],
+  // Every page is its own canonical; previews and mirrors point Google at the production domain.
+  alternates: { canonical: "./" },
+  robots: { index: true, follow: true, googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1 } },
   openGraph: {
-    siteName: siteConfig.name,
+    siteName: reseller,
     locale: "vi_VN",
     type: "website",
+    url: "./",
   },
+  twitter: { card: "summary_large_image" },
+  // Paste the code from Google Search Console → Settings → Ownership verification into GOOGLE_SITE_VERIFICATION.
+  verification: process.env.GOOGLE_SITE_VERIFICATION ? { google: process.env.GOOGLE_SITE_VERIFICATION } : undefined,
 };
 
 /** Applies a saved theme choice before first paint so there is no flash. */
@@ -60,6 +82,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     >
       <body className="flex min-h-full flex-col">
         <Script id="theme-bootstrap" strategy="beforeInteractive">{themeBootstrap}</Script>
+        <StructuredData />
         <SplashScreen />
         <SmoothScroll />
         <RevealObserver />

@@ -11,6 +11,8 @@ export const siteConfig = {
   /** The authorised reseller operating this storefront (header brand rotator, accessible names). */
   reseller: {
     name: "Le Nhi Luxury",
+    /** Diacritic form for copy, page titles and structured data. */
+    displayName: "Lê Nhi Luxury",
     role: "Authorized Reseller",
     /** Dealer certificate issued by the brand's Vietnamese distributor, shown in the footer. */
     certificate: {
@@ -20,8 +22,10 @@ export const siteConfig = {
       validUntil: "31.12.2027",
     },
   },
-  description: "Khám phá bộ sưu tập đồng hồ Alexander Ferros chính hãng dành cho nam và nữ.",
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
+  description:
+    "Lê Nhi Luxury – đại lý phân phối chính hãng đồng hồ Alexander Ferros tại Việt Nam. Bộ sưu tập nam và nữ, kiểm định tại Trường Omega, bảo hành chính hãng, showroom 1247 Văn Tiến Dũng, TP Hồ Chí Minh.",
+  /** Public origin: the production domain unless a deployment overrides it (previews, local dev). */
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://lenhiluxury.com",
   locale: "vi",
   contact: {
     hotline: { label: "0382 669 211", href: "tel:0382669211" },
