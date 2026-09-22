@@ -39,8 +39,8 @@ public/alexander-ferros/
 - **Typography**: Montserrat (font chính thức của Alexander Ferros, hỗ trợ tiếng Việt) cho heading/body; Cormorant Garamond italic cho dòng phụ của heading; Neue Helvetica Ultra Light chỉ cho wordmark "ALEXANDER FERROS".
 - **Dữ liệu client**: `src/lib/product-helpers.ts` chứa type + helper thuần (không import JSON) để client component dùng; `src/lib/products.ts` giữ dữ liệu và truy vấn cho server component.
 - **Chuyển động**:
-  - `SplashScreen` khóa scroll, chạy stagger từng chữ rồi kéo màn lên; phát sự kiện `brand:splash-done`.
-  - `RevealObserver` chờ splash xong rồi mới reveal `[data-reveal]` (`"media"` = wipe bằng `mask-size`, `"fade"` = chỉ opacity, mặc định = fade + translate). Delay từng phần tử qua `--reveal-delay`; các từ trong heading (`[data-word]` do `SplitWords` tạo) chạy stagger 70ms/từ.
+  - `SplashScreen` khóa scroll, chạy stagger từng chữ rồi kéo màn lên; phát `brand:splash-leave` lúc màn bắt đầu kéo và `brand:splash-done` khi màn đã đi.
+  - `RevealObserver` chờ splash xong rồi mới reveal `[data-reveal]` (`"media"` = wipe bằng `mask-size`, `"fade"` = chỉ opacity, mặc định = fade + translate). Delay từng phần tử qua `--reveal-delay`; các từ trong heading (`[data-word]` do `SplitWords` tạo) chạy stagger 70ms/từ. Khi màn còn che, phần tử **vẫn được vẽ** phía sau (để trình duyệt ghi LCP ngay lần vẽ đầu); chỉ ẩn tức thì (transition tắt dưới `html[data-splash="active"]`) lúc `splash-leave`, rồi animate như cũ lúc `splash-done`.
   - `SiteHeader` đọc vị trí cuộn qua `onScroll` (Lenis) và ghi `transform` thẳng vào DOM với ngưỡng 28px/12px nên không giật khi vuốt.
   - `SmoothScroll` dùng Lenis; `scroll-controller.ts` là cầu nối để khóa/mở scroll và cuộn lên đầu khi đổi route.
   - `ParallaxMedia` dịch ảnh chậm hơn trang bằng `transform`, chỉ chạy khi phần tử trong viewport.
@@ -59,4 +59,9 @@ python scripts/scrape-alexander-ferros.py --gallery-only   # chỉ tải lại g
 - `src/lib/seo.ts` — nguồn duy nhất cho title/description/canonical/OG (`pageMetadata`, `productMetadata`, `categoryMetadata`, `familyMetadata`) và JSON-LD (`organizationJsonLd`, `productJsonLd`, `breadcrumbJsonLd`, `productListJsonLd`, `faqJsonLd`, `articleJsonLd`). Mọi URL tuyệt đối đi qua `absoluteUrl()` → `siteConfig.url` (`https://lenhiluxury.com`; `NEXT_PUBLIC_SITE_URL` chỉ để override preview).
 - `src/app/sitemap.ts`, `src/app/robots.ts` — sinh từ cùng dữ liệu với trang; preview Vercel bị `Disallow: /` + header `X-Robots-Tag` (xem `next.config.ts`).
 - `src/lib/articles.ts` + `/kien-thuc` — khung bài viết kiến thức; rỗng thì route 404 và không vào sitemap.
-- Brand SEO: `siteConfig.reseller.brand` ("LENHI Luxury") cho title/schema; `displayName` ("Lê Nhi Luxury") cho copy.
+- Brand SEO: một cách viết duy nhất "LENHI Luxury" (`siteConfig.reseller.name` = wordmark header, `brand` = title/schema/OG); `displayName` ("Lê Nhi Luxury") chỉ dùng khi trích chứng nhận và làm `alternateName`. Số điện thoại trong JSON-LD ở dạng quốc tế (+84…).
+- `FamilyIndex` (cuối trang nam/nữ) liên kết tới mọi dòng sản phẩm để trang dòng cách trang chủ ≤ 3 click.
+- Báo cáo: `SEO_AUDIT.md`, `SEO_ROADMAP.md`, `SEO_IMPLEMENTATION_REPORT.md` (gốc repo).
+- `siteConfig.commerce` — sự thật chung cho mọi Offer (availability + nhãn hiển thị; `returnPolicy`/`shipping` để `undefined` cho đến khi có chính sách thật → khi điền sẽ tự vào JSON-LD).
+- `/llms.txt` (route sinh từ data), `public/<key>.txt` + `npm run indexnow` (IndexNow cho Bing/Yandex; Google không dùng).
+- Audit chuẩn: repo AgriciDaniel/claude-seo — chạy `parse_html.py`, `schema_ecommerce_validate.py`, `preload_check.py` với `CLAUDE_SEO_LOCAL_TARGETS=localhost:3000`.

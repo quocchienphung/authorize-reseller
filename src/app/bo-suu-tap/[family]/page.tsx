@@ -35,7 +35,7 @@ export default async function FamilyPage({ params }: FamilyPageProps) {
         { label: lead.category, href: categoryRoute(lead) },
         { label: familyReference(family) },
       ]}
-      heading={{ primary: `DÒNG ${familyReference(family)}`, secondary: `${familyProducts.length} phiên bản` }}
+      heading={{ primary: `DÒNG ${familyReference(family)}`, secondary: `Alexander Ferros · ${familyProducts.length} phiên bản` }}
       description={`${lead.category} Alexander Ferros ${familyReference(family)} chính hãng. ${lead.description}`}
       products={familyProducts}
       showCategoryFilter={false}

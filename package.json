@@ -12,7 +12,8 @@
     "start": "next start",
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
-    "check": "npm run lint && npm run typecheck && npm run build"
+    "check": "npm run lint && npm run typecheck && npm run build",
+    "indexnow": "node scripts/indexnow-submit.mjs"
   },
   "dependencies": {
     "clsx": "^2.1.1",

@@ -19,7 +19,7 @@ const DESKTOP_QUERY = "(min-width: 768px)";
  * optimisation still come from next/image via `getImageProps`.
  */
 export function CoverPicture({ desktopSrc, mobileSrc, alt, priority = false, className }: CoverPictureProps) {
-  const common = { alt, fill: true, sizes: "100vw", quality: 90, priority } as const;
+  const common = { alt, fill: true, sizes: "100vw", quality: 90, preload: priority, fetchPriority: priority ? "high" : undefined } as const;
   const {
     props: { srcSet: desktopSrcSet },
   } = getImageProps({ ...common, src: desktopSrc });

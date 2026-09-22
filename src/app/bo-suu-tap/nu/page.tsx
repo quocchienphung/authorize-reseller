@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { FamilyIndex } from "@/components/collections/FamilyIndex";
 import { ListingPage } from "@/components/collections/ListingPage";
 import { routes } from "@/config/site";
 import { JsonLd } from "@/components/seo/JsonLd";
@@ -20,8 +21,9 @@ export default function WomensCollectionPage() {
       description={`${womensProducts.length} phiên bản với tỷ lệ tinh tế và bảng màu đa dạng dành cho phái đẹp.`}
       products={womensProducts}
       showCategoryFilter={false}
+      after={<FamilyIndex products={womensProducts} secondary="đồng hồ nữ" />}
     >
-      <JsonLd data={productListJsonLd("Đồng hồ Alexander Ferros nữ", routes.womens, womensProducts)} />
+      <JsonLd data={productListJsonLd("Đồng hồ nữ Alexander Ferros", routes.womens, womensProducts)} />
     </ListingPage>
   );
 }

@@ -52,7 +52,7 @@ export function SiteFooter() {
           >
             <Image
               src={certificate.image}
-              alt={`Chứng nhận ${siteConfig.reseller.name} là đại lý bán hàng chính thức của ${siteConfig.name}`}
+              alt={`Chứng nhận ${siteConfig.reseller.displayName} là đại lý bán hàng chính thức của ${siteConfig.name}`}
               width={900}
               height={1253}
               sizes="140px"
@@ -73,7 +73,7 @@ export function SiteFooter() {
       <div className="grid gap-12 py-16 md:grid-cols-2 lg:grid-cols-4">
         {footerColumns.map((column) => (
           <nav key={column.title} aria-label={column.title} className="flex flex-col gap-3">
-            <h2 className="type-eyebrow mb-2">{column.title}</h2>
+            <p className="type-eyebrow m-0 mb-2">{column.title}</p>
             {column.links.map((link) => (
               <Link key={link.href} href={link.href} className={linkClass}>
                 {link.label}
@@ -83,7 +83,7 @@ export function SiteFooter() {
         ))}
 
         <div className="flex flex-col gap-3">
-          <h2 className="type-eyebrow mb-2">Liên hệ</h2>
+          <p className="type-eyebrow m-0 mb-2">Liên hệ</p>
           <a href={siteConfig.contact.hotline.href} className={linkClass}>
             {siteConfig.contact.hotline.label}
           </a>
@@ -93,7 +93,7 @@ export function SiteFooter() {
         </div>
 
         <div className="flex flex-col gap-3">
-          <h2 className="type-eyebrow mb-2">Showroom</h2>
+          <p className="type-eyebrow m-0 mb-2">Showroom</p>
           {stores.map((store) => (
             <div key={store.slug} className="flex flex-col gap-1">
               <Link href={routes.store(store.slug)} className={linkClass}>

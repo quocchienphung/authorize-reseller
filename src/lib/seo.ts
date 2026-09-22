@@ -7,6 +7,7 @@
 import type { Metadata } from "next";
 import { routes, siteConfig, type Store } from "@/config/site";
 import { categoryLabel, familyDisplayName, familyReference, getSpecification, parsePrice, type Product } from "@/lib/product-helpers";
+import { products } from "@/lib/products";
 
 export const BRAND = siteConfig.reseller.brand;
 export const WATCH_BRAND = siteConfig.name;
@@ -83,27 +84,41 @@ export function productModelName(product: Product) {
  * specifications: category, case size, movement, glass, strap, water
  * resistance. Shown on the page and reused as the meta description lead.
  */
-export function productSummary(product: Product) {
+export function productSummary(product: Product, { compact = false } = {}) {
   const facts = productFacts(product);
   const parts = [
     facts.size ? `${product.category.toLowerCase()} ${facts.size}` : product.category.toLowerCase(),
     facts.movement ? `máy ${facts.movement}` : undefined,
     facts.glass ? facts.glass.toLowerCase() : undefined,
-    facts.strap ? facts.strap.toLowerCase() : undefined,
+    // The strap line can run long ("dây kim loại hoặc dây da"); the meta description drops it first.
+    facts.strap && !compact ? facts.strap.toLowerCase() : undefined,
     facts.waterResistance ? `chống nước ${facts.waterResistance}` : undefined,
   ].filter((part): part is string => Boolean(part));
   return `${productModelName(product)} — ${parts.join(", ")}.`;
 }
 
+/** Google shows ~155–160 characters; keep the strap only when it fits. */
+const META_DESCRIPTION_MAX = 160;
+
 export function productMetadata(product: Product): Metadata {
   const model = productModelName(product);
-  const facts = productSummary(product).replace(`${model} — `, "").replace(/^./, (c) => c.toUpperCase());
-  const description = `${model} chính hãng tại ${BRAND}. ${facts} Giá ${product.price}, bảo hành chính hãng.`;
+  // Opens with the reference (what people search) followed by facts the title does not carry.
+  const compose = (compact: boolean, cta: string) => {
+    const facts = productSummary(product, { compact }).replace(`${model} — `, "");
+    return `${model}: ${facts} Giá ${product.price}. Chính hãng, ${cta}`;
+  };
+  // Longest variant that fits: with strap → without strap → shortest call to action.
+  const description =
+    [compose(false, `xem tại showroom ${BRAND}.`), compose(true, `xem tại showroom ${BRAND}.`), compose(true, `tại ${BRAND}.`)].find(
+      (candidate) => candidate.length <= META_DESCRIPTION_MAX,
+    ) ?? compose(true, `tại ${BRAND}.`);
   return pageMetadata({
-    title: `${model} chính hãng`,
+    // "Đồng hồ" leads every query for the brand; the catalogue name itself is "Đồng Hồ Alexander Ferros <ref>".
+    title: `Đồng hồ ${model} chính hãng`,
     description,
     path: routes.product(product.slug),
-    image: { url: product.image, alt: product.name, width: 1200, height: 1200 },
+    // No width/height: the renders come in several sizes (1000², 2000², 3375²…); crawlers read the file.
+    image: { url: product.image, alt: product.name },
   });
 }
 
@@ -134,9 +149,45 @@ export function productJsonLd(product: Product) {
       url,
       price: parsePrice(product.price),
       priceCurrency: "VND",
+      availability: siteConfig.commerce.availability,
       itemCondition: "https://schema.org/NewCondition",
       seller: { "@id": ORGANIZATION_ID },
+      ...offerPolicies(),
     },
+  };
+}
+
+/** Return / shipping terms only once the owner has declared them in siteConfig.commerce. */
+function offerPolicies() {
+  const { returnPolicy, shipping } = siteConfig.commerce;
+  const quantitative = (min: number, max: number) => ({ "@type": "QuantitativeValue", minValue: min, maxValue: max, unitCode: "DAY" });
+  return {
+    ...(returnPolicy
+      ? {
+          hasMerchantReturnPolicy: {
+            "@type": "MerchantReturnPolicy",
+            applicableCountry: "VN",
+            returnPolicyCategory: "https://schema.org/MerchantReturnFiniteReturnWindow",
+            merchantReturnDays: returnPolicy.merchantReturnDays,
+            returnMethod: "https://schema.org/ReturnInStore",
+            returnFees: returnPolicy.returnFees,
+          },
+        }
+      : {}),
+    ...(shipping
+      ? {
+          shippingDetails: {
+            "@type": "OfferShippingDetails",
+            shippingRate: { "@type": "MonetaryAmount", value: shipping.rate, currency: "VND" },
+            shippingDestination: { "@type": "DefinedRegion", addressCountry: "VN" },
+            deliveryTime: {
+              "@type": "ShippingDeliveryTime",
+              handlingTime: quantitative(...shipping.handlingDays),
+              transitTime: quantitative(...shipping.transitDays),
+            },
+          },
+        }
+      : {}),
   };
 }
 
@@ -147,7 +198,7 @@ export function productJsonLd(product: Product) {
 export function categoryMetadata(category: "nam" | "nu", count: number): Metadata {
   const isMens = category === "nam";
   return pageMetadata({
-    title: `Đồng hồ ${WATCH_BRAND} ${category === "nam" ? "nam" : "nữ"} chính hãng`,
+    title: `Đồng hồ ${category === "nam" ? "nam" : "nữ"} ${WATCH_BRAND} chính hãng`,
     description: isMens
       ? `${count} mẫu đồng hồ ${WATCH_BRAND} nam chính hãng tại ${BRAND}: máy automatic và quartz Miyota, kính sapphire, vỏ thép 316L. Xem giá từng phiên bản.`
       : `${count} mẫu đồng hồ ${WATCH_BRAND} nữ chính hãng tại ${BRAND}: thiết kế thanh lịch, kính sapphire, máy Nhật Bản bền bỉ. Xem giá từng phiên bản.`,
@@ -165,14 +216,19 @@ export function familyMetadata(familySlug: string, familyProducts: readonly Prod
   const reference = familyReference(familySlug);
   const lead = familyProducts[0];
   const skuList = familyProducts.map((product) => product.sku);
-  const skus = skuList.length > 4 ? `${skuList.slice(0, 4).join(", ")}…` : skuList.join(", ");
   const facts = productFacts(lead);
   const detail = [facts.size, facts.movement ? `máy ${facts.movement}` : undefined, facts.glass].filter(Boolean).join(", ");
+  // List as many references as fit in the snippet (4 → 3 → 2), then the shared facts.
+  const compose = (shown: number) => {
+    const skus = skuList.length > shown ? `${skuList.slice(0, shown).join(", ")}…` : skuList.join(", ");
+    return `Dòng ${WATCH_BRAND} ${reference} (${lead.category.toLowerCase()}) với ${familyProducts.length} phiên bản: ${skus}. ${detail ? `${detail}. ` : ""}Giá từng mã tại ${BRAND}.`;
+  };
+  const description = [4, 3, 2].map(compose).find((candidate) => candidate.length <= META_DESCRIPTION_MAX) ?? compose(2);
   return pageMetadata({
     title: `Đồng hồ ${WATCH_BRAND} ${reference} chính hãng`,
-    description: `Dòng ${WATCH_BRAND} ${reference} (${lead.category.toLowerCase()}) với ${familyProducts.length} phiên bản: ${skus}. ${detail ? `${detail}. ` : ""}Giá và thông số từng mã tại ${BRAND}.`,
+    description,
     path: routes.family(familySlug),
-    image: { url: lead.image, alt: lead.name, width: 1200, height: 1200 },
+    image: { url: lead.image, alt: lead.name },
   });
 }
 
@@ -222,10 +278,23 @@ export function faqJsonLd(faqs: readonly (readonly [string, string])[]) {
   };
 }
 
+/** "Lê Nhi Luxury" → "Le Nhi Luxury": the spelling people type without diacritics. */
+function asciiName(name: string) {
+  return name.normalize("NFD").replace(/\p{M}/gu, "").replace("đ", "d").replace("Đ", "D");
+}
+
+/** "0382 669 211" → "+84382669211": schema.org expects the international form. */
+function internationalPhone(label: string) {
+  return `+84${label.replaceAll(" ", "").replace(/^0/, "")}`;
+}
+
 /** Organization + physical Store + WebSite, from siteConfig only. */
 export function organizationJsonLd(store: Store) {
-  const telephone = siteConfig.contact.hotline.label.replaceAll(" ", "");
+  const telephone = internationalPhone(siteConfig.contact.hotline.label);
   const reseller = siteConfig.reseller;
+  const prices = products.map((product) => parsePrice(product.price)).filter((price) => price > 0);
+  const vnd = new Intl.NumberFormat("vi-VN");
+  const priceRange = prices.length ? `${vnd.format(Math.min(...prices))} – ${vnd.format(Math.max(...prices))} ₫` : undefined;
   return {
     "@context": "https://schema.org",
     "@graph": [
@@ -233,10 +302,17 @@ export function organizationJsonLd(store: Store) {
         "@type": "Organization",
         "@id": ORGANIZATION_ID,
         name: BRAND,
-        alternateName: [reseller.displayName, reseller.name, "lenhiluxury", "lenhiluxury.com"],
+        alternateName: [reseller.displayName, asciiName(reseller.displayName), "lenhiluxury", "lenhiluxury.com"],
         url: siteConfig.url,
         logo: absoluteUrl("/icon.svg"),
         telephone,
+        contactPoint: {
+          "@type": "ContactPoint",
+          telephone,
+          contactType: "customer service",
+          areaServed: "VN",
+          availableLanguage: "vi",
+        },
         sameAs: siteConfig.social.map((item) => item.href),
         brand: { "@type": "Brand", name: WATCH_BRAND, url: "https://alexanderferros.com" },
       },
@@ -249,7 +325,9 @@ export function organizationJsonLd(store: Store) {
         url: absoluteUrl(routes.store(store.slug)),
         image: absoluteUrl(DEFAULT_OG_IMAGE.url),
         telephone,
+        priceRange,
         hasMap: store.mapUrl,
+        geo: { "@type": "GeoCoordinates", latitude: store.geo.latitude, longitude: store.geo.longitude },
         parentOrganization: { "@id": ORGANIZATION_ID },
         address: {
           "@type": "PostalAddress",

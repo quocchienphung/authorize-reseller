@@ -6,7 +6,7 @@ import { Eyebrow } from "@/components/typography/Eyebrow";
 import { SectionHeading } from "@/components/typography/SectionHeading";
 import { LineLink } from "@/components/ui/LineLink";
 import { PillLink } from "@/components/ui/PillLink";
-import { routes } from "@/config/site";
+import { routes, siteConfig } from "@/config/site";
 import {
   categoryRoute,
   familyReference,
@@ -55,6 +55,7 @@ export function ProductDetailPage({ product }: { product: Product }) {
           <Eyebrow>{product.category}</Eyebrow>
           <SectionHeading as="h1" primary="Alexander Ferros" secondary={product.sku} secondaryVariant="code" className="mt-5" />
           <p className="mt-8 text-2xl font-light">{product.price}</p>
+          <p className="type-eyebrow mt-3 text-fg/60">{siteConfig.commerce.availabilityLabel}</p>
           {/* Factual one-liner unique to this reference (its own specs), then the family story. */}
           <p className="type-body mt-6 max-w-[440px] text-fg/75">{productSummary(product)}</p>
           <p className="type-body mt-3 max-w-[440px] text-fg/75">{product.description}</p>

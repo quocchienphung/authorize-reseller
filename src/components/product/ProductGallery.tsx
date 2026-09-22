@@ -74,7 +74,8 @@ export function ProductGallery({ hero, photos, name }: ProductGalleryProps) {
               src={frame.src}
               alt={frame.alt}
               fill
-              priority={index === 0}
+              preload={index === 0}
+              fetchPriority={index === 0 ? "high" : undefined}
               quality={90}
               sizes="(min-width: 1024px) 60vw, 100vw"
               onLoad={() => dispatch({ type: "loaded", index })}

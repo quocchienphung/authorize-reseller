@@ -49,4 +49,7 @@ export function onScroll(callback: (y: number) => void) {
   return () => window.removeEventListener("scroll", handler);
 }
 
+/** Fired when the opening curtain starts lifting; reveal targets are hidden (instantly) at this moment. */
+export const SPLASH_LEAVE_EVENT = "brand:splash-leave";
+/** Fired once the curtain is gone; reveal targets animate in from here. */
 export const SPLASH_DONE_EVENT = "brand:splash-done";

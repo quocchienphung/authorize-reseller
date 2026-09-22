@@ -302,6 +302,13 @@ html[data-motion="ready"] [data-reveal][data-revealed="true"] [data-word] {
   filter: blur(0);
 }
 
+/* While the opening curtain is up, hiding happens under it and must be instant:
+   no transition may still be fading when the curtain lifts. */
+html[data-splash="active"] [data-reveal],
+html[data-splash="active"] [data-reveal] [data-word] {
+  transition: none;
+}
+
 /* Hide the native scrollbar of horizontal tracks without losing scroll. */
 @utility scrollbar-none {
   scrollbar-width: none;

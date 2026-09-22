@@ -16,6 +16,8 @@ type ListingPageProps = {
   initialCategory?: "all" | CategorySlug;
   /** Extra sections rendered before the grid (family story, carousels…). */
   children?: ReactNode;
+  /** Sections rendered after the grid (reference index…). */
+  after?: ReactNode;
 };
 
 /**
@@ -31,6 +33,7 @@ export function ListingPage({
   showCategoryFilter = true,
   initialCategory = "all",
   children,
+  after,
 }: ListingPageProps) {
   return (
     <PageShell solidHeader>
@@ -52,6 +55,8 @@ export function ListingPage({
       <section id="san-pham" className="pb-24 md:pb-32" aria-label="Danh sách sản phẩm">
         <ProductGrid key={initialCategory} products={products} showCategoryFilter={showCategoryFilter} initialCategory={initialCategory} />
       </section>
+
+      {after}
     </PageShell>
   );
 }

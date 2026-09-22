@@ -1,4 +1,3 @@
-import { preload } from "react-dom";
 import { AutoplayVideo } from "@/components/media/AutoplayVideo";
 import { VideoWall, type WallFilm } from "@/components/media/VideoWall";
 import { SectionHeading } from "@/components/typography/SectionHeading";
@@ -36,9 +35,10 @@ const craftFilms: readonly WallFilm[] = [1, 2, 3, 4].map((n) => ({
  * (four uncropped portrait films with the copy set to the right on desktop).
  */
 export function HeroStack() {
-  preload(hero.poster, { as: "image", fetchPriority: "high" });
   return (
     <div>
+      {/* LCP candidate: the hero poster. Rendered as a real <link> so it is in the first HTML bytes, not applied after hydration. */}
+      <link rel="preload" as="image" href={hero.poster} fetchPriority="high" />
       <section className="relative h-svh min-h-[640px] md:min-h-[720px]" aria-label={hero.primary}>
         <div className="absolute inset-0 overflow-hidden">
           <AutoplayVideo src={hero.video} poster={hero.poster} label={`${hero.primary} ${hero.secondary}`} showControl={false} />

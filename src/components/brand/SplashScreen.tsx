@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { siteConfig } from "@/config/site";
-import { lockScroll, SPLASH_DONE_EVENT, unlockScroll } from "@/components/motion/scroll-controller";
+import { lockScroll, SPLASH_DONE_EVENT, SPLASH_LEAVE_EVENT, unlockScroll } from "@/components/motion/scroll-controller";
 import { BrandMark } from "./BrandMark";
 import styles from "./SplashScreen.module.css";
 
@@ -31,7 +31,10 @@ export function SplashScreen() {
     root.dataset.splash = "active";
     lockScroll();
 
-    const leaveTimer = window.setTimeout(() => setPhase("leaving"), hold);
+    const leaveTimer = window.setTimeout(() => {
+      setPhase("leaving");
+      window.dispatchEvent(new Event(SPLASH_LEAVE_EVENT));
+    }, hold);
     const hideTimer = window.setTimeout(() => {
       setPhase("hidden");
       delete root.dataset.splash;

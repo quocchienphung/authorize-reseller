@@ -3,7 +3,7 @@ import { ProductCarousel } from "@/components/product/ProductCarousel";
 import { SplitWords } from "@/components/typography/SplitWords";
 import { PillLink } from "@/components/ui/PillLink";
 import { routes } from "@/config/site";
-import { getLatestProducts, mensProducts, womensProducts } from "@/lib/products";
+import { getLatestProducts, mensProducts, products, womensProducts } from "@/lib/products";
 import { ParallaxCover } from "./ParallaxCover";
 
 const covers = [
@@ -33,10 +33,11 @@ export function CollectionsLanding() {
         <div className="pointer-events-none absolute inset-x-0 top-0 h-40 bg-linear-to-b from-fg/8 to-transparent" aria-hidden="true" />
         <div className="mx-auto flex max-w-6xl flex-col items-center px-8 py-16 text-center md:px-20 md:py-24 lg:px-16 lg:py-32" data-reveal>
           <p className="type-eyebrow m-0 text-fg/70">Đồng hành cùng phong cách của bạn</p>
-          <h1 className="mt-3 text-3xl font-light tracking-[0.08em] uppercase md:text-4xl lg:text-5xl"><SplitWords text="Đồng hồ" offset={1} /></h1>
+          <h1 className="mt-3 text-3xl font-light tracking-[0.08em] uppercase md:text-4xl lg:text-5xl"><SplitWords text="Đồng hồ Alexander Ferros" offset={1} /></h1>
           <p className="mt-4 max-w-2xl text-[15px] leading-relaxed text-fg/85">
-            Khám phá bộ sưu tập đồng hồ chất lượng cao và đa dạng của chúng tôi. Mỗi thiết kế là sự kết hợp hoàn hảo giữa
-            phong cách hiện đại và chất lượng bền bỉ, giúp bạn tự tin thể hiện cá tính riêng.
+            {products.length} phiên bản Alexander Ferros chính hãng tại LENHI Luxury — đồng hồ nam và đồng hồ nữ, máy cơ và máy pin
+            Miyota, Seiko, Ronda, kính sapphire. Mỗi thiết kế là sự kết hợp giữa phong cách hiện đại và chất lượng bền bỉ, giúp bạn
+            tự tin thể hiện cá tính riêng.
           </p>
         </div>
       </section>

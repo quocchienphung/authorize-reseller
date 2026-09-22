@@ -17,8 +17,8 @@ export async function generateMetadata({ params }: StorePageProps): Promise<Meta
   const store = getStore(slug);
   if (!store) return { title: "Showroom", robots: { index: false } };
   return pageMetadata({
-    title: store.name,
-    description: `Showroom LENHI Luxury tại ${storeAddress(store)} — đại lý phân phối chính hãng Alexander Ferros. Mở cửa ${store.hours}. Xem chỉ đường và đặt lịch trải nghiệm.`,
+    title: `${store.name}, ${store.city}`,
+    description: `Showroom LENHI Luxury tại ${storeAddress(store)} — đại lý phân phối chính hãng Alexander Ferros. Mở cửa ${store.hours}. Chỉ đường, đặt lịch trải nghiệm.`,
     path: routes.store(store.slug),
   });
 }

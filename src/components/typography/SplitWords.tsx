@@ -1,4 +1,4 @@
-import type { CSSProperties } from "react";
+import { Fragment, type CSSProperties } from "react";
 
 type SplitWordsProps = {
   text: string;
@@ -15,12 +15,14 @@ export function SplitWords({ text, offset = 0 }: SplitWordsProps) {
   return (
     <>
       {words.map((word, index) => (
-        <span key={`${word}-${index}`}>
-          <span data-word style={{ "--word-index": offset + index } as CSSProperties}>
-            {word}
+        <Fragment key={`${word}-${index}`}>
+          <span>
+            <span data-word style={{ "--word-index": offset + index } as CSSProperties}>
+              {word}
+            </span>
           </span>
           {index < words.length - 1 ? " " : null}
-        </span>
+        </Fragment>
       ))}
     </>
   );

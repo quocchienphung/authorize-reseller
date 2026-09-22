@@ -10,8 +10,9 @@ export const siteConfig = {
   splashWordmark: "Authorize Reseller",
   /** The authorised reseller operating this storefront (header brand rotator, accessible names). */
   reseller: {
-    name: "Le Nhi Luxury",
-    /** Diacritic form for on-page copy (matches the printed certificate). */
+    /** One spelling everywhere Google reads a name: wordmark, titles, schema, social metadata. */
+    name: "LENHI Luxury",
+    /** Diacritic form, used only where the printed certificate is quoted (schema keeps it as an alternate name). */
     displayName: "Lê Nhi Luxury",
     /** Brand spelling used in page titles, JSON-LD and social metadata. */
     brand: "LENHI Luxury",
@@ -32,6 +33,19 @@ export const siteConfig = {
   contact: {
     hotline: { label: "0382 669 211", href: "tel:0382669211" },
     zalo: { label: "Zalo", href: "https://zalo.me/0382669211" },
+  },
+  /**
+   * Facts the product schema states about every listing. Only what is true for
+   * the whole catalogue goes here; leave a field undefined rather than guess.
+   */
+  commerce: {
+    /** Watches are sold from the showroom, not through an online cart. */
+    availability: "https://schema.org/InStoreOnly",
+    availabilityLabel: "Có sẵn tại showroom — đặt lịch để xem trực tiếp",
+    /** Fill in once a written policy exists (days + who pays return shipping); undefined = not declared. */
+    returnPolicy: undefined as { merchantReturnDays: number; returnFees: "https://schema.org/FreeReturn" | "https://schema.org/ReturnShippingFees" } | undefined,
+    /** Fill in once nationwide delivery terms are published (VND, 0 for free); undefined = not declared. */
+    shipping: undefined as { rate: number; handlingDays: [number, number]; transitDays: [number, number] } | undefined,
   },
   social: [
     { label: "Instagram", href: "https://www.instagram.com/lenhiluxury" },
@@ -111,6 +125,8 @@ export type Store = {
   hours: string;
   /** Google Maps place page, opened in a new tab for directions. */
   mapUrl: string;
+  /** Pin coordinates from the Maps place page (LocalBusiness `geo`). */
+  geo: { latitude: number; longitude: number };
 };
 
 export const stores: readonly Store[] = [
@@ -121,6 +137,7 @@ export const stores: readonly Store[] = [
     district: "Bình Hưng",
     city: "Hồ Chí Minh",
     hours: "09:00 – 21:00, Thứ Hai – Chủ Nhật",
+    geo: { latitude: 10.7100719, longitude: 106.6557542 },
     mapUrl:
       "https://www.google.com/maps/place/L%C3%AA+Nhi+Luxury/@10.7100719,106.6531793,17z/data=!3m1!4b1!4m6!3m5!1s0x31752f00373c54df:0x92acb7b3c42a02f!8m2!3d10.7100719!4d106.6557542!16s%2Fg%2F11nq_1vtdc?entry=ttu",
   },

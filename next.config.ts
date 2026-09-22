@@ -37,11 +37,16 @@ const nextConfig: NextConfig = {
     ];
   },
   headers() {
+    // Baseline security headers (HSTS is added by Vercel on custom domains). No CSP: inline theme bootstrap + fonts would need nonces.
+    const security = [
+      { key: "X-Content-Type-Options", value: "nosniff" },
+      { key: "X-Frame-Options", value: "SAMEORIGIN" },
+      { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+      { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
+    ];
     // Preview / branch deployments on Vercel: block indexing at the HTTP level (robots.txt covers the rest).
-    if (process.env.VERCEL_ENV && !isProductionDeploy) {
-      return [{ source: "/:path*", headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }] }];
-    }
-    return [];
+    const preview = process.env.VERCEL_ENV && !isProductionDeploy ? [{ key: "X-Robots-Tag", value: "noindex, nofollow" }] : [];
+    return [{ source: "/:path*", headers: [...security, ...preview] }];
   },
 };
 
