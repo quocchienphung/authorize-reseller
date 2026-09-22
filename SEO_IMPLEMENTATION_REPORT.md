@@ -41,7 +41,8 @@ Full detail in `SEO_AUDIT.md`. No CRITICAL (index-blocking) issue existed. The h
 | `src/components/collections/ListingPage.tsx` | `after` slot below the grid |
 | `src/app/bo-suu-tap/nam/page.tsx`, `nu/page.tsx` | render `FamilyIndex`; ItemList names aligned with titles |
 | `src/app/cua-hang/[slug]/page.tsx` | shorter description |
-| `docs/ARCHITECTURE.md` | motion/LCP behaviour, brand naming rule, FamilyIndex, report files |
+| `src/app/favicon.ico`, `icon.png`, `apple-icon.png`, `public/logo-lenhi-luxury.png` (new); `src/app/icon.svg` (removed) | LENHI "ln" signature as the site icon and `Organization.logo` (resolves L3/L4) |
+| `docs/ARCHITECTURE.md` | motion/LCP behaviour, brand naming rule, FamilyIndex, logo assets, report files |
 | `SEO_AUDIT.md`, `SEO_ROADMAP.md`, `SEO_IMPLEMENTATION_REPORT.md` (new) | this audit |
 
 No URL, route, redirect, robots or sitemap logic changed. No new routes were created.
@@ -56,7 +57,8 @@ No URL, route, redirect, robots or sitemap logic changed. No new routes were cre
 | JSON-LD | telephone `+84382669211` on Organization, ContactPoint and Store; Offer has `availability: InStoreOnly`; `schema_ecommerce_validate.py` → availability finding gone (remaining: return policy, shipping, member program — need owner data / not applicable) |
 | Internal linking | `/bo-suu-tap/nam` now links 53 family pages, `/bo-suu-tap/nu` 18; every family is ≤ 3 clicks from home |
 | Crawl integrity | all 293 sitemap URLs → 200; all 293 distinct internal links across 18 templates → 200; canonicals self-referencing; `index, follow` on every real page; unknown slugs → 404 + noindex; `robots.txt`, `sitemap.xml`, `llms.txt`, IndexNow key → 200; security headers present |
-| Build | `npm run lint`, `npm run typecheck`, `npm run build` all pass (300 static pages) |
+| Favicon / logo | Source artwork was a dark stroke on black (max luminance 188, 0.05 % of pixels > 120) — invisible at SERP size; the stroke was extracted with a black-hat transform and re-rendered white on the brand ink. `favicon.ico` carries hand-tuned 16/32/48 frames, `icon.png` 192×192 (multiple of 48, per Google's favicon guidance), `apple-icon.png` 180×180, `logo-lenhi-luxury.png` 512×512 for `Organization.logo`. All four are crawlable (outside `/_next/` and `/api/`); the old `icon.svg` (Alexander Ferros emblem) was removed so exactly one icon is offered. The emblem stays in the header and splash. |
+| Build | `npm run lint`, `npm run typecheck`, `npm run build` all pass (302 static pages) |
 
 ## 5. Issues intentionally not changed
 
@@ -73,7 +75,7 @@ No URL, route, redirect, robots or sitemap logic changed. No new routes were cre
 
 ## 6. Manual actions for you
 
-1. **Deploy** — push `main` (this commit) to trigger the Vercel production build; then confirm: `https://lenhiluxury.com/llms.txt`, `/9373a51171e036aca8894f03338b0c3c.txt`, `curl -I https://lenhiluxury.com/` shows `X-Frame-Options`, and a product page's `<title>` starts with "Đồng hồ".
+1. **Deploy** — push `main` (this commit) to trigger the Vercel production build; then confirm: `https://lenhiluxury.com/llms.txt`, `/9373a51171e036aca8894f03338b0c3c.txt`, `/icon.png`, `curl -I https://lenhiluxury.com/` shows `X-Frame-Options`, and a product page's `<title>` starts with "Đồng hồ". The SERP favicon only changes after Google recrawls the homepage (days to weeks); the snippet still showing the pre-`080a35b` title is evidence that a recrawl is overdue, so request indexing for `/`.
 2. `siteConfig.social[2].href` → canonical Facebook page URL.
 3. Write the return window and delivery terms → `siteConfig.commerce.returnPolicy` / `shipping`, and publish them on `/dich-vu/bao-hanh`.
 4. Decide the one brand spelling for **all** external profiles (recommended: "LENHI Luxury"); update GBP, Facebook, Instagram, TikTok, Zalo OA bios; add `https://lenhiluxury.com` to each.

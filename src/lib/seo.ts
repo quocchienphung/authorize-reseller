@@ -11,6 +11,8 @@ import { products } from "@/lib/products";
 
 export const BRAND = siteConfig.reseller.brand;
 export const WATCH_BRAND = siteConfig.name;
+/** LENHI Luxury monogram, 512×512 (also the source of the favicon / apple icon in `src/app`). */
+export const BRAND_LOGO = "/logo-lenhi-luxury.png";
 /** Shared social preview (1200×630); pages with their own imagery override it. */
 export const DEFAULT_OG_IMAGE = { url: "/og/lenhiluxury.jpg", width: 1200, height: 630, alt: `${BRAND} – đại lý phân phối chính hãng đồng hồ ${WATCH_BRAND}` };
 
@@ -304,7 +306,7 @@ export function organizationJsonLd(store: Store) {
         name: BRAND,
         alternateName: [reseller.displayName, asciiName(reseller.displayName), "lenhiluxury", "lenhiluxury.com"],
         url: siteConfig.url,
-        logo: absoluteUrl("/icon.svg"),
+        logo: absoluteUrl(BRAND_LOGO),
         telephone,
         contactPoint: {
           "@type": "ContactPoint",

@@ -59,6 +59,7 @@ python scripts/scrape-alexander-ferros.py --gallery-only   # chỉ tải lại g
 - `src/lib/seo.ts` — nguồn duy nhất cho title/description/canonical/OG (`pageMetadata`, `productMetadata`, `categoryMetadata`, `familyMetadata`) và JSON-LD (`organizationJsonLd`, `productJsonLd`, `breadcrumbJsonLd`, `productListJsonLd`, `faqJsonLd`, `articleJsonLd`). Mọi URL tuyệt đối đi qua `absoluteUrl()` → `siteConfig.url` (`https://lenhiluxury.com`; `NEXT_PUBLIC_SITE_URL` chỉ để override preview).
 - `src/app/sitemap.ts`, `src/app/robots.ts` — sinh từ cùng dữ liệu với trang; preview Vercel bị `Disallow: /` + header `X-Robots-Tag` (xem `next.config.ts`).
 - `src/lib/articles.ts` + `/kien-thuc` — khung bài viết kiến thức; rỗng thì route 404 và không vào sitemap.
+- Logo: chữ ký "ln" (LENHI) — `src/app/favicon.ico` (16/32/48), `src/app/icon.png` (192), `src/app/apple-icon.png` (180) cho favicon; `public/logo-lenhi-luxury.png` (512) cho `Organization.logo`. Emblem Alexander Ferros (`BrandMark`) vẫn dùng trong header/splash.
 - Brand SEO: một cách viết duy nhất "LENHI Luxury" (`siteConfig.reseller.name` = wordmark header, `brand` = title/schema/OG); `displayName` ("Lê Nhi Luxury") chỉ dùng khi trích chứng nhận và làm `alternateName`. Số điện thoại trong JSON-LD ở dạng quốc tế (+84…).
 - `FamilyIndex` (cuối trang nam/nữ) liên kết tới mọi dòng sản phẩm để trang dòng cách trang chủ ≤ 3 click.
 - Báo cáo: `SEO_AUDIT.md`, `SEO_ROADMAP.md`, `SEO_IMPLEMENTATION_REPORT.md` (gốc repo).
