@@ -7,7 +7,7 @@ import { RevealObserver } from "@/components/motion/RevealObserver";
 import { SmoothScroll } from "@/components/motion/SmoothScroll";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { siteConfig, stores, THEME_STORAGE_KEY } from "@/config/site";
-import { BRAND, organizationJsonLd } from "@/lib/seo";
+import { BRAND, DEFAULT_OG_IMAGE, organizationJsonLd } from "@/lib/seo";
 import "./globals.css";
 
 /** Montserrat is the Alexander Ferros brand face and covers Vietnamese diacritics. */
@@ -54,8 +54,14 @@ export const metadata: Metadata = {
     url: "./",
     title: `Đồng hồ ${siteConfig.name} chính hãng | ${BRAND}`,
     description: siteConfig.description,
+    images: [DEFAULT_OG_IMAGE],
   },
-  twitter: { card: "summary_large_image", title: `Đồng hồ ${siteConfig.name} chính hãng | ${BRAND}`, description: siteConfig.description },
+  twitter: {
+    card: "summary_large_image",
+    title: `Đồng hồ ${siteConfig.name} chính hãng | ${BRAND}`,
+    description: siteConfig.description,
+    images: [DEFAULT_OG_IMAGE.url],
+  },
   // Paste the code from Google Search Console → Settings → Ownership verification into GOOGLE_SITE_VERIFICATION.
   verification: process.env.GOOGLE_SITE_VERIFICATION ? { google: process.env.GOOGLE_SITE_VERIFICATION } : undefined,
 };

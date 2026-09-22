@@ -10,6 +10,8 @@ import { categoryLabel, familyDisplayName, familyReference, getSpecification, pa
 
 export const BRAND = siteConfig.reseller.brand;
 export const WATCH_BRAND = siteConfig.name;
+/** Shared social preview (1200×630); pages with their own imagery override it. */
+export const DEFAULT_OG_IMAGE = { url: "/og/lenhiluxury.jpg", width: 1200, height: 630, alt: `${BRAND} – đại lý phân phối chính hãng đồng hồ ${WATCH_BRAND}` };
 
 /** Absolute production URL for a site path ("/" → origin without a trailing slash). */
 export function absoluteUrl(path: string) {
@@ -26,7 +28,7 @@ type PageMetadataInput = {
   description: string;
   /** Site path used for the canonical and Open Graph URL. */
   path: string;
-  /** Absolute or site-relative image; omitted → the shared opengraph-image. */
+  /** Site-relative image; omitted → DEFAULT_OG_IMAGE. */
   image?: { url: string; alt: string; width?: number; height?: number };
   noindex?: boolean;
 };
@@ -41,13 +43,13 @@ export function pageMetadata({ title, description, path, image, noindex }: PageM
       title: `${title} | ${BRAND}`,
       description,
       url: path,
-      ...(image ? { images: [image] } : {}),
+      images: [image ?? DEFAULT_OG_IMAGE],
     },
     twitter: {
       card: "summary_large_image",
       title: `${title} | ${BRAND}`,
       description,
-      ...(image ? { images: [image.url] } : {}),
+      images: [(image ?? DEFAULT_OG_IMAGE).url],
     },
     ...(noindex ? { robots: { index: false, follow: true } } : {}),
   };
@@ -95,7 +97,8 @@ export function productSummary(product: Product) {
 
 export function productMetadata(product: Product): Metadata {
   const model = productModelName(product);
-  const description = `${model} chính hãng tại ${BRAND}. ${productSummary(product).replace(`${model} — `, "").replace(/^./, (c) => c.toUpperCase())} Giá ${product.price}, bảo hành chính hãng, xem thông số chi tiết.`;
+  const facts = productSummary(product).replace(`${model} — `, "").replace(/^./, (c) => c.toUpperCase());
+  const description = `${model} chính hãng tại ${BRAND}. ${facts} Giá ${product.price}, bảo hành chính hãng.`;
   return pageMetadata({
     title: `${model} chính hãng`,
     description,
@@ -114,7 +117,7 @@ export function productJsonLd(product: Product) {
     "@type": "Product",
     "@id": `${url}#product`,
     name: productModelName(product),
-    alternateName: product.name,
+    alternateName: product.sku.includes("/") ? [product.name, `${WATCH_BRAND} ${product.sku.replaceAll("/", "-")}`] : product.name,
     sku: product.sku,
     mpn: product.sku,
     brand: { "@type": "Brand", name: WATCH_BRAND },
@@ -146,8 +149,8 @@ export function categoryMetadata(category: "nam" | "nu", count: number): Metadat
   return pageMetadata({
     title: `Đồng hồ ${WATCH_BRAND} ${category === "nam" ? "nam" : "nữ"} chính hãng`,
     description: isMens
-      ? `Khám phá ${count} mẫu đồng hồ ${WATCH_BRAND} nam chính hãng tại ${BRAND}: máy automatic và quartz Miyota, kính sapphire, vỏ thép 316L, thiết kế Swiss Brand. Xem giá từng phiên bản.`
-      : `Khám phá ${count} mẫu đồng hồ ${WATCH_BRAND} nữ chính hãng tại ${BRAND}: thiết kế thanh lịch, kính sapphire, máy Nhật Bản bền bỉ. Xem giá từng phiên bản và đặt lịch trải nghiệm.`,
+      ? `${count} mẫu đồng hồ ${WATCH_BRAND} nam chính hãng tại ${BRAND}: máy automatic và quartz Miyota, kính sapphire, vỏ thép 316L. Xem giá từng phiên bản.`
+      : `${count} mẫu đồng hồ ${WATCH_BRAND} nữ chính hãng tại ${BRAND}: thiết kế thanh lịch, kính sapphire, máy Nhật Bản bền bỉ. Xem giá từng phiên bản.`,
     path: isMens ? routes.mens : routes.womens,
     image: {
       url: isMens ? "/alexander-ferros/covers/mens-listing-desktop.webp" : "/alexander-ferros/covers/womens-desktop.webp",
@@ -161,7 +164,8 @@ export function categoryMetadata(category: "nam" | "nu", count: number): Metadat
 export function familyMetadata(familySlug: string, familyProducts: readonly Product[]): Metadata {
   const reference = familyReference(familySlug);
   const lead = familyProducts[0];
-  const skus = familyProducts.map((product) => product.sku).join(", ");
+  const skuList = familyProducts.map((product) => product.sku);
+  const skus = skuList.length > 4 ? `${skuList.slice(0, 4).join(", ")}…` : skuList.join(", ");
   const facts = productFacts(lead);
   const detail = [facts.size, facts.movement ? `máy ${facts.movement}` : undefined, facts.glass].filter(Boolean).join(", ");
   return pageMetadata({
@@ -243,7 +247,7 @@ export function organizationJsonLd(store: Store) {
         alternateName: reseller.displayName,
         description: siteConfig.description,
         url: absoluteUrl(routes.store(store.slug)),
-        image: absoluteUrl("/opengraph-image.jpg"),
+        image: absoluteUrl(DEFAULT_OG_IMAGE.url),
         telephone,
         hasMap: store.mapUrl,
         parentOrganization: { "@id": ORGANIZATION_ID },

@@ -53,3 +53,10 @@ npm run check    # lint + typecheck + build
 python scripts/scrape-alexander-ferros.py   # cập nhật src/data/products.json và ảnh sản phẩm (cần Pillow)
 python scripts/scrape-alexander-ferros.py --gallery-only   # chỉ tải lại gallery từng phiên bản
 ```
+
+## SEO
+
+- `src/lib/seo.ts` — nguồn duy nhất cho title/description/canonical/OG (`pageMetadata`, `productMetadata`, `categoryMetadata`, `familyMetadata`) và JSON-LD (`organizationJsonLd`, `productJsonLd`, `breadcrumbJsonLd`, `productListJsonLd`, `faqJsonLd`, `articleJsonLd`). Mọi URL tuyệt đối đi qua `absoluteUrl()` → `siteConfig.url` (`https://lenhiluxury.com`; `NEXT_PUBLIC_SITE_URL` chỉ để override preview).
+- `src/app/sitemap.ts`, `src/app/robots.ts` — sinh từ cùng dữ liệu với trang; preview Vercel bị `Disallow: /` + header `X-Robots-Tag` (xem `next.config.ts`).
+- `src/lib/articles.ts` + `/kien-thuc` — khung bài viết kiến thức; rỗng thì route 404 và không vào sitemap.
+- Brand SEO: `siteConfig.reseller.brand` ("LENHI Luxury") cho title/schema; `displayName` ("Lê Nhi Luxury") cho copy.

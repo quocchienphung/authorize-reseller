@@ -30,6 +30,7 @@ export function SectionHeading({
       <span className="type-display block">
         <SplitWords text={primary} />
       </span>
+{" "}
       {secondary && secondaryVariant === "code" ? (
         <span className="type-display-code mt-2 block">
           <SplitWords text={secondary} offset={wordCount(primary)} />
