@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { BrandLogo } from "@/components/brand/BrandLogo";
 import { routes, siteConfig, storeAddress, stores } from "@/config/site";
@@ -27,15 +28,40 @@ const footerColumns = [
 ] as const;
 
 const linkClass = "text-sm font-light leading-relaxed transition-opacity hover:opacity-60";
+const { certificate } = siteConfig.reseller;
 
 export function SiteFooter() {
   return (
     <footer className="rail border-t border-line bg-surface pt-20 pb-9 text-fg max-md:pt-16">
-      <div className="border-b border-line pb-14">
-        <BrandLogo markClassName="size-14 md:size-[68px]" className="text-xl md:text-2xl" />
-        <p className="mt-5 max-w-md text-sm font-light md:ml-[84px]">
-          Đồng hồ Alexander Ferros chính hãng — kiểm định và bảo hành tại Việt Nam.
-        </p>
+      <div className="grid gap-12 border-b border-line pb-14 md:grid-cols-2 md:gap-16">
+        <div>
+          <BrandLogo markClassName="size-14 md:size-[68px]" className="text-xl md:text-2xl" />
+          <p className="mt-5 max-w-md text-sm font-light md:ml-[84px]">
+            Đồng hồ Alexander Ferros chính hãng — kiểm định và bảo hành tại Việt Nam.
+          </p>
+        </div>
+
+        {/* Dealer certificate: the document at a modest size, the claim set beside it in the display register. */}
+        <figure className="m-0 flex items-start gap-6 md:gap-8 lg:justify-self-end" data-reveal>
+          <div className="relative w-[112px] shrink-0 overflow-hidden border border-line bg-paper md:w-[132px]">
+            <Image
+              src={certificate.image}
+              alt={`Chứng nhận ${siteConfig.reseller.name} là đại lý bán hàng chính thức của ${siteConfig.name}`}
+              width={900}
+              height={1253}
+              sizes="132px"
+              className="block h-auto w-full"
+            />
+          </div>
+          <figcaption className="flex flex-col pt-1">
+            <p className="type-eyebrow m-0 opacity-70">Chứng nhận đại lý</p>
+            <p className="m-0 mt-4 text-[22px] leading-none font-extralight tracking-[0.04em] uppercase md:text-[26px]">Lê Nhi Luxury</p>
+            <p className="font-serif m-0 mt-1.5 text-[24px] leading-none font-medium italic md:text-[28px]">đại lý phân phối chính hãng</p>
+            <p className="m-0 mt-5 max-w-[300px] text-sm leading-relaxed font-light text-fg/70">
+              Được {certificate.issuer} — {certificate.issuerRole} — chứng nhận, hiệu lực đến {certificate.validUntil}.
+            </p>
+          </figcaption>
+        </figure>
       </div>
 
       <div className="grid gap-12 py-16 md:grid-cols-2 lg:grid-cols-4">

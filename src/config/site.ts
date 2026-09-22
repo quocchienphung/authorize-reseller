@@ -9,7 +9,17 @@ export const siteConfig = {
   /** Wordmark shown under the emblem on the opening splash screen. */
   splashWordmark: "Authorize Reseller",
   /** The authorised reseller operating this storefront (header brand rotator, accessible names). */
-  reseller: { name: "Le Nhi Luxury", role: "Authorized Reseller" },
+  reseller: {
+    name: "Le Nhi Luxury",
+    role: "Authorized Reseller",
+    /** Dealer certificate issued by the brand's Vietnamese distributor, shown in the footer. */
+    certificate: {
+      image: "/alexander-ferros/editorial/reseller-certificate.webp",
+      issuer: "JMC&CO Việt Nam",
+      issuerRole: "nhà phân phối chính thức tại Việt Nam",
+      validUntil: "31.12.2027",
+    },
+  },
   description: "Khám phá bộ sưu tập đồng hồ Alexander Ferros chính hãng dành cho nam và nữ.",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
   locale: "vi",
