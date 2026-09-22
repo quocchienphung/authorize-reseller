@@ -1,12 +1,11 @@
 import type { Metadata } from "next";
 import { ListingPage } from "@/components/collections/ListingPage";
 import { routes } from "@/config/site";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { mensProducts } from "@/lib/products";
+import { categoryMetadata, productListJsonLd } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Đồng hồ nam",
-  description: `${mensProducts.length} mẫu đồng hồ nam Alexander Ferros chính hãng.`,
-};
+export const metadata: Metadata = categoryMetadata("nam", mensProducts.length);
 
 export default function MensCollectionPage() {
   return (
@@ -17,10 +16,12 @@ export default function MensCollectionPage() {
         alt: "Đồng hồ nam Alexander Ferros",
       }}
       breadcrumbs={[{ label: "Bộ sưu tập", href: routes.collections }, { label: "Đồng hồ nam" }]}
-      heading={{ primary: "ĐỒNG HỒ NAM", secondary: `${mensProducts.length} phiên bản` }}
-      description="Từ thanh lịch cổ điển đến cá tính thể thao — máy Nhật Bản bền bỉ, vỏ thép 316L và kính sapphire chống trầy."
+      heading={{ primary: "ĐỒNG HỒ NAM", secondary: "Alexander Ferros chính hãng" }}
+      description={`${mensProducts.length} phiên bản — từ thanh lịch cổ điển đến cá tính thể thao: máy Nhật Bản bền bỉ, vỏ thép 316L và kính sapphire chống trầy.`}
       products={mensProducts}
       showCategoryFilter={false}
-    />
+    >
+      <JsonLd data={productListJsonLd("Đồng hồ Alexander Ferros nam", routes.mens, mensProducts)} />
+    </ListingPage>
   );
 }

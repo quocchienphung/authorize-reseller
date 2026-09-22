@@ -5,8 +5,9 @@ import Script from "next/script";
 import { SplashScreen } from "@/components/brand/SplashScreen";
 import { RevealObserver } from "@/components/motion/RevealObserver";
 import { SmoothScroll } from "@/components/motion/SmoothScroll";
-import { StructuredData } from "@/components/seo/StructuredData";
-import { siteConfig, THEME_STORAGE_KEY } from "@/config/site";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { siteConfig, stores, THEME_STORAGE_KEY } from "@/config/site";
+import { BRAND, organizationJsonLd } from "@/lib/seo";
 import "./globals.css";
 
 /** Montserrat is the Alexander Ferros brand face and covers Vietnamese diacritics. */
@@ -35,37 +36,26 @@ const brandSerif = Cormorant_Garamond({
   display: "swap",
 });
 
-const reseller = siteConfig.reseller.displayName;
-
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: `${reseller} | Đại lý ${siteConfig.name} chính hãng`,
-    template: `%s | ${reseller}`,
+    default: `Đồng hồ ${siteConfig.name} chính hãng | ${BRAND}`,
+    template: `%s | ${BRAND}`,
   },
   description: siteConfig.description,
-  applicationName: reseller,
-  keywords: [
-    "Lê Nhi Luxury",
-    "lenhiluxury",
-    "lenhiluxury.com",
-    "Alexander Ferros",
-    "đồng hồ Alexander Ferros",
-    "đồng hồ Alexander Ferros chính hãng",
-    "đại lý Alexander Ferros",
-    "đồng hồ nam",
-    "đồng hồ nữ",
-  ],
+  applicationName: BRAND,
   // Every page is its own canonical; previews and mirrors point Google at the production domain.
   alternates: { canonical: "./" },
   robots: { index: true, follow: true, googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1 } },
   openGraph: {
-    siteName: reseller,
+    siteName: BRAND,
     locale: "vi_VN",
     type: "website",
     url: "./",
+    title: `Đồng hồ ${siteConfig.name} chính hãng | ${BRAND}`,
+    description: siteConfig.description,
   },
-  twitter: { card: "summary_large_image" },
+  twitter: { card: "summary_large_image", title: `Đồng hồ ${siteConfig.name} chính hãng | ${BRAND}`, description: siteConfig.description },
   // Paste the code from Google Search Console → Settings → Ownership verification into GOOGLE_SITE_VERIFICATION.
   verification: process.env.GOOGLE_SITE_VERIFICATION ? { google: process.env.GOOGLE_SITE_VERIFICATION } : undefined,
 };
@@ -82,7 +72,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     >
       <body className="flex min-h-full flex-col">
         <Script id="theme-bootstrap" strategy="beforeInteractive">{themeBootstrap}</Script>
-        <StructuredData />
+        <JsonLd data={organizationJsonLd(stores[0])} />
         <SplashScreen />
         <SmoothScroll />
         <RevealObserver />

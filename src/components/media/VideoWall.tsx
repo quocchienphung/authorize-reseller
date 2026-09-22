@@ -296,7 +296,7 @@ export function VideoWall({ films, className }: VideoWallProps) {
                 muted
                 loop
                 playsInline
-                preload="metadata"
+                preload={duplicate ? "none" : "metadata"}
                 poster={film.poster}
                 aria-label={duplicate ? undefined : film.label}
               >

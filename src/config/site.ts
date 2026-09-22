@@ -11,8 +11,10 @@ export const siteConfig = {
   /** The authorised reseller operating this storefront (header brand rotator, accessible names). */
   reseller: {
     name: "Le Nhi Luxury",
-    /** Diacritic form for copy, page titles and structured data. */
+    /** Diacritic form for on-page copy (matches the printed certificate). */
     displayName: "Lê Nhi Luxury",
+    /** Brand spelling used in page titles, JSON-LD and social metadata. */
+    brand: "LENHI Luxury",
     role: "Authorized Reseller",
     /** Dealer certificate issued by the brand's Vietnamese distributor, shown in the footer. */
     certificate: {
@@ -23,7 +25,7 @@ export const siteConfig = {
     },
   },
   description:
-    "Lê Nhi Luxury – đại lý phân phối chính hãng đồng hồ Alexander Ferros tại Việt Nam. Bộ sưu tập nam và nữ, kiểm định tại Trường Omega, bảo hành chính hãng, showroom 1247 Văn Tiến Dũng, TP Hồ Chí Minh.",
+    "Khám phá đồng hồ Alexander Ferros chính hãng tại LENHI Luxury. Bộ sưu tập đồng hồ nam, nữ, automatic, sapphire cùng thông tin sản phẩm, bảo hành và dịch vụ chính hãng.",
   /** Public origin: the production domain unless a deployment overrides it (previews, local dev). */
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://lenhiluxury.com",
   locale: "vi",
@@ -58,6 +60,8 @@ export const routes = {
   stores: "/cua-hang",
   store: (slug: string) => `/cua-hang/${slug}`,
   contact: "/lien-he",
+  knowledge: "/kien-thuc",
+  article: (slug: string) => `/kien-thuc/${slug}`,
 } as const;
 
 export type NavLink = { label: string; href: string; external?: boolean };

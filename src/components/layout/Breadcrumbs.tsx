@@ -1,7 +1,9 @@
 import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { Fragment } from "react";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { routes } from "@/config/site";
+import { breadcrumbJsonLd } from "@/lib/seo";
 import { cn } from "@/lib/utils";
 
 export type Crumb = { label: string; href?: string };
@@ -11,6 +13,7 @@ export function Breadcrumbs({ items, className }: { items: readonly Crumb[]; cla
 
   return (
     <nav aria-label="Đường dẫn" className={cn("rail py-3 text-xs", className)}>
+      <JsonLd data={breadcrumbJsonLd(trail)} />
       <ol className="m-0 flex list-none flex-wrap items-center gap-1 p-0">
         {trail.map((crumb, index) => {
           const isLast = index === trail.length - 1;

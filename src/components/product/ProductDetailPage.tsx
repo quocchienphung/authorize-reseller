@@ -15,6 +15,7 @@ import {
   getVariants,
   type Product,
 } from "@/lib/products";
+import { productModelName, productSummary } from "@/lib/seo";
 import { cn } from "@/lib/utils";
 import { ProductCarousel } from "./ProductCarousel";
 import { ProductGallery } from "./ProductGallery";
@@ -43,7 +44,8 @@ export function ProductDetailPage({ product }: { product: Product }) {
         items={[
           { label: "Bộ sưu tập", href: routes.collections },
           { label: product.category, href: categoryHref },
-          { label: product.sku },
+          { label: `Dòng ${reference}`, href: routes.family(product.familySlug) },
+          { label: productModelName(product) },
         ]}
       />
 
@@ -53,7 +55,9 @@ export function ProductDetailPage({ product }: { product: Product }) {
           <Eyebrow>{product.category}</Eyebrow>
           <SectionHeading as="h1" primary="Alexander Ferros" secondary={product.sku} secondaryVariant="code" className="mt-5" />
           <p className="mt-8 text-2xl font-light">{product.price}</p>
-          <p className="type-body mt-6 max-w-[440px] text-fg/75">{product.description}</p>
+          {/* Factual one-liner unique to this reference (its own specs), then the family story. */}
+          <p className="type-body mt-6 max-w-[440px] text-fg/75">{productSummary(product)}</p>
+          <p className="type-body mt-3 max-w-[440px] text-fg/75">{product.description}</p>
           <div className="mt-10 flex flex-wrap items-center gap-6">
             <PillLink href={routes.appointment}>Đặt lịch trải nghiệm</PillLink>
             <LineLink href={routes.contact}>Liên hệ tư vấn</LineLink>

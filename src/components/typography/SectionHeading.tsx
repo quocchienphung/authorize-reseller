@@ -8,7 +8,8 @@ type SectionHeadingProps = {
   secondary?: string;
   /** `code` sets the second line upright in the sans face, for reference numbers. */
   secondaryVariant?: "serif" | "code";
-  as?: "h1" | "h2" | "h3";
+  /** `p` keeps the display styling without adding a heading to the outline. */
+  as?: "h1" | "h2" | "h3" | "p";
   className?: string;
 };
 

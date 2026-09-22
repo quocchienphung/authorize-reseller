@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ListingPage } from "@/components/collections/ListingPage";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { routes } from "@/config/site";
-import { categoryRoute, familyDisplayName, familyReference, getFamilyProducts, productFamilies } from "@/lib/products";
+import { categoryRoute, familyReference, getFamilyProducts, productFamilies } from "@/lib/products";
+import { familyMetadata, productListJsonLd } from "@/lib/seo";
 
 export const dynamicParams = false;
 
@@ -14,7 +16,9 @@ type FamilyPageProps = { params: Promise<{ family: string }> };
 
 export async function generateMetadata({ params }: FamilyPageProps): Promise<Metadata> {
   const { family } = await params;
-  return { title: familyDisplayName(family) };
+  const familyProducts = getFamilyProducts(family);
+  if (!familyProducts.length) return { title: "Không tìm thấy dòng sản phẩm", robots: { index: false } };
+  return familyMetadata(family, familyProducts);
 }
 
 export default async function FamilyPage({ params }: FamilyPageProps) {
@@ -32,9 +36,11 @@ export default async function FamilyPage({ params }: FamilyPageProps) {
         { label: familyReference(family) },
       ]}
       heading={{ primary: `DÒNG ${familyReference(family)}`, secondary: `${familyProducts.length} phiên bản` }}
-      description={lead.description}
+      description={`${lead.category} Alexander Ferros ${familyReference(family)} chính hãng. ${lead.description}`}
       products={familyProducts}
       showCategoryFilter={false}
-    />
+    >
+      <JsonLd data={productListJsonLd(`Alexander Ferros ${familyReference(family)}`, routes.family(family), familyProducts)} />
+    </ListingPage>
   );
 }

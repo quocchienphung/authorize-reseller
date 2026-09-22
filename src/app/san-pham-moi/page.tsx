@@ -2,10 +2,15 @@ import type { Metadata } from "next";
 import { ListingPage } from "@/components/collections/ListingPage";
 import { routes } from "@/config/site";
 import { getLatestProducts } from "@/lib/products";
-
-export const metadata: Metadata = { title: "Sản phẩm mới nhất" };
+import { pageMetadata } from "@/lib/seo";
 
 const latest = getLatestProducts(48);
+
+export const metadata: Metadata = pageMetadata({
+  title: "Đồng hồ Alexander Ferros mới nhất",
+  description: `${latest.length} phiên bản Alexander Ferros vừa được bổ sung vào catalog chính thức — mẫu mới nhất cho nam và nữ, giá và thông số cập nhật tại LENHI Luxury.`,
+  path: routes.latest,
+});
 
 export default function LatestProductsPage() {
   return (

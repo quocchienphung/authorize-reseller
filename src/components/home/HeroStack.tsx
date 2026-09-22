@@ -5,6 +5,7 @@ import { LineLink } from "@/components/ui/LineLink";
 import { routes } from "@/config/site";
 
 const hero = {
+  headline: "Đồng hồ Alexander Ferros chính hãng tại LENHI Luxury",
   primary: "ALEXANDER FERROS",
   secondary: "Swiss Brand Timepieces",
   description:
@@ -45,7 +46,9 @@ export function HeroStack() {
           aria-hidden="true"
         />
         <div className="rail-left relative z-[2] flex h-full max-w-[calc(var(--rail)+460px)] flex-col justify-center pt-(--header-height) text-paper" data-reveal>
-          <SectionHeading as="h1" primary={hero.primary} secondary={hero.secondary} />
+          {/* The page's single H1: a real, visible line in the eyebrow register; the wordmark below stays the visual lead. */}
+          <h1 className="type-eyebrow m-0 mb-5 text-paper/80">{hero.headline}</h1>
+          <SectionHeading as="p" primary={hero.primary} secondary={hero.secondary} />
           <p className="mt-10 max-w-[414px] text-[17px] leading-[1.35] font-light">{hero.description}</p>
           <LineLink href={hero.cta.href} className="mt-7">
             {hero.cta.label}

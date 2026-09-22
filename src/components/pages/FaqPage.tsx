@@ -2,7 +2,7 @@ import { PageIntro } from "@/components/layout/PageIntro";
 import { PageShell } from "@/components/layout/PageShell";
 import { storeAddress, stores } from "@/config/site";
 
-const faqs = [
+export const faqs = [
   ["Làm thế nào để chọn đúng sản phẩm?", "Bạn có thể lọc theo đồng hồ nam, nữ, tìm bằng mã sản phẩm hoặc đặt lịch để được tư vấn trực tiếp tại showroom."],
   ["Sản phẩm có được bảo hành không?", "Có. Mọi sản phẩm được bảo hành chính hãng theo chính sách của Alexander Ferros, kèm chứng nhận kiểm định từ Trường Omega."],
   ["Tôi có thể xem sản phẩm trực tiếp ở đâu?", `Bạn có thể trải nghiệm tại showroom ${storeAddress(stores[0])}.`],
