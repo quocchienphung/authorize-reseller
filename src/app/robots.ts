@@ -1,6 +1,8 @@
 import type { MetadataRoute } from "next";
 import { siteConfig } from "@/config/site";
 
+export const dynamic = "force-static";
+
 /**
  * Production: crawl everything public. Preview deployments (VERCEL_ENV !==
  * "production") are closed to all crawlers so a *.vercel.app copy can never

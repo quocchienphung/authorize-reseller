@@ -4,6 +4,8 @@ import { articleRoute, articles } from "@/lib/articles";
 import { productFamilies, products } from "@/lib/products";
 import { absoluteUrl } from "@/lib/seo";
 
+export const dynamic = "force-static";
+
 type Frequency = NonNullable<MetadataRoute.Sitemap[number]["changeFrequency"]>;
 
 /** lastModified is only set where a real date exists (articles); catalogue pages carry none rather than a fake "now". */

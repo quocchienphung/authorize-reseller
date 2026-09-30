@@ -1,8 +1,8 @@
 "use client";
 
 import { ChevronDown, Search } from "lucide-react";
-import { useMemo, useState } from "react";
-import { categoryLabel, parsePrice, searchProducts, type CategorySlug, type Product } from "@/lib/product-helpers";
+import { useEffect, useMemo, useState } from "react";
+import { categoryLabel, isCategorySlug, parsePrice, searchProducts, type CategorySlug, type Product } from "@/lib/product-helpers";
 import { cn } from "@/lib/utils";
 import { ProductCard } from "./ProductCard";
 
@@ -14,6 +14,7 @@ type ProductGridProps = {
   /** Hide the men/women tabs when the list is already scoped to one category. */
   showCategoryFilter?: boolean;
   initialCategory?: CategoryFilter;
+  categoryFromUrl?: boolean;
 };
 
 const categoryOptions: { value: CategoryFilter; label: string }[] = [
@@ -32,10 +33,21 @@ const toolbarButtonClass =
   "h-10 rounded-none border px-5 text-sm transition-colors duration-200 border-fg/25 text-fg/75 hover:border-fg hover:text-fg";
 
 /** Filterable, searchable catalogue grid (4 columns on desktop like alexanderferros.com). */
-export function ProductGrid({ products, showCategoryFilter = true, initialCategory = "all" }: ProductGridProps) {
+export function ProductGrid({ products, showCategoryFilter = true, initialCategory = "all", categoryFromUrl = false }: ProductGridProps) {
   const [category, setCategory] = useState<CategoryFilter>(initialCategory);
   const [sort, setSort] = useState<SortOrder>("default");
   const [query, setQuery] = useState("");
+
+  useEffect(() => {
+    if (!categoryFromUrl) return;
+    const syncCategory = () => {
+      const value = new URLSearchParams(window.location.search).get("danh-muc") ?? undefined;
+      setCategory(isCategorySlug(value) ? value : "all");
+    };
+    syncCategory();
+    window.addEventListener("popstate", syncCategory);
+    return () => window.removeEventListener("popstate", syncCategory);
+  }, [categoryFromUrl]);
 
   const visible = useMemo(() => {
     const scoped = products.filter(

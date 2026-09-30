@@ -8,7 +8,9 @@ import { articleJsonLd, pageMetadata } from "@/lib/seo";
 export const dynamicParams = false;
 
 export function generateStaticParams() {
-  return articles.map((article) => ({ slug: article.slug }));
+  // Static export requires one param even while the article registry is empty.
+  // This reserved slug renders the existing not-found page and is never linked.
+  return articles.length ? articles.map((article) => ({ slug: article.slug })) : [{ slug: "__unpublished__" }];
 }
 
 type ArticleRouteProps = { params: Promise<{ slug: string }> };

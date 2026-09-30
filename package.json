@@ -9,6 +9,7 @@
   "scripts": {
     "dev": "next dev --webpack",
     "build": "next build",
+    "build:cloudflare": "node scripts/build-cloudflare.mjs",
     "start": "next start",
     "lint": "eslint",
     "typecheck": "tsc --noEmit",

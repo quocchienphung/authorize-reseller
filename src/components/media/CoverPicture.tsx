@@ -16,7 +16,8 @@ const DESKTOP_QUERY = "(min-width: 768px)";
  * Art-directed full-bleed cover: one `<picture>` that lets the browser pick
  * the portrait or landscape file, so a phone never downloads the desktop
  * image (and vice versa) the way two CSS-toggled `<Image>`s would. Sizing and
- * optimisation still come from next/image via `getImageProps`.
+ * responsive URLs come from next/image via `getImageProps` when an image
+ * optimizer is configured; static export falls back to the original files.
  */
 export function CoverPicture({ desktopSrc, mobileSrc, alt, priority = false, className }: CoverPictureProps) {
   const common = { alt, fill: true, sizes: "100vw", quality: 90, preload: priority, fetchPriority: priority ? "high" : undefined } as const;
@@ -29,8 +30,8 @@ export function CoverPicture({ desktopSrc, mobileSrc, alt, priority = false, cla
 
   return (
     <picture>
-      <source media={DESKTOP_QUERY} srcSet={desktopSrcSet} sizes="100vw" />
-      <img {...img} srcSet={mobileSrcSet} alt={alt} className={cn("object-cover", className)} />
+      <source media={DESKTOP_QUERY} srcSet={desktopSrcSet ?? desktopSrc} sizes="100vw" />
+      <img {...img} srcSet={mobileSrcSet ?? mobileSrc} alt={alt} className={cn("object-cover", className)} />
     </picture>
   );
 }

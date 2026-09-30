@@ -14,6 +14,7 @@ type ListingPageProps = {
   cover?: { desktopSrc: string; mobileSrc: string; alt: string };
   showCategoryFilter?: boolean;
   initialCategory?: "all" | CategorySlug;
+  categoryFromUrl?: boolean;
   /** Extra sections rendered before the grid (family story, carousels…). */
   children?: ReactNode;
   /** Sections rendered after the grid (reference index…). */
@@ -32,6 +33,7 @@ export function ListingPage({
   cover,
   showCategoryFilter = true,
   initialCategory = "all",
+  categoryFromUrl = false,
   children,
   after,
 }: ListingPageProps) {
@@ -53,7 +55,7 @@ export function ListingPage({
       {children}
 
       <section id="san-pham" className="pb-24 md:pb-32" aria-label="Danh sách sản phẩm">
-        <ProductGrid key={initialCategory} products={products} showCategoryFilter={showCategoryFilter} initialCategory={initialCategory} />
+        <ProductGrid key={initialCategory} products={products} showCategoryFilter={showCategoryFilter} initialCategory={initialCategory} categoryFromUrl={categoryFromUrl} />
       </section>
 
       {after}

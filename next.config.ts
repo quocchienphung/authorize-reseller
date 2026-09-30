@@ -4,17 +4,20 @@ const PRODUCTION_HOST = "lenhiluxury.com";
 /** Hosts that must never be indexed as copies of the site: the Vercel alias and the www variant. */
 const MIRROR_HOSTS = ["lenhiluxury.vercel.app", `www.${PRODUCTION_HOST}`];
 const isProductionDeploy = process.env.VERCEL_ENV === "production";
+const isStaticExport = process.env.CLOUDFLARE_STATIC_EXPORT === "1";
 
 const nextConfig: NextConfig = {
-  output: process.env.NEXT_BUILD_STANDALONE === "true" ? "standalone" : undefined,
+  output: isStaticExport ? "export" : process.env.NEXT_BUILD_STANDALONE === "true" ? "standalone" : undefined,
   images: {
     qualities: [75, 90],
     formats: ["image/avif", "image/webp"],
+    // Pages serves the original files; no runtime image transformations are needed.
+    unoptimized: isStaticExport,
   },
   turbopack: {
     root: process.cwd(),
   },
-  redirects() {
+  redirects: isStaticExport ? undefined : function redirects() {
     return [
       // Mirrors → canonical host, permanent, path preserved.
       ...MIRROR_HOSTS.map((host) => ({
@@ -36,7 +39,7 @@ const nextConfig: NextConfig = {
       { source: "/pricing", destination: "/bang-gia", permanent: true },
     ];
   },
-  headers() {
+  headers: isStaticExport ? undefined : function headers() {
     // Baseline security headers (HSTS is added by Vercel on custom domains). No CSP: inline theme bootstrap + fonts would need nonces.
     const security = [
       { key: "X-Content-Type-Options", value: "nosniff" },
