@@ -8,11 +8,15 @@ catalogue changes.
 
     python scripts/scrape-alexander-ferros.py                 # full refresh
     python scripts/scrape-alexander-ferros.py --gallery-only  # refresh only per-variant galleries
+    python scripts/scrape-alexander-ferros.py --sync-men      # add missing men's watches only
+    python scripts/scrape-alexander-ferros.py --sync-men --allow-broken-source-images
+        # skip unreadable official gallery assets when the source server is damaged
 """
 
 from __future__ import annotations
 
 import concurrent.futures
+import hashlib
 import html
 import io
 import json
@@ -94,7 +98,7 @@ class CatalogueParser(HTMLParser):
         elif tag == "img" and self.anchor is not None:
             alt = values.get("alt") or ""
             src = values.get("src") or ""
-            if alt.startswith("Đồng Hồ Alexander Ferros") and src:
+            if alt.casefold().startswith("đồng hồ alexander ferros") and src:
                 self.anchor["name"] = alt
                 self.anchor["imageSource"] = original_image_url(src)
 
@@ -319,7 +323,7 @@ def convert_gallery_image(content: bytes, destination: Path) -> None:
         image.save(destination, "WEBP", quality=GALLERY_QUALITY, method=6)
 
 
-def download_gallery(product: dict[str, object]) -> list[str]:
+def download_gallery(product: dict[str, object], strict: bool = False) -> list[str]:
     """Store each official photo for the variant as `products/<slug>/NN.webp`."""
     sources = product.get("gallerySources")
     slug = str(product["slug"])
@@ -329,16 +333,24 @@ def download_gallery(product: dict[str, object]) -> list[str]:
     folder.mkdir(parents=True, exist_ok=True)
     local_paths: list[str] = []
     expected: set[str] = set()
+    seen_hashes: set[str] = set()
     for index, url in enumerate(sources, 1):
         filename = f"{index:02d}.webp"
-        expected.add(filename)
         destination = folder / filename
         if not destination.exists() or destination.stat().st_size == 0:
             try:
                 convert_gallery_image(fetch(str(url)), destination)
             except Exception as error:  # noqa: BLE001 - one bad photo must not drop the set
+                if strict:
+                    raise RuntimeError(f"Gallery download failed for {slug} #{index}: {error}") from error
                 print(f"Gallery warning for {slug} #{index}: {error}", file=sys.stderr)
                 continue
+        image_hash = hashlib.sha256(destination.read_bytes()).hexdigest()
+        if image_hash in seen_hashes:
+            destination.unlink()
+            continue
+        seen_hashes.add(image_hash)
+        expected.add(filename)
         local_paths.append(f"/alexander-ferros/products/{slug}/{filename}")
     for stale in folder.glob("*.webp"):
         if stale.name not in expected:
@@ -414,6 +426,82 @@ def refresh_galleries() -> int:
     return 0
 
 
+def sync_mens_products(
+    new_arrivals_only: bool = False, allow_broken_source_images: bool = False
+) -> int:
+    """Add every missing watch in the live men's category, preserving existing records."""
+    research_file = RESEARCH_DIR / "product-catalogue.json"
+    existing = json.loads(research_file.read_text(encoding="utf-8"))["products"]
+    existing_ids = {str(product["variantId"]) for product in existing}
+    discovered: dict[str, dict[str, str]] = {}
+    for page in range(1, 100):
+        parser = CatalogueParser()
+        parser.feed(fetch(f"{BASE_URL}/san-pham/dong-ho-nam?page={page}").decode("utf-8"))
+        if not parser.items:
+            break
+        for item in parser.items.values():
+            if not str(item.get("name", "")).casefold().startswith("đồng hồ alexander ferros"):
+                continue
+            variant_id = urllib.parse.parse_qs(
+                urllib.parse.urlparse(item["sourceUrl"]).query
+            ).get("vid", [""])[0]
+            if not variant_id or not {"name", "price", "imageSource"}.issubset(item):
+                raise RuntimeError(f"Incomplete men's watch on catalogue page {page}: {item}")
+            discovered[variant_id] = item
+        print(f"Men's page {page}: {len(parser.items)} entries", flush=True)
+    else:
+        raise RuntimeError("Men's catalogue did not end before page 100")
+
+    missing_ids = set(discovered) - existing_ids
+    if new_arrivals_only:
+        latest_existing = max(map(int, existing_ids))
+        missing_ids = {variant_id for variant_id in missing_ids if int(variant_id) > latest_existing}
+    new_products: list[dict[str, object]] = []
+    for variant_id in sorted(missing_ids, key=int, reverse=True):
+        item = discovered[variant_id]
+        parsed_url = urllib.parse.urlparse(item["sourceUrl"])
+        sku = re.search(r"Alexander Ferros\s+(.+)$", item["name"])
+        if not sku:
+            raise RuntimeError(f"Could not read SKU: {item['name']}")
+        reference = sku.group(1).strip()
+        new_products.append({
+            **item,
+            "variantId": variant_id,
+            "sku": reference,
+            "slug": f"{text_slug(reference)}-{variant_id}",
+            "category": "Đồng hồ nam",
+            "familySlug": parsed_url.path.rstrip("/").split("/")[-1],
+            "baseSourceUrl": f"{BASE_URL}{parsed_url.path}",
+        })
+
+    print(f"Found {len(discovered)} men's watches; {len(new_products)} absent locally", flush=True)
+    if not new_products:
+        return 0
+    details = scrape_details(sorted({str(p["baseSourceUrl"]) for p in new_products}))
+    with concurrent.futures.ThreadPoolExecutor(max_workers=8) as executor:
+        futures = {executor.submit(download_product, product): product for product in new_products}
+        for future in concurrent.futures.as_completed(futures):
+            product = futures[future]
+            product["image"], product["imageBytes"] = future.result()
+
+    for product in new_products:
+        detail = details[str(product["baseSourceUrl"])]
+        galleries = detail["galleries"]
+        assert isinstance(galleries, dict)
+        if str(product["variantId"]) not in galleries:
+            raise RuntimeError(f"Variant absent from detail page: {product['sourceUrl']}")
+        product["description"] = detail["description"]
+        product["specifications"] = detail["specifications"]
+        product["gallerySources"] = list(galleries.get(str(product["variantId"]), []))
+        product["images"] = download_gallery(product, strict=not allow_broken_source_images)
+
+    combined = sorted([*existing, *new_products], key=lambda p: int(str(p["variantId"])), reverse=True)
+    if len({str(p["variantId"]) for p in combined}) != len(combined):
+        raise RuntimeError("Duplicate variant ID in merged catalogue")
+    write_catalogue(combined)
+    return 0
+
+
 def main() -> int:
     PRODUCT_DIR.mkdir(parents=True, exist_ok=True)
     DATA_DIR.mkdir(parents=True, exist_ok=True)
@@ -421,6 +509,11 @@ def main() -> int:
 
     if "--gallery-only" in sys.argv[1:]:
         return refresh_galleries()
+    if "--sync-men" in sys.argv[1:]:
+        return sync_mens_products(
+            new_arrivals_only="--new-arrivals-only" in sys.argv[1:],
+            allow_broken_source_images="--allow-broken-source-images" in sys.argv[1:],
+        )
 
     products = scrape_catalogue()
     if not products:

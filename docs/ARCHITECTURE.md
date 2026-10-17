@@ -22,7 +22,7 @@ src/
   config/site.ts           # Tên thương hiệu, liên hệ, mạng xã hội, showroom, routes, navigation
   lib/products.ts          # Dữ liệu + truy vấn catalogue (server)
   lib/product-helpers.ts   # Type và helper thuần dùng được ở client
-  data/products.json       # 208 sản phẩm scrape từ alexanderferros.com (scripts/scrape-alexander-ferros.py)
+  data/products.json       # 237 sản phẩm scrape từ alexanderferros.com (scripts/scrape-alexander-ferros.py)
 public/alexander-ferros/
   covers/                  # Ảnh bìa parallax (our-collection, mens, womens) desktop + mobile
   editorial/               # Ảnh brand story
@@ -52,6 +52,7 @@ npm run dev      # dev server (webpack)
 npm run check    # lint + typecheck + build
 python scripts/scrape-alexander-ferros.py   # cập nhật src/data/products.json và ảnh sản phẩm (cần Pillow)
 python scripts/scrape-alexander-ferros.py --gallery-only   # chỉ tải lại gallery từng phiên bản
+python scripts/scrape-alexander-ferros.py --sync-men   # thêm đồng hồ nam còn thiếu, giữ nguyên sản phẩm nữ
 ```
 
 ## SEO
