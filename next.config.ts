@@ -9,7 +9,7 @@ const isStaticExport = process.env.CLOUDFLARE_STATIC_EXPORT === "1";
 const nextConfig: NextConfig = {
   output: isStaticExport ? "export" : process.env.NEXT_BUILD_STANDALONE === "true" ? "standalone" : undefined,
   images: {
-    qualities: [75, 90],
+    qualities: [75, 90, 100],
     formats: ["image/avif", "image/webp"],
     // Pages serves the original files; no runtime image transformations are needed.
     unoptimized: isStaticExport,

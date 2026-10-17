@@ -76,12 +76,12 @@ export function ProductGallery({ hero, photos, name }: ProductGalleryProps) {
               fill
               preload={index === 0}
               fetchPriority={index === 0 ? "high" : undefined}
-              quality={90}
+              quality={frame.isHero ? 100 : 90}
               sizes="(min-width: 1024px) 60vw, 100vw"
               onLoad={() => dispatch({ type: "loaded", index })}
               className={cn(
                 "object-contain transition-opacity duration-200 ease-out motion-reduce:transition-none",
-                frame.isHero && "p-[8%]",
+                frame.isHero && "p-[3%]",
                 shown === index ? "opacity-100" : "opacity-0",
               )}
             />

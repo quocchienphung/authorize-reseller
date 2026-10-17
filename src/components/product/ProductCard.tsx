@@ -25,10 +25,10 @@ export function ProductCard({ product, sizes, headingLevel: Heading = "h3", clas
           alt={product.name}
           fill
           sizes={sizes}
-          quality={90}
+          quality={100}
           preload={priority}
           fetchPriority={priority ? "high" : undefined}
-          className="object-contain p-[10%] transition-transform duration-700 ease-out-soft group-hover/card:scale-[1.06]"
+          className="object-contain transition-transform duration-700 ease-out-soft group-hover/card:scale-[1.06]"
         />
       </Link>
       <div className="flex flex-1 flex-col pt-4">
